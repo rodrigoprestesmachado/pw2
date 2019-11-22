@@ -23,7 +23,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -38,17 +41,17 @@ public class Service {
 	@PersistenceContext(unitName = "CrudWS")
 	private EntityManager em;
 
-	@GET
-	@Path("/create/{name}/{email}")
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	@Path("/create")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Client create(@PathParam("name") String name, @PathParam("email") String email) {
+	public Client create(@FormParam("name") String name, @FormParam("email") String email) {
 		Client client = new Client();
 		client.setName(name);
 		client.setEmail(email);
 		em.persist(client);
 		return client;
 	}
-	
 	
 	@GET
 	@Path("/read")
@@ -60,6 +63,28 @@ public class Service {
 		Root<Client> client = criteria.from( Client.class );
 		criteria.select(client);
 		return em.createQuery(criteria).getResultList();
+	}
+	
+	@GET
+	@Path("/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String delete(@PathParam("id") long id) {
+		Client client = em.find(Client.class, id);
+		em.remove(client);				
+		StringBuilder json = new StringBuilder();			
+		json.append("{\"result\":\"true\", \"id\":\""+id+"\"}");
+		return json.toString();
+	}
+	
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Client update(@FormParam("id") long id, @FormParam("name") String name, @FormParam("email") String email) {
+		Client client = em.find(Client.class, id);
+		client.setName(name);
+		client.setEmail(email);
+		return em.merge(client);
 	}
 
 }
