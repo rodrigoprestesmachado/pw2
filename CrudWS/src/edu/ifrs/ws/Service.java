@@ -32,6 +32,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.ifrs.model.Client;
 
 @Path("/v1")
@@ -52,30 +55,31 @@ public class Service {
 		em.persist(client);
 		return client;
 	}
-	
+
 	@GET
 	@Path("/read")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Client>  read() {
-		//https://docs.jboss.org/hibernate/entitymanager/3.6/reference/en/htm
+	public String read() {
+		// https://docs.jboss.org/hibernate/entitymanager/3.6/reference/en/htm
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Client> criteria = builder.createQuery(Client.class );
-		Root<Client> client = criteria.from( Client.class );
+		CriteriaQuery<Client> criteria = builder.createQuery(Client.class);
+		Root<Client> client = criteria.from(Client.class);
 		criteria.select(client);
-		return em.createQuery(criteria).getResultList();
+		List<Client> c = em.createQuery(criteria).getResultList();
+		return generateJson(c);
 	}
-	
+
 	@GET
 	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String delete(@PathParam("id") long id) {
 		Client client = em.find(Client.class, id);
-		em.remove(client);				
-		StringBuilder json = new StringBuilder();			
-		json.append("{\"result\":\"true\", \"id\":\""+id+"\"}");
+		em.remove(client);
+		StringBuilder json = new StringBuilder();
+		json.append("{\"result\":\"true\", \"id\":\"" + id + "\"}");
 		return json.toString();
 	}
-	
+
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Path("/update")
@@ -85,6 +89,17 @@ public class Service {
 		client.setName(name);
 		client.setEmail(email);
 		return em.merge(client);
+	}
+
+	private <T> String generateJson(List<T> pojo) {
+		ObjectMapper mapper = new ObjectMapper();
+		String json = null;
+		try {
+			json = mapper.writeValueAsString(pojo);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return json;
 	}
 
 }

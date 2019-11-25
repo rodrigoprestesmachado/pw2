@@ -15,9 +15,15 @@
  */
 package edu.ifrs.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client {
@@ -30,6 +36,14 @@ public class Client {
 	
 	private String email;
 
+	@OneToMany(mappedBy = "client")
+	@JsonManagedReference
+	private Set<Phone> phones;
+	
+	@ManyToMany
+	@JsonManagedReference
+	private Set<Product> products;
+	
 	public long getId() {
 		return id;
 	}
@@ -52,6 +66,30 @@ public class Client {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Set<Phone> phones) {
+		this.phones = phones;
+	}
+	
+	public void addPhone(Phone phone) {
+		this.phones.add(phone);
+	}
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+	
+	public void addProduct(Product product) {
+		this.products.add(product);
 	}
 	
 }
