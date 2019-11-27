@@ -15,7 +15,9 @@
  */
 package edu.ifrs.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -31,7 +33,7 @@ public class Phone {
 	
 	private String number;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JsonBackReference
 	private Client client;
 	

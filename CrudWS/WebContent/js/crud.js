@@ -21,7 +21,7 @@ function fnCreate() {
 	var name = document.getElementById("name").value;
 	var email = document.getElementById("email").value;
 	xmlHttp.onreadystatechange = createCallback;
-	xmlHttp.open("POST", "ws/v1/create", true);
+	xmlHttp.open("POST", "api/v1/create", true);
 	xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlHttp.send("name="+name+"&email="+email);
 }
@@ -37,7 +37,7 @@ function createCallback() {
 function fnRead() {
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = readCallback;
-	xmlHttp.open("GET", "ws/v1/read", true);
+	xmlHttp.open("GET", "api/v1/read", true);
 	xmlHttp.send();
 }
 
@@ -76,7 +76,7 @@ function fnUpdate(id) {
 	var trChildNodes = tr.childNodes;
 	var textName = trChildNodes[0].firstChild.value;
 	var textEmail = trChildNodes[1].firstChild.value;
-	var url = "ws/v1/update";
+	var url = "api/v1/update";
 	xmlHttp.onreadystatechange = updateCallback;
 	xmlHttp.open("POST", url, true);
 	xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -95,7 +95,7 @@ function updateCallback() {
 
 function fnDelete(id) {
 	xmlHttp.onreadystatechange = deleteCallback;
-	xmlHttp.open("GET", "ws/v1/delete/" + id, true);
+	xmlHttp.open("GET", "api/v1/delete/" + id, true);
 	xmlHttp.send();
 }
 
