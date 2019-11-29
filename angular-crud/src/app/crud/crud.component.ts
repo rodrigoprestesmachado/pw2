@@ -22,7 +22,7 @@ import {
 })
 export class CrudComponent implements OnInit {
   //Web Service
-  private WS_URL: string = "http://localhost:8080/CrudWS-0.0.1/api/v1/";
+  private WS_URL: string = "http://code.inf.poa.ifrs.edu.br/CrudWS/api/v1/";
 
   // CRUD data
   public clients: Client[];
