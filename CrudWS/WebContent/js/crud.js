@@ -14,44 +14,100 @@
  * limitations under the License.
  */
 
-// Global XMLHttpRequest
-var xmlHttp;
+/*jshint esversion: 6 */
 
+/**
+ * Create
+ */
 function fnCreate() {
-	var name = document.getElementById("name").value;
-	var email = document.getElementById("email").value;
-	xmlHttp.onreadystatechange = createCallback;
-	xmlHttp.open("POST", "api/v1/create", true);
-	xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlHttp.send("name="+name+"&email="+email);
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  let wsClient = new WsClient();
+  wsClient
+    .post("api/v1/create", "name=" + name + "&email=" + email)
+    .then(function(json) {
+      var table = document.getElementById("tableData");
+      createRow(table, json);
+    })
+    .catch(function() {
+      return console.log("Create fail");
+    });
 }
 
-function createCallback() {
-  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-    var json = JSON.parse(xmlHttp.responseText);
-    var table = document.getElementById("tableData");
-    createRow(table, json);
-  }
-}
-
+/**
+ * Read
+ */
 function fnRead() {
-	xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = readCallback;
-	xmlHttp.open("GET", "api/v1/read", true);
-	xmlHttp.send();
+  let wsClient = new WsClient();
+  wsClient
+    .get("api/v1/read")
+    .then(function(json) {
+      var table = document.getElementById("tableData");
+      for (var key in json) {
+        createRow(table, json[key]);
+      }
+    })
+    .catch(function() {
+      return console.log("Read fail");
+    });
 }
 
-function readCallback() {
-  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-    // get json from the server
-    var json = JSON.parse(xmlHttp.responseText);
-    var table = document.getElementById("tableData");
-    for (var key in json) {
-      createRow(table, json[key]);
-    }
-  }
+/**
+ * Update
+ *
+ * @param {*} id
+ */
+function fnUpdate(id) {
+  var tr = document.getElementById(id);
+  var trChildNodes = tr.childNodes;
+  var textName = trChildNodes[0].firstChild.value;
+  var textEmail = trChildNodes[1].firstChild.value;
+
+  let data = "id=" + id + "&name=" + textName + "&email=" + textEmail;
+  let wsClient = new WsClient();
+  wsClient
+    .post("api/v1/update", data)
+    .then(function(json) {
+      var tr = document.getElementById(json.id);
+      var trChildNodes = tr.childNodes;
+      trChildNodes[0].innerText = json.name;
+      trChildNodes[1].innerText = json.email;
+    })
+    .catch(function() {
+      return console.log("Update fail");
+    });
 }
 
+/**
+ * Delete
+ *
+ * @param {*} id
+ */
+function fnDelete(id) {
+  let wsClient = new WsClient();
+  wsClient
+    .get("api/v1/delete/" + id)
+    .then(function(json) {
+      // If returns true of the server then remove table row
+      if (json.result === "true") {
+        //gets the table row
+        var tr = document.getElementById(json.id);
+        // get table row parent
+        var trParent = tr.parentNode;
+        // remove table row
+        trParent.removeChild(tr);
+      }
+    })
+    .catch(function() {
+      return console.log("Delete fail");
+    });
+}
+
+/**
+ * Enables the form to update the data
+ *
+ * @param {*} id
+ */
 function enableUpdate(id) {
   var tr = document.getElementById(id);
   var trChildNodes = tr.childNodes;
@@ -71,50 +127,12 @@ function enableUpdate(id) {
   }
 }
 
-function fnUpdate(id) {
-	var tr = document.getElementById(id);
-	var trChildNodes = tr.childNodes;
-	var textName = trChildNodes[0].firstChild.value;
-	var textEmail = trChildNodes[1].firstChild.value;
-	var url = "api/v1/update";
-	xmlHttp.onreadystatechange = updateCallback;
-	xmlHttp.open("POST", url, true);
-	xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlHttp.send("id="+id+"&name="+textName+"&email="+textEmail);
-}
-
-function updateCallback() {
-  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-    var json = JSON.parse(xmlHttp.responseText);
-    var tr = document.getElementById(json.id);
-    var trChildNodes = tr.childNodes;
-    trChildNodes[0].innerText = json.name;
-    trChildNodes[1].innerText = json.email;
-  }
-}
-
-function fnDelete(id) {
-	xmlHttp.onreadystatechange = deleteCallback;
-	xmlHttp.open("GET", "api/v1/delete/" + id, true);
-	xmlHttp.send();
-}
-
-function deleteCallback() {
-  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-    var json = JSON.parse(xmlHttp.responseText);
-    // If returns true of the server then remove table row
-    if (json.result === "true") {
-      //gets the table row
-      var tr = document.getElementById(json.id);
-      // get table row parent
-      var trParent = tr.parentNode;
-      // remove table row
-      trParent.removeChild(tr);
-    }
-  }
-}
-
-/* DOM do create a table row */
+/**
+ * Create a row in the HTML table using DOM
+ *
+ * @param {*} table
+ * @param {*} json
+ */
 function createRow(table, json) {
   // Creating table row with the data base id
   var tr = document.createElement("tr");
