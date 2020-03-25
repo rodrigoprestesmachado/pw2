@@ -1,3 +1,5 @@
-## PW2
+# Disciplina de Programação para Web II
 
-[link](https://github.com/rodrigoprestesmachado/pw2/master/docs/slides/slide-base)
+## Slides das aulas
+
+[link](slides/slide-base/index.html#/)
