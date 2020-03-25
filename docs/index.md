@@ -2,4 +2,4 @@
 
 ## Slides das aulas
 
-[Teste slide base](https://rodrigoprestesmachado.github.io/pw2/slides/slide-base/#/)
+[Slide base](slides/slide-base/index.html)
