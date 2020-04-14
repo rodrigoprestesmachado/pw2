@@ -14,5 +14,5 @@ COPY --chown=jboss:root wildfly/standalone.xml /opt/jboss/wildfly/standalone/con
 # deploying CrudWS application
 COPY --chown=jboss:root target/CrudWS.war /opt/jboss/wildfly/standalone/deployments
 
-# starting wildfly
+# starting wildfly with administration console
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
