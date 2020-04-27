@@ -1,12 +1,15 @@
 # Disciplina de Programação para Web II
 
-## Instalação do projeto CrudWS
+## Slides
 
-[Tutorial](crudws.md) CrudWS
+* [Slide 02:](slides/02-introdução/index.html) Introdução aos EJBs
 
+## Tutoriais
 
-<!-- 
-## Slides das aulas
+* [Tutorial 01:](tutorials/crudws.md) de instalação do projeto CrudWS
 
-[Slide base](slides/slide-base/index.html)
--->
+## Vídeos
+
+* [Vídeo 01:](https://youtu.be/MkjzEuSleso) Instalação do Eclipse e Wildfly
+
+* [Vídeo 02:](https://youtu.be/aOAHTI4YAAI) Hello World VSCode e Wildfly
