@@ -6,7 +6,7 @@
 
 ## Tutoriais
 
-* [Tutorial 01:](tutorials/crudws.md) de instalação do projeto CrudWS
+* [Tutorial 01:](tutorials/crudws.md) Instalação do projeto CrudWS
 
 ## Vídeos
 
