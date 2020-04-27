@@ -2,8 +2,6 @@ title: "PW2"
 
 remote_theme: pmarsceill/just-the-docs
 
-exclude: ["slides/", "tutoriais/"]
-
 search_tokenizer_separator: /[\s/]+/
 
 layout: default
