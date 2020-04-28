@@ -1,9 +1,11 @@
 ---
 layout: default
-title: Session Beans (Parte 1)
+title: Session Beans - parte 1
+nav_order: 4
+parent: slides
 ---
 
-## Session Beans (Parte 1)
+## Session Beans - parte 1
 Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 

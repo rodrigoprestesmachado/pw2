@@ -1,3 +1,10 @@
+---
+layout: default
+title: Instalação do projeto CrudWS
+nav_order: 6
+parent: tutoriais
+---
+
 # Instalação do projeto CrudWS
 
 * **Nota:** Antes de iniciar, instale o [Docker](https://www.docker.com) e o [Maven](https://maven.apache.org) na sua máquina
