@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Instalação do projeto CrudWS
-nav_order: 6
-parent: tutoriais
+parent: Tutoriais
+nav_order: 1
 ---
 
 # Instalação do projeto CrudWS

@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Introdução aos EJBs
-nav_order: 3
-parent: slides
+parent: Apresentações
+nav_order: 1
 ---
 
 # Introdução aos EJBs

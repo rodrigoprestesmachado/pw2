@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Session Beans - parte 1
-nav_order: 4
-parent: slides
+parent: Apresentações
+nav_order: 2
 ---
 
 ## Session Beans - parte 1
