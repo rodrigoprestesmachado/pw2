@@ -1,7 +1,16 @@
+---
+layout: default
+title: Home
+nav_order: 1
+description: "Disciplina de Programação para Web II"
+permalink: /
+---
+
 # Disciplina de Programação para Web II
 
 ## Slides
 
+* [Slide 01:](slides/02-introdução/index.html) Apresentação
 * [Slide 02:](slides/02-introdução/index.html) Introdução aos EJBs
 * [Slide 03:](slides/03-session-beans-01/index.html) Session Beans - parte 1
 

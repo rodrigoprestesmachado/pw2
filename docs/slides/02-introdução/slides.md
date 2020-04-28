@@ -1,3 +1,10 @@
+---
+layout: default
+title: Slides
+nav_order: 2
+has_children: true
+---
+
 # Introdução aos EJBs
 
 Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
