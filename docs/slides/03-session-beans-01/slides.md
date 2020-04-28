@@ -1,3 +1,8 @@
+---
+layout: default
+title: Session Beans (Parte 1)
+---
+
 ## Session Beans (Parte 1)
 Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
