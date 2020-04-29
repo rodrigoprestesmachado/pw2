@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Session Beans - parte 1
-parent: Apresentações
-nav_order: 2
+nav_exclude: true
 ---
 
 ## Session Beans - parte 1
