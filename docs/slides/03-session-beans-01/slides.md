@@ -1,5 +1,8 @@
 ---
-nav_exclude: true
+layout: default
+title: Introdução aos EJBs
+parent: Apresentações
+nav_order: 1
 ---
 
 ## Session Beans - parte 1
