@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Introdução aos EJBs
-parent: Tutoriais
+parent: Apresentações
 nav_order: 1
 ---
 
