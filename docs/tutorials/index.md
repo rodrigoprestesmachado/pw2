@@ -6,4 +6,4 @@ navigation: 2
 
 ## Tutoriais
 
-* [Tutorial 01:](crudws.md) Instalação do projeto CrudWS
+1. Instalação do projeto CrudWS [[texto]](crudws.md)
