@@ -1,10 +1,3 @@
----
-layout: default
-title: Introdução aos EJBs
-parent: Apresentações
-nav_order: 1
----
-
 ## Session Beans - parte 1
 
 Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)

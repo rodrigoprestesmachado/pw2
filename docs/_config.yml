@@ -1,12 +1,8 @@
 title: "PW2"
 
-remote_theme: pmarsceill/just-the-docs
+remote_theme: alexander-heimbuch/millidocs
 
 search_tokenizer_separator: /[\s/]+/
-
-layout: default
-nav_order: 2
-has_children: true
 
 footer_content: "Copyright &copy; 2020 Rodrigo Prestes Machado, distributed under Apache 2.0 license."
 

@@ -1,7 +1,9 @@
 ---
-layout: default
+layout: page
 title: Tutoriais
-nav_order: 2
-has_children: true
-has_toc: true
+navigation: 2
 ---
+
+## Tutoriais
+
+* [Tutorial 01:](crudws.md) Instalação do projeto CrudWS
