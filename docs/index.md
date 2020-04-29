@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Início
-navigation: 2
+navigation: 1
 ---
 
 # Disciplina de Programação para Web II
@@ -14,7 +14,7 @@ navigation: 2
 
 1. [[slides]](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778) [[texto]]([slides/02-introdução/slides.md](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)) Apresentação
 1. [[slides]](slides/02-introdução/index.html) [[texto]](slides/02-introdução/slides.md) Apresentação Introdução aos EJBs
-1. [[slides]](slides/03-session-beans-01/index.html) [[texto]](slides/03-session-beans-01/index.html) Session Beans - parte 1
+2. [[slides]](slides/03-session-beans-01/index.html) [[texto]](slides/03-session-beans-01/slides.md) Session Beans - parte 1
 
 ## Vídeos
 
@@ -23,8 +23,8 @@ navigation: 2
 
 ## Códigos de exemplo
 
-* [Github](https://github.com/rodrigoprestesmachado/pw2)
+* [[Github]](https://github.com/rodrigoprestesmachado/pw2)
 
 ## Moodle
 
-* Moodle da [disciplina](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
+* Moodle da [[disciplina]](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
