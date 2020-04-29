@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Iníciode
+title: Início
 nav_order: 1
 description: "Disciplina de Programação para Web II"
 permalink: /
 ---
 
+# Disciplina de Programação para Web II
+
 ## Tutoriais
 
 * [Tutorial 01:](tutorials/crudws.md) Instalação do projeto CrudWS
-
-# Disciplina de Programação para Web II
 
 ## Apresentações
 
