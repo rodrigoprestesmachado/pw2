@@ -1,7 +1,7 @@
 ---
-layout: page
-title: Início
-navigation: 1
+layout: default
+title: Home
+nav_order: 1
 ---
 
 # Disciplina de Programação para Web II
