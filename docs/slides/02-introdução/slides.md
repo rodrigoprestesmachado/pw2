@@ -1,11 +1,3 @@
----
-title: Introdução aos EJBs
-parent: Apresentações
-nav_order: 1
----
-
-
-
 # Introdução aos EJBs
 
 Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
