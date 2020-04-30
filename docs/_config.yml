@@ -6,3 +6,6 @@ aux_links:
 
 # Footer content appears at the bottom of every page's main content
 footer_content: "Copyright &copy; 2020 Rodrigo Prestes Machado. Distributed by Apache 2.0 license."
+
+include:
+  - "*.md"
