@@ -12,11 +12,11 @@ nav_order: 1
 
 ## Apresentações
 
-1. Apresentação [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778) [texto]([slides/02-introdução/slides.md](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778))
+1. Apresentação [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
 
-1. Introdução aos EJBs [slides](slides/02-introdução/slides.html) [texto](slides/02-introdução/slides.md)
+2. Introdução aos EJBs [slides](slides/02-introdução/slides.html)
 
-2. ** Session Beans - parte 1 [slides](slides/03-session-beans-01/slides.html) [texto](slides/03-session-beans-01/slides.md)
+3. * Session Beans - parte 1 [slides](slides/03-session-beans-01/slides.html)
 
 ## Vídeos
 
