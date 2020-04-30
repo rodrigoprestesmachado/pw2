@@ -1,9 +1,3 @@
----
-layout: default
-title: Início
-nav_order: 1
----
-
 # Disciplina de Programação para Web II
 
 ## Tutoriais
@@ -12,17 +6,17 @@ nav_order: 1
 
 ## Apresentações
 
-1. Apresentação [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
+1. Apresentação - [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
 
-2. Introdução aos EJBs [slides](slides/02-introdução/slides.html)
+1. Introdução aos EJBs - [slides](slides/02-introdução/slides.html) [texto](slides/02-introdução/slides.md)
 
-3. * Session Beans - parte 1 [slides](slides/03-session-beans-01/slides.html)
+1. Session Beans - parte 1 - [slides](slides/03-session-beans-01/slides.html) [texto](slides/03-session-beans-01/slides.md)
 
 ## Vídeos
 
-1. Instalação do Eclipse e Wildfly [vídeo](https://youtu.be/MkjzEuSleso)
+1. Instalação do Eclipse e Wildfly - [vídeo](https://youtu.be/MkjzEuSleso)
 
-1. Hello World VSCode e Wildfly [vídeo](https://youtu.be/aOAHTI4YAAI)
+1. Hello World VSCode e Wildfly - [vídeo](https://youtu.be/aOAHTI4YAAI)
 
 ## Códigos de exemplo
 
