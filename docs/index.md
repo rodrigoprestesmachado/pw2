@@ -4,6 +4,8 @@
 
 1. Instalação do projeto CrudWS [texto](tutorials/crudws.md)
 
+1. Microserviços [tutorias](tutorials/microservices/index.md)
+
 ## Apresentações
 
 1. Apresentação - [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
