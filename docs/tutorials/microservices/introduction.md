@@ -1,4 +1,4 @@
-# Introdução
+# Introdução aos microserviços
 
 De maneira simplificada, os micro serviços são uma maneira conceber a arquitetura interna de um sistema onde as funcionalidades são vistas como serviços independentes. Por exemplo, em um sistema de comércio eletrônico poderia ser dividido em: catálogo de produtos, estoque, carrinho de compras, pagamento, entrega, entre outros.
 
@@ -23,4 +23,4 @@ A abordagem de micro serviços proporciona algumas vantagens, entre elas, reduz 
 * Eclipse MicroProfile White Paper 2019. Disponível em: https://microprofile.io/resources/#white-paper
 
 
-* Saavedra, Cesar. Hands-On Enterprise Java Microservices with Eclipse MicroProfile: Build and optimize your microservice architecture with Java . Packt Publishing. Edição do Kindle.
+* Saavedra, Cesar. Hands-On Enterprise Java Microservices with Eclipse MicroProfile: Build and optimize your microservice architecture with Java. Packt Publishing. Edição do Kindle.
