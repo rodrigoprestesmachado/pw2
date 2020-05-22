@@ -2,9 +2,9 @@
 
 ## Tutoriais
 
-1. Instalação do projeto CrudWS [texto](tutorials/crudws.md)
+1. Instalação do projeto CrudWS - [texto](tutorials/crudws.md)
 
-1. Microserviços [tutorias](tutorials/microservices/index.md)
+1. Microserviços - [tutorias](tutorials/microservices/index.md)
 
 ## Apresentações
 
