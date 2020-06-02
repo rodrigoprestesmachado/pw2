@@ -18,7 +18,7 @@
 
 1. Instalação do Eclipse e Wildfly - [vídeo](https://youtu.be/MkjzEuSleso)
 
-1. Hello World VSCode e Wildfly - [vídeo](https://youtu.be/aOAHTI4YAAI)
+1. VSCode e Wildfly - [vídeo](https://youtu.be/aOAHTI4YAAI)
 
 ## Moodle
 
