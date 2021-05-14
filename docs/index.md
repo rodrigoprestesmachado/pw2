@@ -1,25 +1,32 @@
-# PW2
+# Trilha de aprendizagem
 
-## Tutoriais
+[Configuração do ambiente](documento/ambiente.md)
 
-1. Instalação do projeto CrudWS - [texto](tutorials/crudws.md)
+[Introdução aos EJBs](slides/02-introdução/index.html) 
 
-1. Microserviços - [tutorias](tutorials/microservices/index.md)
+[Session Beans](slides/03-session-beans-01/index.html)
 
-## Apresentações
+[Stateless](https://rodrigoprestesmachado.github.io/pw2/)
 
-1. Apresentação - [slides](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
+[Stateful](https://rodrigoprestesmachado.github.io/pw2/)
 
-1. Introdução aos EJBs - [slides](slides/02-introdução/index.html) [texto](slides/02-introdução/content.md)
+[Message Driven](https://rodrigoprestesmachado.github.io/pw2/)
 
-1. Session Beans - parte 1 - [slides](slides/03-session-beans-01/index.html) [texto](slides/03-session-beans-01/content.md)
+[Web Services](https://rodrigoprestesmachado.github.io/pw2/)
 
-## Vídeos
+[Microprofile](https://rodrigoprestesmachado.github.io/pw2/)
 
-1. Instalação do Eclipse e Wildfly - [vídeo](https://youtu.be/MkjzEuSleso)
+[Introdução a JPA](https://rodrigoprestesmachado.github.io/pw2/)
 
-1. VSCode e Wildfly - [vídeo](https://youtu.be/aOAHTI4YAAI)
+[Docker](https://rodrigoprestesmachado.github.io/pw2/)
 
-## Moodle
+[Exemplo de CrudWS](tutorials/crudws.md)
 
-* Moodle da [disciplina](https://moodle.poa.ifrs.edu.br/course/view.php?id=5778)
+# Comunidade de aprendizagem
+
+Comunidade [Discord](https://discord.com/invite/C29cqvm): canal `#pw2`
+
+<center>
+<a href="https://github.com/rodrigoprestesmachado" target="blanck"><img src="imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+</center>
