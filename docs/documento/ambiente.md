@@ -15,8 +15,12 @@
 * [Tools for MicroProfile](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-microprofile)
 
 ## VSCode e Wildfly
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aOAHTI4YAAI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 
 ## Instalação do Eclipse e Wildfly
 
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/MkjzEuSleso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
