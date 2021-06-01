@@ -1,8 +1,8 @@
 # Trilha de aprendizagem
 
-[Configuração do ambiente](documento/ambiente.md)
+[Configuração do ambiente](topicos/ambiente/ambiente.md)
 
-[Introdução aos EJBs](slides/02-introdução/index.html) 
+[Introdução aos EJBs](topicos/introducaoEJB/introducao.md)
 
 [Session Beans](slides/03-session-beans-01/index.html)
 
