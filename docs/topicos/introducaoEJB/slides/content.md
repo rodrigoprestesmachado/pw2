@@ -1,10 +1,14 @@
+<!-- .slide: data-background-image="https://dailytravelpill.com/wp-content/uploads/2021/02/backpacking-in-java-attractions.jpg" 
+data-transition="zoom" 
+-->
 # Introdução aos EJBs
+<!-- .element: style="margin-bottom:100px; font-size: 50px; color:black;" -->
 
 Pressione 'F' para tela cheia
-<!-- .element: style="font-size: small;" -->
+<!-- .element: style="margin-bottom:10px; font-size: 15px; color:black;" -->
 
 [versão em pdf](?print-pdf)
-<!-- .element: style="font-size: small;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 15px; color:black;" -->
 
 
 <!-- .slide: data-background="#F0FDFF" data-transition="zoom" -->
@@ -83,7 +87,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:30px; font-size: 30px;" -->
   * Executam tarefas para um cliente, opcionalmente, pode implementar um Web Service
   <!-- .element: style="margin-bottom:30px; font-size: 25px;" -->
-  * Os Session podem ser: Stateless e Stateful
+  * Os Session podem ser: Stateless, Stateful e Singleton
   <!-- .element: style="margin-bottom:30px; font-size: 25px;" -->
 
 * Message-driven
@@ -92,7 +96,12 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
 
-## Referências
+## Referência
 
-* [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
-<!-- .element: style="margin-bottom:70px; font-size: 25px;" -->
+[The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
+<!-- .element: style="margin-bottom:70px; font-size: 30px;" -->
+
+<center>
+<a href="https://rpmhub.dev" target="blanck"><img src="../../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+</center>

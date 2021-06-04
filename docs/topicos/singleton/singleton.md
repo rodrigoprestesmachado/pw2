@@ -1,12 +1,12 @@
-# Introdução
+# Singleton Session Beans
 
 <center>
-<iframe src="https://pw2.rpmhub.dev/topicos/introducaoEJB/slides/index.html#/" title="Intrudução aos EJBs" width="90%" height="500" style="border:none;"></iframe>
+<iframe src="https://pw2.rpmhub.dev/topicos/singleton/slides/index.html#/" title="Singleton Session Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
 # Referência 
 
-[The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)
+[The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>

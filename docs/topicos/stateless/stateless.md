@@ -1,7 +1,7 @@
-# Introdução
+# Stateless Session Beans
 
 <center>
-<iframe src="https://pw2.rpmhub.dev/topicos/introducaoEJB/slides/index.html#/" title="Intrudução aos EJBs" width="90%" height="500" style="border:none;"></iframe>
+<iframe src="https://pw2.rpmhub.dev/topicos/stateless/slides/index.html#/" title="Stateless Session Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
 # Referência 
