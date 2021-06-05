@@ -4,6 +4,12 @@
 <iframe src="https://pw2.rpmhub.dev/topicos/stateless/slides/index.html#/" title="Stateless Session Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
+# Implementando um Stateless
+
+O vídeo abaixo mostra um exemplo de como podemos implemenat um Stateless Session Beans no Open Liberty por meio do VSCode
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gMfJjPpbCR8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Referência 
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)
