@@ -30,7 +30,7 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#F0FBFF" data-transition="fade" -->
-## Interface de negócio
+## Interface de um EJB
 <!-- .element: style="margin-bottom:70px;" -->
 
 * As interfaces de negócio de um EJB podem ser:
@@ -44,6 +44,34 @@ Pressione 'F' para tela cheia
     <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
     * Interface remota
     <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
+
+
+<!-- .slide: data-background="#F0FBFF" data-transition="fade" -->
+##  Interface local ou remota?
+<!-- .element: style="margin-bottom:70px;" -->
+
+* Quando você projeta uma aplicação Java EE, uma das primeiras decisões é o tipo de acesso aos enterprise beans: local, remota ou Web Services
+<!-- .element: style="margin-bottom:50px; font-size: 30px;" -->
+
+* Permitir o acesso local ou remoto depende dos seguintes fatores:
+<!-- .element: style="margin-bottom:30px; font-size: 30px;" -->
+
+  * **Acoplamento entre os beans:** Se o acoplamento entre os beans for forte, ou seja, um bean depende de outro, então estes beans são fortes candidatos para acesso local
+  <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
+
+  * **Tipo dos clientes:** Se um enterprise bean é acessado por várias aplicações, então, é interessante permitir acesso remoto
+  <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
+
+
+<!-- .slide: data-background="#F0FBFF" data-transition="convex" -->
+ # Interface local ou remota?
+ <!-- .element: style="margin-bottom:50px; font-size: 30px;" -->
+
+* **Distribuição dos Componentes:** Aplicações Java EE são escaláveis pois, permitem que os componentes sejam distribuídos em múltiplas máquinas. Assim, neste tipo de cenário é adequado permitir acesso remoto
+<!-- .element: style="margin-bottom:80px; font-size: 25px;" -->
+
+* **Performance:** Devido a fatores como a latência da rede, chamadas remotas pode ser mais lentas do que as chamadas locais. Por outro lado, se você distribuir componentes entre servidores diferentes, você pode melhorar o desempenho geral da aplicação
+<!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
 
 
@@ -74,7 +102,7 @@ Pressione 'F' para tela cheia
 * Para construir um enterprise bean que permite o acesso apenas local, você pode fazer o seguinte:
 <!-- .element: style="margin-bottom:25px; font-size: 25px;" -->
 
-  * Escrever uma classe que implementa um bean, mas, que não implemente uma interface de negócio. Isto indica que o bean expõe os seus métodos públicos, por exemplo: dollarToYen e yenToEuro
+  * Escrever uma classe que implementa um bean, mas, que não implemente uma interface de negócio. Isto indica que o bean expõe os seus métodos públicos, por exemplo: `dollarToYen` e `yenToEuro`
   <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
 
 ```java
