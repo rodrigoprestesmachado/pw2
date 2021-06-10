@@ -50,7 +50,7 @@ Pressione 'F' para tela cheia
 ##  Interface local ou remota?
 <!-- .element: style="margin-bottom:70px;" -->
 
-* Quando você projeta uma aplicação Java EE, uma das primeiras decisões é o tipo de acesso aos enterprise beans: local, remota ou Web Services
+* Quando você projeta uma aplicação Jakarta EE, uma das primeiras decisões é o tipo de acesso aos enterprise beans: local, remota ou Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 30px;" -->
 
 * Permitir o acesso local ou remoto depende dos seguintes fatores:
@@ -67,7 +67,7 @@ Pressione 'F' para tela cheia
  # Interface local ou remota?
  <!-- .element: style="margin-bottom:50px; font-size: 30px;" -->
 
-* **Distribuição dos Componentes:** Aplicações Java EE são escaláveis pois, permitem que os componentes sejam distribuídos em múltiplas máquinas. Assim, neste tipo de cenário é adequado permitir acesso remoto
+* **Distribuição dos Componentes:** Aplicações Jakarta EE são escaláveis pois, permitem que os componentes sejam distribuídos em múltiplas máquinas. Assim, neste tipo de cenário é adequado permitir acesso remoto
 <!-- .element: style="margin-bottom:80px; font-size: 25px;" -->
 
 * **Performance:** Devido a fatores como a latência da rede, chamadas remotas pode ser mais lentas do que as chamadas locais. Por outro lado, se você distribuir componentes entre servidores diferentes, você pode melhorar o desempenho geral da aplicação
@@ -155,12 +155,13 @@ public class ConverterBean {
 <!-- .element: style="margin-bottom:40px;" -->
 
 * Para utilizar uma interface local devemos primeiro anotar a interface de negócio do bean com @Local. Por exemplo:
-<!-- .element: style="margin-bottom:25px; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:10px; font-size: 25px;" -->
 
 ```java
 @Local
 public interface InterfaceName { ... }
 ```
+<!-- .element: style="margin-bottom:10px; font-size: 16px;" -->
 
 * Depois, devemos especificar uma interface para a classe que implementa o bean por meio da anotação @Local. Por exemplo:
 <!-- .element: style="margin-bottom:25px; font-size: 25px;" -->
@@ -169,6 +170,7 @@ public interface InterfaceName { ... }
 @Local(InterfaceName.class)
 public class BeanName implements InterfaceName { ... }
 ```
+<!-- .element: style="margin-bottom:10px; font-size: 16px;" -->
 
 
 
@@ -203,12 +205,13 @@ public class BeanName implements InterfaceName { ... }
 <!-- .element: style="margin-bottom:20px; font-size: 30px;" -->
 
   * Decorar a interface de negócios do enterprise bean com a anotação @Remote anotação
-  <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
+  <!-- .element: style="margin-bottom:10px; font-size: 20px;" -->
 
   ```java
   @Remote
   public interface InterfaceName {... }
   ```
+  <!-- .element: style="margin-bottom:10px; font-size: 16px;" -->
 
   * Depois, devemos especificar uma interface para a classe que implementa o bean por meio da anotação @Remote. Por exemplo:
   <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
@@ -217,26 +220,10 @@ public class BeanName implements InterfaceName { ... }
   @Remote(InterfaceName.class)
   public class BeanName implements InterfaceName { ... }
   ```
+<!-- .element: style="margin-bottom:10px; font-size: 16px;" -->
 
   * A interface remota define os métodos de negócio e ciclo de vida que são específicos para o bean
   <!-- .element: style="margin-bottom:15px; font-size: 20px;" -->
-
-
-<!-- .slide: data-background="#FFF8F0" data-transition="zoom" -->
-## Interface de Negócio Remota
-<!-- .element: style="margin-bottom:40px;" -->
-
-* Depois, decore a classe do bean com @Remote, especificando as interfaces de negócio:
-<!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
-
-  ```java
-  @Remote(InterfaceName.class)
-  public class BeanName implements InterfaceName{}
-  ```
-  <!-- .element: style="margin-bottom:50px; font-size: 13px;" -->
-
-* A interface remota define os métodos de negócio e ciclo de vida que são específicos para o bean
-<!-- .element: style="margin-bottom:40px; font-size: 25px;" -->
 
 
 
@@ -250,10 +237,10 @@ public class BeanName implements InterfaceName { ... }
 * Os clientes pode obter instâncias de um EJBs de duas maneiras:
 <!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
-  * **[Dependency injection:](https://eclipse-ee4j.github.io/jakartaee-tutorial/#jakarta-ee-contexts-and-dependency-injection)** por meio de anotações Java
+  * **[Dependency injection:](https://eclipse-ee4j.github.io/jakartaee-tutorial/#jakarta-ee-contexts-and-dependency-injection)** por meio de anotações Jakarta
   <!-- .element: style="margin-bottom:40px; font-size: 22px;" -->
 
-  * **Java Naming and Directory Interface ([JNDI](https://eclipse-ee4j.github.io/jakartaee-tutorial/#resources-and-jndi-naming)) lookup:** usando a sintaxe do JNDI para encontrar a instância do bean
+  * **Jakarta Naming and Directory Interface ([JNDI](https://eclipse-ee4j.github.io/jakartaee-tutorial/#resources-and-jndi-naming)) lookup:** usando a sintaxe do JNDI para encontrar a instância do bean
   <!-- .element: style="margin-bottom:40px; font-size: 22px;" -->
 
 
@@ -264,10 +251,10 @@ public class BeanName implements InterfaceName { ... }
 * Injeção de Dependência é a maneira mais fácil para obter uma referência para um enterprise bean
 <!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
-* Entretanto, clientes que rodam fora do servidor de aplicação, como por exemplo, aplicações Java SE, necessitam localizar o bean por meio de JNDI
+* Entretanto, clientes que rodam fora do servidor de aplicação, como por exemplo, aplicações Jakarta SE, necessitam localizar o bean por meio de JNDI
 <!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
-* Por exemplo, classes POJO (*Plain Old Java Objects*) devem utilizar JNDI para acessar um session bean
+* Por exemplo, classes POJO (*Plain Old Jakarta Objects*) devem utilizar JNDI para acessar um session bean
 <!-- .element: style="margin-bottom:50px; font-size: 25px;" -->
 
 
@@ -365,7 +352,7 @@ InitialContext.lookup("java:global/myApp/ExampleRemote");
 <!-- .slide: data-background="#F0FDFF" data-transition="convex" -->
 ## Empacotando um EJB
 
-* Existem duas formas de fazer um deploy de enterprise beans por meio de arquivos JAR (Java Archive):
+* Existem duas formas de fazer um deploy de enterprise beans por meio de arquivos JAR (Jakarta Archive):
 <!-- .element: style="margin-bottom:50px; font-size: 22px;" -->
 
 * Você pode empacotar um ou mais JARs dentro de um EAR (Enterprise Archive). Assim, quando você fizer o deploy de um EAR no servidor de aplicação todos os beans também serão implantados
@@ -401,7 +388,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 * Assim, o empacotamento do bean dentro do módulo Web (WAR) simplifica a organização da aplicação
 <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
 
-* Enterprise beans podem ser empacotados dentro de um módulo WAR como um arquivo de classes Java
+* Enterprise beans podem ser empacotados dentro de um módulo WAR como um arquivo de classes Jakarta
 <!-- .element: style="margin-bottom:20px; font-size: 20px;" -->
 
 * Também pode ser empacotados como arquivos JAR e incluídos dentro do WAR

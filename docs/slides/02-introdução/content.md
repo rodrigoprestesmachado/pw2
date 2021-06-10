@@ -4,10 +4,10 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 
 
-## O que são os Enterprise Java Beans?
+## O que são os Enterprise Jakarta Beans?
 
 
-## O que são os Enterprise Java Beans?
+## O que são os Enterprise Jakarta Beans?
 
 * Um enterprise java bean (ou enterprise bean) é um **componente** que roda no lado do servidor que encapsula as regras de negócio de uma aplicação
 <!-- .element: class="fragment" -->
@@ -19,7 +19,7 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 <!-- .element: class="fragment" -->
 
 
-## O que são os Enterprise Java Beans?
+## O que são os Enterprise Jakarta Beans?
 
 * A imagem apresenta de maneira geral as camadas de *softwares* necessários para se executar os EJBs
 
@@ -68,7 +68,7 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 * Message-driven
 <!-- .element: class="fragment" -->
-  * Atuam como um listener para um tipo de mensagem específica, como por exemplo, mensagens JMS (Java Message Service)
+  * Atuam como um listener para um tipo de mensagem específica, como por exemplo, mensagens JMS (Jakarta Message Service)
   <!-- .element: class="fragment" -->
 
 
@@ -211,7 +211,7 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 ## O que é um Message-Driven Bean?
 
-* Um message-driven bean (MDB) permite que aplicações Java EE processem mensagens de forma assíncrona
+* Um message-driven bean (MDB) permite que aplicações Jakarta EE processem mensagens de forma assíncrona
 <!-- .element: class="fragment" -->
 
 * Este tipo de bean normalmente atua como um JMS listerner
@@ -219,12 +219,12 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 * As mensagens podem ser enviadas por:
 <!-- .element: class="fragment" -->
-  * Qualquer componente Java EE (uma aplicação cliente, outro bean, etc.)
+  * Qualquer componente Jakarta EE (uma aplicação cliente, outro bean, etc.)
   <!-- .element: class="fragment" -->
   * Aplicações de utilizam JMS
   <!-- .element: class="fragment" -->
   
-  * Sistemas que não utilizam a tecnologia Java EE
+  * Sistemas que não utilizam a tecnologia Jakarta EE
   <!-- .element: class="fragment" -->
 
 
@@ -302,4 +302,4 @@ Rodrigo Prestes Machado (rodrigo.prestes at poa.ifrs.edu.br)
 
 ## Referências
 
-* Jendrock E.; Evans I.; Gollapudi D.; Haase K.; Chinmayee S.; The Java EE 6 Tutorial: Basic Concepts. Ed. Prentice Hall, ISBN-10: 0137081855
+* Jendrock E.; Evans I.; Gollapudi D.; Haase K.; Chinmayee S.; The Jakarta EE 6 Tutorial: Basic Concepts. Ed. Prentice Hall, ISBN-10: 0137081855
