@@ -9,10 +9,10 @@
     * [Stateless](topicos/stateless/stateless.md)
 
     * [Stateful](topicos/stateful/stateful.md)
-    
+
     * [Singleton](topicos/singleton/singleton.md)
 
-* [Message Driven](https://rodrigoprestesmachado.github.io/pw2/)
+* [Message Driven](topicos/mdb/mdb.md)
 
 * [Web Services](https://rodrigoprestesmachado.github.io/pw2/)
 

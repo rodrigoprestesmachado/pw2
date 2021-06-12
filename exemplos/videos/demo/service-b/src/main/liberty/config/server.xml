@@ -19,4 +19,38 @@
     <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
     <mpJwt id="jwtUserConsumer" keyName="theKeyId" audiences="targetService" issuer="${jwt.issuer}" />
 
+    <!--
+        Tutorial:
+        https://rieckpil.de/howto-simple-jms-application-with-the-embedded-messaging-engine-in-open-liberty/
+    -->
+
+    <!--
+        https://openliberty.io/docs/21.0.0.5/reference/config/messagingEngine.html
+    -->
+    <messagingEngine>
+        <queue id="QUEUE1" />
+    </messagingEngine>
+
+    <!--
+        https://openliberty.io/docs/21.0.0.5/reference/config/jmsQueueConnectionFactory.html
+    -->
+    <jmsQueueConnectionFactory jndiName="jms/JmsFactory">
+        <properties.wasJms remoteServerAddress="localhost:7276:BootStrapBasicMessaging" />
+    </jmsQueueConnectionFactory>
+
+    <!--
+        https://openliberty.io/docs/21.0.0.5/reference/config/jmsQueue.html
+    -->
+    <jmsQueue id="simpleJmsQueue" jndiName="jms/MyQueue">
+        <properties.wasJms queueName="QUEUE1" />
+    </jmsQueue>
+
+    <!--
+        https://openliberty.io/docs/21.0.0.5/reference/config/jmsActivationSpec.html
+    -->
+    <jmsActivationSpec id="demo/MDB">
+        <properties.wasJms destinationRef="simpleJmsQueue" destinationType="javax.jms.Queue" remoteServerAddress="localhost:7276:BootstrapBasicMessaging" />
+    </jmsActivationSpec>
+
+
 </server>
