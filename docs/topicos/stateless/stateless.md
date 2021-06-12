@@ -6,7 +6,7 @@
 
 # Implementando um Stateless
 
-O vídeo abaixo mostra um exemplo de como podemos implemenat um Stateless Session Beans no Open Liberty por meio do VSCode
+O vídeo abaixo mostra um exemplo de como podemos implementa um Stateless Session Beans no Open Liberty por meio do VSCode
 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gMfJjPpbCR8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
