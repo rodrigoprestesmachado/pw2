@@ -16,17 +16,15 @@ Para fazer um clone do resultado final apresentado no vídeo:
 
     git clone `https://github.com/rodrigoprestesmachado/pw2`
     cd `pw2`
-    git checkout 23c6ef48fd17b2d712f8f06c4bb5ce95f870ef7b
+    git checkout 77b5968549588820266e26a894998a1b296fa8db
 
 ## Configuração do Open Liberty mostrada no vídeo 
 
 ```xml
   <!--
-        Baseado em:
+        Tutorial:
         https://rieckpil.de/howto-simple-jms-application-with-the-embedded-messaging-engine-in-open-liberty/
-    -->
 
-    <!--
         https://openliberty.io/docs/21.0.0.5/reference/config/messagingEngine.html
     -->
     <messagingEngine>
@@ -55,7 +53,7 @@ Para fazer um clone do resultado final apresentado no vídeo:
     </jmsActivationSpec>
 ```
 
-# Referência 
+# Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)
 
