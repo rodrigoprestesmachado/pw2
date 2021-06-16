@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/383133.jpg" 
+<!-- .slide: data-background-image="https://authentic-indonesia.com/wp-content/uploads/2019/12/magnificent-view-of-bromo-mountain.jpg" 
 data-transition="convex"
 -->
 # Singleton Session Beans
@@ -15,7 +15,7 @@ Pressione 'F' para tela cheia
 # Ciclo de vida de um Singleton
 
 
-<!-- .slide: data-background="#0D255D" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 ## Ciclo de vida de um Singleton
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -25,7 +25,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 ## Ciclo de vida de um Singleton
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -46,7 +46,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 # Inicialização de um Singleton
 
 
-<!-- .slide: data-background="#0D255D" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -64,10 +64,10 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 @Singleton
 public class StatusBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -81,7 +81,7 @@ public class StatusBean { //code }
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -97,14 +97,14 @@ public class SecondaryBean { //code }
 @DependsOn({"PrimaryBean", "SecondaryBean"})
 public class TertiaryBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
 
 
 
 # Acesso Concorrente
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -121,7 +121,7 @@ public class TertiaryBean { //code }
     <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -141,7 +141,7 @@ public class TertiaryBean { //code }
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="convex" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -151,10 +151,10 @@ public class TertiaryBean { //code }
 @Singleton
 public class MySingletonBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="convex" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -174,7 +174,7 @@ public class MySingletonBean { //code }
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="convex" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -188,7 +188,7 @@ public class MySingletonBean { //code }
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="convex" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -209,10 +209,10 @@ public class ExampleSingletonBean {
   }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -226,7 +226,7 @@ public class ExampleSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -251,9 +251,10 @@ public class SharedSingletonBean {
   }
 }
 ```
+<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -270,7 +271,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -284,7 +285,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -310,10 +311,10 @@ public class StatusSingletonBean {
 @AccessTimeout(value=60, timeUnit=SECONDS)
 public class StatusSingletonBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
 
 
-<!-- .slide: data-background="#0D255D" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Acesso Concorrente: Bean
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
@@ -328,6 +329,7 @@ public class StatusSingletonBean { //code }
 
 
 
+<!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 ## Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)

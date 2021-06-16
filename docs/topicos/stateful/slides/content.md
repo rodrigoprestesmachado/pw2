@@ -1,8 +1,8 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/383133.jpg" 
+<!-- .slide: data-background-image="https://wallpaperaccess.com/full/4107115.jpg" 
 data-transition="convex"
 -->
 # Stateful Session Beans
-<!-- .element: style="margin-bottom:100px; font-size: 60px; color:white;" -->
+<!-- .element: style="margin-bottom:300px; font-size: 60px; color:white;" -->
 
 Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:10px; font-size: 15px; color:white;" -->
@@ -11,7 +11,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white;" -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Ciclo de vida de um Stateful
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -21,7 +21,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white" -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Características
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -32,7 +32,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Quando utilizar?
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -46,7 +46,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="white" data-transition="fade" -->
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Exemplo
 <!-- .element: style="margin-bottom:10px; font-size: 30px;" -->
 
@@ -122,12 +122,13 @@ public class CartBean implements Cart {
     }
 }
 ```
-<!-- .element: style="margin-bottom:20px; font-size: 12px;" -->
+<!-- .element: style="margin-bottom:20px; font-size: 14px; color:white" -->
 
 Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#session-bean-class)
 <!-- .element: style="margin-bottom:20px; font-size: 10px;" -->
 
 
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)

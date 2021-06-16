@@ -1,8 +1,8 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/383133.jpg" 
+<!-- .slide: data-background-image="https://wallpaperaccess.com/full/21964.jpg" 
 data-transition="convex"
 -->
 # Stateless Session Beans
-<!-- .element: style="margin-bottom:100px; font-size: 60px; color:white;" -->
+<!-- .element: style="margin-bottom:300px; font-size: 60px; color:white;" -->
 
 Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:10px; font-size: 15px; color:white;" -->
@@ -11,7 +11,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white;" -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 ## Ciclo de vida de um Stateless
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -21,7 +21,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white"  -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 ## Características
 <!-- .element: style="margin-bottom:40px; font-size: 50px;" -->
 
@@ -41,7 +41,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:40px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#311F4A" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 ## Quando utilizar?
 <!-- .element: style="margin-bottom:40px; font-size: 50px;" -->
 
@@ -55,7 +55,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:40px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#F7F7F7" data-transition="zoom" -->
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 ## Exemplo
 <!-- .element: style="margin-bottom:40px; font-size: 50px;" -->
 
@@ -79,8 +79,10 @@ public class HelloServiceBean {
     }
 }
 ```
+<!-- .element: style="margin-bottom:40px; color:white; font-size: 14px; color:white" -->
 
 
+<!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
 # Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
