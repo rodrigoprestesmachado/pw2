@@ -53,10 +53,10 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 * O container EJB é responsável por determinar quando um singleton será inicializado
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
-* Porém, você pode decorar o bean com a anotação `@Startup`. Neste caso, o bean será inicializado antes da aplicação (eager initialization)
+* Porém, o bean será inicializado antes da aplicação (_eager initialization_) se a anotação `@Startup` estiver presente
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
-* Isto permite que o bean execute tarefas de inicialização de toda a aplicação
+* Assim, a anotação `@Startup` permite que o bean execute tarefas de inicialização de toda a aplicação
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 ```java
@@ -64,40 +64,46 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 @Singleton
 public class StatusBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 # Inicialização de um Singleton
-<!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 40px;" -->
 
 * As vezes múltiplos beans são utilizados para inicializar dados de uma aplicação numa ordem determinada
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
 * Neste caso, podemos utilizar a anotação `@DependsOn` para declarar as dependências na inicialização
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
-* A anotação `@DependsOn` recebe como parâmetro uma ou mais strings que indicam as dependências na inicialização do bean
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+* A anotação `@DependsOn` recebe como parâmetro strings que indicam as dependências na inicialização do bean
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="fade" -->
 # Inicialização de um Singleton
-<!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
+<!-- .element: style="margin-bottom:60px; font-size: 45px;" -->
 
 ```java
 @Singleton
-public class PrimaryBean { //code }
+public class PrimaryBean {
+  //code
+}
 
 @Singleton
 @DependsOn("PrimaryBean")
-public class SecondaryBean { //code }
+public class SecondaryBean {
+  //code
+}
 
 @Singleton
 @DependsOn({"PrimaryBean", "SecondaryBean"})
-public class TertiaryBean { //code }
+public class TertiaryBean {
+  //code
+}
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 21px; color:white" -->
 
 
 
@@ -137,13 +143,13 @@ public class TertiaryBean { //code }
     * ConcurrencyManagementType.BEAN
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
-* Se a anotação `@ConcurrencyManagement` não for utilizada, então é a gerencia da concorrência é realizada por meio do container
+* Se a anotação `@ConcurrencyManagement` não for utilizada, então é a gerência da concorrência é realizada por meio do container
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente
-<!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
+<!-- .element: style="margin-bottom:70px; font-size: 45px;" -->
 
 ```java
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
@@ -151,7 +157,7 @@ public class TertiaryBean { //code }
 @Singleton
 public class MySingletonBean { //code }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 24px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
@@ -190,7 +196,7 @@ public class MySingletonBean { //code }
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 # Acesso Concorrente: Container
-<!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
+<!-- .element: style="margin-bottom:60px; font-size: 45px;" -->
 
 ```java
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
@@ -209,7 +215,7 @@ public class ExampleSingletonBean {
   }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 21px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
@@ -217,13 +223,13 @@ public class ExampleSingletonBean {
 <!-- .element: style="margin-bottom:50px; font-size: 45px;" -->
 
 * No exemplo anterior, o método getState pode ser acessado por vários clientes ao mesmo tempo
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
 * Porém, quando o método setState é invocado, todos os métodos do bean são travados
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
 * Isso evita que dois clientes tentem alterar de forma simultânea o estado de um bean
-<!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
+<!-- .element: style="margin-bottom:50px; color:white; font-size: 27px;" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
@@ -251,7 +257,7 @@ public class SharedSingletonBean {
   }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 19px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="zoom" -->
@@ -309,9 +315,11 @@ public class StatusSingletonBean {
 
 @Singleton
 @AccessTimeout(value=60, timeUnit=SECONDS)
-public class StatusSingletonBean { //code }
+public class StatusSingletonBean {
+  //code
+}
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 19px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="zoom" -->

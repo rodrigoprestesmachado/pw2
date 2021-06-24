@@ -94,15 +94,15 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
  @ActivationConfigProperty(propertyName = "destinationType",
                            propertyValue = "javax.jms.Queue")
 })
-public class SimpleMessageBean implements MessageListener { 
-    //code 
+public class SimpleMessageBean implements MessageListener {
+    //code
 }
 ```
-<!-- .element: style="margin-bottom:40px; font-size: 18px; color:white" -->
+<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
-## Interfaces de um Message-driven Bean 
+## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white;" -->
 
 * Diferente dos sessions beans os MDBs não possuem interface local ou remota
@@ -111,7 +111,7 @@ public class SimpleMessageBean implements MessageListener {
 * Os clientes não realizam a localização nem a invocação dos métodos de um message-driven, por exemplo:
 <!-- .element: style="margin-bottom:20px; font-size: 25px; color:white;" -->
 
-![imagem](img/queue.svg) 
+![imagem](img/queue.svg)
 <!-- .element height="50%" width="50%" -->
 
 Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#receiving-messages-asynchronously-using-a-message-driven-bean)
@@ -119,13 +119,13 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
-## Interfaces de um Message-driven Bean 
+## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white;" -->
 
-* Os MDBs podem talbém responder a um tópico
+* Os MDBs podem também responder a um tópico
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white;" -->
 
-![imagem](img/topic.svg) 
+![imagem](img/topic.svg)
 <!-- .element height="50%" width="50%" -->
 
 Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#receiving-messages-asynchronously-using-a-message-driven-bean)
@@ -133,43 +133,43 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
-## Interfaces de um Message-driven Bean 
-<!-- .element: style="margin-bottom:40px; font-size: 40px; color:white;" -->
+## Interfaces de um Message-driven Bean
+<!-- .element: style="margin-bottom:50px; font-size: 40px; color:white;" -->
 
 * Quando recebe uma mensagem o container invoca os métodos listeners
-<!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white;" -->
 
 * Um método listener deve seguir as seguintes regras:
-<!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
-    
+<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white;" -->
+
     * Deve ser declarado como público
-    <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+    <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white;" -->
 
     * Não pode ser estático ou final
-    <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+    <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white;" -->
 
     * Quando utilizamos JMS, respeitamos a interface MessageListener e implementamos o método onMessage
-    <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+    <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white;" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
-## Interfaces de um Message-driven Bean 
-<!-- .element: style="margin-bottom:40px; font-size: 40px; color:white;" -->
+## Interfaces de um Message-driven Bean
+<!-- .element: style="margin-bottom:50px; font-size: 40px; color:white;" -->
 
-* Quando uma mensagem chega, o método onMessage é invocado
-<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white;" -->
+* Quando uma mensagem chega no bean, o método `onMessage` é invocado
+<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white;" -->
 
-* É responsabilidade do bean analisar a mensagem recebida
-<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white;" -->
+* O bean é responsável por analisar a mensagem recebida
+<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white;" -->
 
 * O método `onMessage` deve seguir as regras:
-<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white;" -->
 
     * O tipo de retorno deve ser void
-    <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+    <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white;" -->
 
-    * Deve possuir um argumento do tipo javax.jms.Message
-    <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white;" -->
+    * Deve possuir um argumento do tipo `javax.jms.Message`
+    <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white;" -->
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
@@ -179,12 +179,12 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 ```java
 @MessageDriven(mappedName = "jms/MyQueue")
 public class MyMessageBean implements MessageListener {
-    
-    private static final Logger logger = 
+
+    private static final Logger logger =
     Logger.getLogger(MyMessageBean.class.getName());
-    
+
     public MyMessageBean() { }
-    
+
     @Override
     public void onMessage(Message message) {
         try {
@@ -194,11 +194,11 @@ public class MyMessageBean implements MessageListener {
         catch (JMSException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }
 ```
-<!-- .element: style="margin-bottom:40px; font-size: 15px; color:white" -->
+<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
 
 
