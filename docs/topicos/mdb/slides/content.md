@@ -102,6 +102,20 @@ public class SimpleMessageBean implements MessageListener {
 
 
 <!-- .slide: data-background="#1D2F44" data-transition="convex" -->
+##  Parêmetros da anotação @ActivationConfigProperty
+<!-- .element: style="margin-bottom:50px; font-size: 40px; color:white;" -->
+
+| acknowledgeMode        	| Permite controlar se uma mensagem foi consumida       	|
+|------------------------	|-------------------------------------------------------	|
+| destinationType        	| Queue ou topic                                        	|
+| subscriptionDurability 	| Temporária ou durável                                 	|
+| clientId               	| O identificador de um cliente com conexão durável     	|
+| subscriptionName       	| O nome da assinatura de clientes duráveis             	|
+| MessageSelector        	| Permite criar uma expressão para filtrar as mensagen  	|
+| addressList            	| Utilizado para consumir mensagens de clientes remotos 	|
+
+
+<!-- .slide: data-background="#1D2F44" data-transition="convex" -->
 ## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white;" -->
 
