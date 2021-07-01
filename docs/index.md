@@ -14,7 +14,7 @@
 
 * [Message Driven](topicos/mdb/mdb.md)
 
-* [Web Services](https://rodrigoprestesmachado.github.io/pw2/)
+* [Web Services](topicos/webservices/webservices.md)
 
 * [Docker](https://rodrigoprestesmachado.github.io/pw2/)
 
