@@ -1,7 +1,7 @@
-# Stateless Session Beans
+# Web Services
 
 <center>
-<iframe src="https://pw2.rpmhub.dev/topicos/stateless/slides/index.html#/" title="Stateless Session Beans" width="90%" height="500" style="border:none;"></iframe>
+<iframe src="https://pw2.rpmhub.dev/topicos/webservices/slides/index.html#/" title="Web Services" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
 # Implementando um Stateless
@@ -22,6 +22,7 @@ Para fazer um clone do resultado final apresentado no vídeo:
 **Para saber mais:** O Open Liberty possui uma feature chamada [Admin Center](https://openliberty.io/blog/2021/04/21/admin-center-21004.html#TAG_1) que habilita um console Web de administração do servidor
 
 ---
+
 
 # Referência 
 

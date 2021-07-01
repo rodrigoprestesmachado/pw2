@@ -4,6 +4,10 @@
 <iframe src="https://pw2.rpmhub.dev/topicos/mdb/slides/index.html#/" title="Message Driven Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
+## Lives 
+
+* Trecho da live do dia [24/06/2021](https://youtu.be/w61SmUqoG-k) sobre Message Driven Beans
+
 ## Implementando um MDB
 
 O vídeo abaixo mostra um exemplo de como podemos implementa um MDB no Open Liberty por meio do VSCode
@@ -12,13 +16,13 @@ O vídeo abaixo mostra um exemplo de como podemos implementa um MDB no Open Libe
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xSNsj-DfGQk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-Para fazer um clone do resultado final apresentado no vídeo:
+Para fazer um clone do resultado final apresentado no vídeo digite:
 
     git clone `https://github.com/rodrigoprestesmachado/pw2`
     cd `pw2`
     git checkout 77b5968549588820266e26a894998a1b296fa8db
 
-## Configuração do Open Liberty mostrada no vídeo 
+## Configuração do Open Liberty utilizada no vídeo 
 
 ```xml
   <!--

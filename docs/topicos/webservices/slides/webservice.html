@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>
+            Web Service em XML
+        </title>
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script>
+            mermaid.initialize({
+                startOnLoad: true
+            });
+        </script>
+        <center>
+            <div class="mermaid">
+                graph LR 
+                    Cliente-- SOAP/HTTP --> WSDL
+                    WSDL-- SOAP/HTTP --> Cliente
+                    subgraph Servidor
+                        WSDL
+                    end
+                    click Cliente "https://www.w3schools.com/xml/xml_soap.asp" "O cliente envia/recebe mensagens SOAP(Simple Object Access Protocol) sob HTTP"
+
+                    click WSDL "https://www.w3schools.com/xml/xml_wsdl.asp" "O servidor expõe uma API por meio de WSDL(Web Services Description Language)"
+
+                    class Cliente myStyle
+
+                    class WSDL myStyle
+
+                    classDef myStyle fill:#DBFF74,stroke:#333,stroke-width:3px,font-size:15px;
+            </div>
+        </center>
+    </body>
+</html>
