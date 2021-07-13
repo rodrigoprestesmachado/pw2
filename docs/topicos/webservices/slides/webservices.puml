@@ -1,0 +1,11 @@
+@startuml
+
+rectangle Navegador
+
+node "Servidor" {
+  WSDL - [Web Service]
+}
+
+Navegador <-> WSDL
+
+@enduml

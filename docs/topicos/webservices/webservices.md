@@ -7,7 +7,13 @@
 ## RESTFul Web Services
 
 <center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PU8EhAHptlQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PU8EhAHptlQ" title="RESTFul Web Services" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
+
+## XML Web Services
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2nP7rzaIw5Y" title="XML Web Services" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-pictu
 </center>
 
 # Referência

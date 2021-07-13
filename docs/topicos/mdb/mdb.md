@@ -13,7 +13,7 @@
 O vídeo abaixo mostra um exemplo de como podemos implementa um MDB no Open Liberty por meio do VSCode
 
 <center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xSNsj-DfGQk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xSNsj-DfGQk" title="Message Driven Beans" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
 Para fazer um clone do resultado final apresentado no vídeo digite:
