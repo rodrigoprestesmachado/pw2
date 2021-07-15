@@ -354,10 +354,10 @@ public class UI extends HttpServlet {
 
 <!-- .slide: data-background="#455FA4" data-transition="zoom" -->
 ## Web Services baseados em XML
-<!-- .element: style="margin-bottom:100px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 <center>
-<iframe src="https://pw2.rpmhub.dev/topicos/webservices/slides/webservice.html#/" title="Web Services" width="90%" height="500" style="border:none;"></iframe>
+<img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/topicos/webservices/slides/webservices.puml" alt="XML Web Service" width="40%" height="40%">
 </center>
 
 

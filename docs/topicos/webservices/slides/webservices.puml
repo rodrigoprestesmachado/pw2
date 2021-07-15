@@ -1,11 +1,10 @@
 @startuml
+rectangle Browser 
 
-rectangle Navegador
-
-node "Servidor" {
-  WSDL - [Web Service]
+node "Server" {
+  Op1 <-right- [WSDL] : exposes
+  Op2 <-- [WSDL] : exposes
 }
-
-WSDL <-> Navegador
-
+Op1 <-left-> Browser : soap/http
+Op2 <-left-> Browser : soap/http
 @enduml
