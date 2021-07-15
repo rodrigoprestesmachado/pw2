@@ -6,6 +6,6 @@ node "Servidor" {
   WSDL - [Web Service]
 }
 
-Navegador <-> WSDL
+WSDL <-> Navegador
 
 @enduml

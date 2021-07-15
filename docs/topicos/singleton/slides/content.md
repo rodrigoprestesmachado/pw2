@@ -66,7 +66,7 @@ public class StatusBean {
   //code 
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; color:white" -->
+<!-- .element: style="margin-bottom:50px; font-size: 18px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 <!-- .slide: data-background="#455FA4" data-transition="fade" -->
@@ -83,7 +83,7 @@ public class StatusBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 25px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="fade" -->
+<!-- .slide: data-background="#455FA4" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -105,7 +105,7 @@ public class TertiaryBean {
   //code
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 16px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 
@@ -149,7 +149,7 @@ public class TertiaryBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px; font-family: arial " -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="convex" -->
+<!-- .slide: data-background="#455FA4" data-transition="convex" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:70px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -161,7 +161,7 @@ public class MySingletonBean {
   //code 
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
+<!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 <!-- .slide: data-background="#455FA4" data-transition="convex" -->
@@ -198,7 +198,7 @@ public class MySingletonBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 25px; font-family: arial " -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="convex" -->
+<!-- .slide: data-background="#455FA4" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -219,7 +219,7 @@ public class ExampleSingletonBean {
   }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px;" -->
+<!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 <!-- .slide: data-background="#455FA4" data-transition="zoom" -->
@@ -236,7 +236,7 @@ public class ExampleSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -261,7 +261,7 @@ public class SharedSingletonBean {
   }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px;" -->
+<!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 <!-- .slide: data-background="#455FA4" data-transition="zoom" -->
@@ -295,7 +295,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 22px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -323,7 +323,7 @@ public class StatusSingletonBean {
   //code
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 19px;" -->
+<!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
 <!-- .slide: data-background="#455FA4" data-transition="zoom" -->

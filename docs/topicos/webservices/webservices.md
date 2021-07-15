@@ -16,6 +16,7 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2nP7rzaIw5Y" title="XML Web Services" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
+Dúvidas na configuração do XML Web Service? seguem os arquivos de configuração [server.xml](server.xml) e [pom.xml](pom.xml) utilizados no vídeo.
 # Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)
