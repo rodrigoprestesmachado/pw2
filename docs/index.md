@@ -16,9 +16,7 @@
 
 * [Web Services](topicos/webservices/webservices.md)
 
-* [Docker](https://rodrigoprestesmachado.github.io/pw2/)
-
-* [JPA](https://rodrigoprestesmachado.github.io/pw2/)
+* [JPA e Docker](topicos/jpa/jpa.md)
 
 * [Microprofile](https://rodrigoprestesmachado.github.io/pw2/)
 
