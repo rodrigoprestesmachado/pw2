@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://authentic-indonesia.com/wp-content/uploads/2019/12/magnificent-view-of-bromo-mountain.jpg" 
+<!-- .slide: data-background-opacity="0.2" data-background-image="https://authentic-indonesia.com/wp-content/uploads/2019/12/magnificent-view-of-bromo-mountain.jpg" 
 data-transition="convex"
 -->
 # Singleton Session Beans
@@ -12,10 +12,10 @@ Pressione 'F' para tela cheia
 
 
 
-# Ciclo de vida de um Singleton
+# Ciclo de vida de um Singleton ⏳
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 ## Ciclo de vida de um Singleton
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -25,11 +25,11 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 ## Ciclo de vida de um Singleton
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
-* Diferente de um stateful sesion bean, um singleton session bean nunca é desativado (_passivate_). Assim, o ciclo de vida de um singleton possui apenas dois estágios: não criado e pronto
+* Diferente de um stateful session bean, um singleton session bean nunca é desativado (_passivate_). Assim, o ciclo de vida de um singleton possui apenas dois estágios: não criado e pronto
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 25px; font-family: arial" -->
 
 * O container EJB é responsável por iniciar o ciclo de vida do bean, porém, o bean pode ser iniciado antes da aplicação se a anotação `@Startup` for utilizada
@@ -43,10 +43,10 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 
 
 
-# Inicialização de um Singleton
+# Inicialização de um Singleton 🔥
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -69,7 +69,7 @@ public class StatusBean {
 <!-- .element: style="margin-bottom:50px; font-size: 18px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -83,7 +83,7 @@ public class StatusBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 25px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 # Inicialização de um Singleton
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -109,10 +109,10 @@ public class TertiaryBean {
 
 
 
-# Acesso Concorrente
+# Acesso Concorrente ⚙️
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -129,7 +129,7 @@ public class TertiaryBean {
     <!-- .element: style="margin-bottom:30px; color:white; font-size: 25px; fantasy" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -149,7 +149,7 @@ public class TertiaryBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px; font-family: arial " -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 # Acesso Concorrente
 <!-- .element: style="margin-bottom:70px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -164,7 +164,7 @@ public class MySingletonBean {
 <!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -184,7 +184,7 @@ public class MySingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -198,7 +198,7 @@ public class MySingletonBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 25px; font-family: arial " -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -222,7 +222,7 @@ public class ExampleSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -236,7 +236,7 @@ public class ExampleSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -264,7 +264,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -281,7 +281,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 22px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:60px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -295,7 +295,7 @@ public class SharedSingletonBean {
 <!-- .element: style="margin-bottom:60px; color:white; font-size: 22px; font-family: arial" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Container
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -326,7 +326,7 @@ public class StatusSingletonBean {
 <!-- .element: style="margin-bottom:50px; color:black; font-size: 18px; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Acesso Concorrente: Bean
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -341,7 +341,7 @@ public class StatusSingletonBean {
 
 
 
-<!-- .slide: data-background="#455FA4" data-transition="fade" -->
+<!-- .slide: data-background="#222c44" data-transition="fade" -->
 ## Referência
 <!-- .element: style="margin-bottom:50px; font-size: 45px; font-family: Marker Felt;" -->
 

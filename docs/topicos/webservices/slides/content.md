@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="img/java.jpg" 
+<!-- .slide:  data-background-opacity="0.2" data-background-image="img/java.jpg" 
 data-transition="convex"
 -->
 # Web Services
@@ -13,10 +13,10 @@ Pressione 'F' para tela cheia
 
 
 
-# O que é um Web Services?
+# O que é um Web Services? 🕸️
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## O que é um Web Services?
 <!-- .element: style="margin-bottom:60px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 
@@ -30,7 +30,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Tipos de Web Services
 <!-- .element: style="margin-bottom:40px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 
@@ -51,13 +51,13 @@ Pressione 'F' para tela cheia
 
 
 
-# RESTful Web Services
+# RESTful Web Services 🕸️
 
 [Building RESTful Web Services with Jakarta REST](https://eclipse-ee4j.github.io/jakartaee-tutorial/#building-restful-web-services-with-jakarta-rest)
 <!-- .element: style="margin-bottom:40px; font-size: 10px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## RESTful Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -71,7 +71,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## RESTful Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -91,7 +91,7 @@ Pressione 'F' para tela cheia
     <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## RESTful Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -108,7 +108,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:60px; font-size: 23px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## RESTful Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -128,7 +128,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -147,7 +147,7 @@ public class DemoRestApplication extends Application {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -170,7 +170,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -192,7 +192,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -211,7 +211,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -230,7 +230,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -262,7 +262,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -282,7 +282,7 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -305,7 +305,7 @@ public class UI extends HttpServlet {
 <!-- .element: style="margin-bottom:50px; font-size: 16px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -329,13 +329,13 @@ public class UI extends HttpServlet {
 
 
 
-# Web Services baseados em XML
+# Web Services baseados em XML 🕸️
 
 [Building Web Services with Jakarta XML Web Services](https://eclipse-ee4j.github.io/jakartaee-tutorial/#building-web-services-with-jakarta-xml-web-services)
 <!-- .element: style="margin-bottom:40px; font-size: 10px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:40px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -352,7 +352,7 @@ public class UI extends HttpServlet {
 <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -361,7 +361,7 @@ public class UI extends HttpServlet {
 </center>
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -378,7 +378,7 @@ public class UI extends HttpServlet {
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -396,7 +396,7 @@ public class Math {
 <!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -413,7 +413,7 @@ public class Math {
      <!-- .element: style="margin-bottom:30px; font-size: 23px; color:white; font-family: fantasy;" -->
 
 
-<!-- .slide: data-background="#E8F4FE" data-transition="zoom" -->
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
 ## Web Services baseados em XML
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
@@ -434,7 +434,7 @@ port.sum(2, 2);
 
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Referência
 <!-- .element: style="margin-bottom:60px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 

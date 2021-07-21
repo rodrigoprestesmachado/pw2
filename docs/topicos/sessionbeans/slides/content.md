@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/118572.jpg" 
+<!-- .slide: data-background-opacity="0.2" data-background-image="https://wallpaperaccess.com/full/118572.jpg" 
 data-transition="convex"
 -->
 # Session Beans
@@ -12,10 +12,10 @@ Pressione 'F' para tela cheia
 
 
 
-# Desenvolvendo Session Beans
+# Desenvolvendo Session Beans 🛠️
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Desenvolvendo Session Beans
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -31,7 +31,7 @@ Pressione 'F' para tela cheia
   <!-- .element: style="margin-bottom:50px; font-size: 20px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Interface de um EJB
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -48,7 +48,7 @@ Pressione 'F' para tela cheia
     <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white; font-family: arial; " -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ##  Interface local ou remota?
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -65,7 +65,7 @@ Pressione 'F' para tela cheia
   <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
  # Interface local ou remota?
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -80,7 +80,7 @@ Pressione 'F' para tela cheia
 # Métodos Públicos
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Métodos Públicos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -94,7 +94,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Métodos Públicos
 <!-- .element: style="margin-bottom:30px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -136,7 +136,7 @@ public class ConverterBean {
 # Interface de Negócio Local
 
 
-<!-- .slide: data-background="#455FA4" data-transition="concave" -->
+<!-- .slide: data-background="#222c44" data-transition="concave" -->
 ## Clientes Locais
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -153,7 +153,7 @@ public class ConverterBean {
   <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="concave" -->
+<!-- .slide: data-background="#222c44" data-transition="concave" -->
 ## Interface de Negócio Local
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -180,7 +180,7 @@ public class BeanName implements InterfaceName { ... }
 # Interface de Negócio Remota
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Clientes Remotos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -200,7 +200,7 @@ public class BeanName implements InterfaceName { ... }
    <!-- .element: style="margin-bottom:25px; font-size: 20px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Interface de Negócio Remota
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -233,7 +233,7 @@ public class BeanName implements InterfaceName { ... }
 # Acessando um Enterprise Bean
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando um Enterprise Bean
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -247,7 +247,7 @@ public class BeanName implements InterfaceName { ... }
   <!-- .element: style="margin-bottom:40px; font-size: 22px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando um Enterprise Bean
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -261,7 +261,7 @@ public class BeanName implements InterfaceName { ... }
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando Beans locais
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -278,7 +278,7 @@ public class BeanName implements InterfaceName { ... }
   <!-- .element: style="margin-bottom:40px; font-size: 15px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando Beans locais
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -291,7 +291,7 @@ public class BeanName implements InterfaceName { ... }
   <!-- .element: style="margin-bottom:40px; font-size: 15px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando Beans Remotos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -308,7 +308,7 @@ private Service service;
 <!-- .element: style="margin-bottom:40px; font-size: 15px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Acessando Beans Remotos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -322,7 +322,7 @@ InitialContext.lookup("java:global/myApp/ExampleRemote");
 <!-- .element: style="margin-bottom:40px; font-size: 15px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Sintaxe JNDI
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -352,7 +352,7 @@ InitialContext.lookup("java:global/myApp/ExampleRemote");
 # Empacotamento
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Empacotando um EJB
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -371,7 +371,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Empacotando um EJB num Jar
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -384,7 +384,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; font-size: 10px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Empacotando um EJB num WAR
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -406,7 +406,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Empacotando um EJB num WAR
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -425,7 +425,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Referência
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 

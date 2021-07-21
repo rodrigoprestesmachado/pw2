@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://www.10wallpaper.com/wallpaper/1920x1200/1511/Indonesia_island_java_volcano-scenery_HD_Wallpaper_1920x1200.jpg" 
+<!-- .slide: data-background-opacity="0.2" data-background-image="https://www.10wallpaper.com/wallpaper/1920x1200/1511/Indonesia_island_java_volcano-scenery_HD_Wallpaper_1920x1200.jpg" 
 data-transition="convex"
 -->
 # Message Driven Beans
@@ -16,7 +16,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:40px; font-size: 50px; color:white;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Ciclo de Vida de um Message-Driven
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px;" -->
 
@@ -27,7 +27,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white"  -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Ciclo de Vida de um Message-Driven
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -42,11 +42,11 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 
 
 
-# Implementação de um Message Driven
+# Implementação de um Message Driven ✉️
 <!-- .element: style="margin-bottom:40px; font-size: 50px; color:white;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Implementação de um Message Driven
 <!-- .element: style="margin-bottom:35px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -69,7 +69,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:35px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Implementação de um Message Driven
 <!-- .element: style="margin-bottom:45px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -101,7 +101,7 @@ public class SimpleMessageBean implements MessageListener {
 <!-- .element: style="margin-bottom:40px; font-size: 16px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ##  Parâmetros da anotação @ActivationConfigProperty
 <!-- .element: style="margin-bottom:50px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -115,7 +115,7 @@ public class SimpleMessageBean implements MessageListener {
 | addressList            	| Utilizado para consumir mensagens de clientes remotos 	|
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -132,7 +132,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white"  -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:40px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -146,7 +146,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white"  -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:50px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -166,7 +166,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
     <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white; font-family: fantasy;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Interfaces de um Message-driven Bean
 <!-- .element: style="margin-bottom:50px; font-size: 40px; color:white; font-family: Marker Felt;" -->
 
@@ -216,7 +216,7 @@ public class MyMessageBean implements MessageListener {
 
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 # Referência
 <!-- .element: style="margin-bottom:40px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 

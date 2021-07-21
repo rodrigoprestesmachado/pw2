@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/4107115.jpg" 
+<!-- .slide: data-background-opacity="0.2" data-background-image="https://wallpaperaccess.com/full/4107115.jpg" 
 data-transition="convex"
 -->
 # Stateful Session Beans
@@ -11,7 +11,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Ciclo de vida de um Stateful
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -21,7 +21,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Características
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -32,7 +32,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Quando utilizar?
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px; font-family: Marker Felt;" -->
 
@@ -46,9 +46,9 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 25px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Exemplo
-<!-- .element: style="margin-bottom:10px; font-size: 30px; font-family: Marker Felt;" -->
+<!-- .element: style="margin-bottom:10px; font-size: 35px; font-family: Marker Felt;" -->
 
 ```java
 package ee.jakarta.tutorial.cart.ejb;
@@ -128,9 +128,9 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:20px; font-size: 10px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Referência
-<!-- .element: style="margin-bottom:10px; font-size: 30px; font-family: Marker Felt;" -->
+<!-- .element: style="margin-bottom:10px; font-size: 40px; font-family: Marker Felt;" -->
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
 <!-- .element: style="margin-bottom:50px; font-size: 20px;" -->

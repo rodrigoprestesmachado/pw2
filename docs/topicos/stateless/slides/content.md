@@ -1,4 +1,4 @@
-<!-- .slide: data-background-image="https://wallpaperaccess.com/full/21964.jpg" 
+<!-- .slide: data-background-opacity="0.2" data-background-image="https://wallpaperaccess.com/full/21964.jpg" 
 data-transition="convex"
 -->
 # Stateless Session Beans
@@ -11,8 +11,8 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
-## Ciclo de vida de um Stateless
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
+## Ciclo de vida de um Stateless ⏳
 <!-- .element: style="margin-bottom:50px; color:white; font-size: 45px; font-family: Marker Felt;" -->
 
 ![imagem](img/stateless.svg) <!-- .element height="50%" width="50%" -->
@@ -21,7 +21,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:10px; font-size: 10px; color:white"  -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Características
 <!-- .element: style="margin-bottom:40px; font-size: 50px; font-family: Marker Felt;" -->
 
@@ -41,7 +41,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:40px; color:white; font-size: 25px; font-family:arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Quando utilizar?
 <!-- .element: style="margin-bottom:40px; font-size: 50px; font-family: Marker Felt;" -->
 
@@ -55,8 +55,8 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:40px; color:white; font-size: 25px; font-family:arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
-## Exemplo
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
+## Exemplo ⚒️
 <!-- .element: style="margin-bottom:40px; font-size: 50px; font-family: Marker Felt;" -->
 
 ```java
@@ -82,7 +82,7 @@ public class HelloServiceBean {
 <!-- .element: style="margin-bottom:40px; color:white; font-size: 14px; color:black; background-color:#F3FBFF" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)

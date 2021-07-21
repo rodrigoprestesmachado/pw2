@@ -17,6 +17,12 @@
 </center>
 
 Dúvidas na configuração do XML Web Service? seguem os arquivos de configuração [server.xml](server.xml) e [pom.xml](pom.xml) utilizados no vídeo.
+
+---
+Para saber mais: consulte o o capítulo 7 do livro [Desenvolvimento de software, v.3 programação de sistemas web orientada a objetos em Java](https://biblioteca.ifrs.edu.br/pergamum_ifrs/biblioteca_s/acesso_login.php?cod_acervo_acessibilidade=5020683&acesso=aHR0cHM6Ly9pbnRlZ3JhZGEubWluaGFiaWJsaW90ZWNhLmNvbS5ici9ib29rcy85Nzg4NTgyNjAzNzEw&label=acesso%20restrito) para compreender detalhes sobre a implementação de Web Services em Java.
+
+---
+
 # Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)

@@ -1,17 +1,17 @@
-<!-- .slide: data-background-image="https://dailytravelpill.com/wp-content/uploads/2021/02/backpacking-in-java-attractions.jpg" 
+<!-- .slide: data-background-opacity="0.2"data-background-image="https://dailytravelpill.com/wp-content/uploads/2021/02/backpacking-in-java-attractions.jpg" 
 data-transition="zoom" 
 -->
 # Introdução aos EJBs
-<!-- .element: style="margin-bottom:100px; font-size: 50px; color:#474A4C; font-family: Marker Felt; " -->
+<!-- .element: style="margin-bottom:100px; font-size: 50px; color:#f5f5f5; font-family: Marker Felt; " -->
 
 Pressione 'F' para tela cheia
-<!-- .element: style="margin-bottom:10px; font-size: 15px; color:black;" -->
+<!-- .element: style="margin-bottom:10px; font-size: 15px; color:white;" -->
 
 [versão em pdf](?print-pdf)
-<!-- .element: style="margin-bottom:30px; font-size: 15px; color:black;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 15px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## O que são os Enterprise Java Beans?
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -25,7 +25,7 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom:70px; font-size: 25px;color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## O que são os Enterprise Java Beans?
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -35,7 +35,7 @@ Pressione 'F' para tela cheia
 ![imagem](img/software-stack.png) <!-- .element height="50%" width="50%" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Camadas do Jakarta EE
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -45,7 +45,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; font-size: 15px;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Benefícios de um Enterprise Bean
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -62,7 +62,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:60px; font-size: 25px;color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Quando utilizar um EJB?
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -85,7 +85,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
   <!-- .element: style="margin-bottom:50px; font-size: 20px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="zoom" -->
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
 ## Tipos de Enterprise Beans
 <!-- .element: style="margin-bottom:60px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -102,7 +102,7 @@ Fonte: [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tuto
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#455FA4" data-transition="convex" -->
+<!-- .slide: data-background="#222c44" data-transition="convex" -->
 ## Referência
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
