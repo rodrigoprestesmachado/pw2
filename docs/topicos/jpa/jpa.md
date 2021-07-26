@@ -4,6 +4,9 @@
 
 [Docker](https://www.docker.com) é um serviço no nível do sistema operacional (Linux) que permite o empacotamento e a distribuição de sistemas pode meio de pacotes chamado _containers_. Os containers são isolados uns dos outros e normalmente utilizam apenas os recursos necessários para a execução de um sistema. Os trechos abaixo mostram como criar um _container_ a partir de um projeto do [MicroProfile](https://microprofile.io) no [Open Liberty](https://openliberty.io).
 
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tFiG3aw4ET4" title="Docker com Microprofile e Open Liberty" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 ### Dockerfile
 
 O trecho de código abaixo mostra um exemplo de dockerfile utilizado para construirmos um _container_ para a nossa aplicação. O dockerfile abaixo irá tentar instalar um [driver JDBC](https://dev.mysql.com/downloads/connector/j/) do MySQL no container, assim, baixe um driver e instale no diretório `src/main/liberty/config/resources/` do projeto.
