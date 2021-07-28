@@ -1,0 +1,22 @@
+@startuml
+
+User "1" --> "0..*" Message : send
+User "0..*" -- "0..*" Channel : join
+Channel "1" --> "0..*" Message : contains
+
+class User {
+ - Number id
+ - String name
+}
+
+class Channel {
+ -Number id
+ - String hash
+}
+
+class Message {
+ -Number id
+ - String text
+}
+
+@enduml
