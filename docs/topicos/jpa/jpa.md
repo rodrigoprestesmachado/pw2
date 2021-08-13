@@ -156,7 +156,7 @@ Finalmente, podemos criar um arquivo `persistence.xml` para [configurar o JPA](h
 Imagine que tenhamos o seguinte diagrama de classes:
 
 <center>
-    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&amp;src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/jpa/uml.puml" alt="Diagrama de classes" width="20%" height="20%"/>
+    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/topicos/jpa/uml.puml" alt="Diagrama de classes" width="20%" height="20%"/>
 </center>
 
 O mapeamento da classe `User` deveria ser algo parecido com:
