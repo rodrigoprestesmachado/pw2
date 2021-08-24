@@ -1,1 +1,0 @@
-data-source add --name=pw2-datasource --jndi-name=java:/CrudDS --driver-name=mysql-connector-java-8.0.19.jar --connection-url=jdbc:mysql://db:3306/pw2 --user-name=pw2 --password=pw2
