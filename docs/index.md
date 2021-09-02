@@ -1,10 +1,12 @@
 # Trilha de aprendizagem
 
-* [Configuração do ambiente](topicos/ambiente/ambiente.md)
+Jakarta EE
 
-* [Introdução aos EJBs](topicos/introducaoEJB/introducao.md)
+  * [Configuração do ambiente](topicos/ambiente/ambiente.md)
 
-* [Session Beans](topicos/sessionbeans/sessionbeans.md)
+  * [Introdução aos EJBs](topicos/introducaoEJB/introducao.md)
+
+    * [Session Beans](topicos/sessionbeans/sessionbeans.md)
 
     * [Stateless](topicos/stateless/stateless.md)
 
@@ -12,15 +14,15 @@
 
     * [Singleton](topicos/singleton/singleton.md)
 
-* [Message Driven](topicos/mdb/mdb.md)
+    * [Message Driven](topicos/mdb/mdb.md)
 
 * [Web Services](topicos/webservices/webservices.md)
 
-* [JPA e Docker](topicos/jpa/jpa.md)
+Quarkus
 
-* [Microprofile](https://rodrigoprestesmachado.github.io/pw2/)
-
-* [Exemplo de CRUD](tutorials/crudws.md)
+* [Instalação](topicos/quarkus-install/install.md)
+  
+* [JPA](topicos/jpa/jpa.md) (em processo de revisão)
 
 # Comunidade de aprendizagem
 

@@ -40,7 +40,7 @@ Os exemplos da disciplina serão apresentados com o [Maven](https://maven.apache
 * Windows por meio do [Chocolatey](https://chocolatey.org): `choco install maven`
 * macOS por meio do [Homebrew](https://brew.sh/index_pt-br): `brew install maven`
 
- 🚨 **Para saber mais:** Para se obter mais informações sobre como instalar o Maven, por favor, consulte a [documentação](https://maven.apache.org/install.html) de instalação do Maven
+ 🚨 **Para saber mais:** Para se obter mais informações sobre como instalar o Maven, por favor, consulte a [documentação](https://maven.apache.org/install.html) de instalação do Maven. Além disso, esse [artigo](https://medium.com/beelabacademy/configurando-variáveis-de-ambiente-java-home-e-maven-home-no-windows-e-unix-d9461f783c26) aprofunda o assuno uma vez que mostra detalhes da instalação do Java e do Maven.
 
 ## Quarkus IO
 
