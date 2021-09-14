@@ -24,6 +24,10 @@ Quarkus
   
 * [JPA](topicos/jpa/jpa.md) (em processo de revisão)
 
+# Conteúdo de terceiros
+
+* Essa página reune [conteúdos](topicos/terceiros/terceiros.md) relevantes de terceiros que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
+
 # Comunidade de aprendizagem
 
 Comunidade [Discord](https://discord.com/invite/C29cqvm): canal `#pw2`
