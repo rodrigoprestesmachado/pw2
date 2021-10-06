@@ -223,7 +223,7 @@ public class BeanName implements InterfaceName { ... }
   @Remote(InterfaceName.class)
   public class BeanName implements InterfaceName { ... }
   ```
-<!-- .element: style="margin-bottom:10px; font-size: 16px; color:white; font-family: Courier New; background-color:#F3FBFF" -->
+<!-- .element: style="margin-bottom:10px; font-size: 16px; color:black; font-family: Courier New; background-color:#F3FBFF" -->
 
   * A interface remota define os métodos de negócio e ciclo de vida que são específicos para o bean
   <!-- .element: style="margin-bottom:15px; font-size: 20px; color:white; font-family: arial;" -->
