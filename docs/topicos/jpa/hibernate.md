@@ -1,31 +1,29 @@
 # Hibernate no Quarkus 💾
 
-Esse tutorial tem o objetivo de demonstrar como utilizar o [Hibernate](https://hibernate.org) dentro de um contexto de um RESTFul Web Service (JAX-RS) no Quarkus. Além disso, esse documento também apresenta dicas úteis para a implementação de mapeamento objeto relacional, consultas por meio da API Critéria e conversão de objetos Java para a notação JSON.
+Esse tutorial tem o objetivo de demonstrar como utilizar o [Hibernate](https://hibernate.org) dentro de um contexto de um RESTFul Web Service (JAX-RS) no [Quarkus](https://quarkus.io). Assim, esse documento apresenta dicas úteis para a implementação de mapeamento objeto relacional, conversão de objetos Java para JSON e consultas por meio da API Critéria.
 
-⚠️ A JPA (Java Persistence API) é uma especificação que o [Hibernate](https://hibernate.org), [Eclipse Link](https://www.eclipse.org/eclipselink/), [Open JPA](http://openjpa.apache.org), [entre outros](https://en.wikibooks.org/wiki/Java_Persistence/Persistence_Products), implementam. 
+⚠️ A JPA (Java Persistence API) é uma especificação que o [Hibernate](https://hibernate.org), [Eclipse Link](https://www.eclipse.org/eclipselink/), [Open JPA](http://openjpa.apache.org), [entre outros](https://en.wikibooks.org/wiki/Java_Persistence/Persistence_Products), respeitam/implementam.
 
-No Hibernate, existe uma segunda API chamada de _Hibernate Native API_ que implementa mais funcionalidades do que aqueles especificados pela JPA, a figura 1 mostra uma visão geral sobre o Hibernate. 
+No Hibernate, existe uma segunda API chamada de _Hibernate Native API_ que implementa mais funcionalidades do que aqueles especificados pela JPA, a figura 1 mostra uma visão geral sobre o Hibernate.
 
 <center>
     <img src="https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/images/architecture/data_access_layers.svg" alt="Diagrama de classes" width="30%" height="30%"/> <br/>
     Figura 1 - Visão geral sobre o Hibernate
 </center>
 
-## O que iremos estudar nesse tutorial? 
+# Tutorial
 
-💡 Para acessar a última versão do código desse tutorial no VS Code abra um terminal e digite:
-
-    git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-    code pw2/exemplos/hibernate-example
-
-# Tutorial 
-
-Imagine que tenhamos que implementar um RESTful Web Service que suporte um sistema bate-papo (_chat_), assim, como ilustração, considere o seguinte diagrama de classes:
+Imagine que tenhamos que implementar um RESTful Web Service para um sistema bate-papo (_chat_), assim, como ilustração, considere o seguinte diagrama de classes:
 
 <center>
     <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/topicos/jpa/uml.puml" alt="Diagrama de classes" width="25%" height="25%"/> <br/>
     Figura 2 - Diagrama de classes
 </center>
+
+💡 Uma dica, a última versão do código desse tutorial no VS Code abra um terminal e digite:
+
+    git clone -b dev https://github.com/rodrigoprestesmachado/pw2
+    code pw2/exemplos/hibernate-example
 
 ## Etapa 1: projeto Quarkus
 
@@ -41,7 +39,11 @@ Se você estiver no Windows (cmd):
 
     mvn io.quarkus.platform:quarkus-maven-plugin:2.3.0.Final:create -DprojectGroupId=dev.pw2 -DprojectArtifactId=hibernate-example -DclassName="dev.pw2.UserWS" -Dpath="/user/list"
 
-Depois de criar, abra o projeto no VS Code: `code hibernate-example`. Na sequência, abra o arquivo `pom.xml` e adicione as seguintes dependências:
+Depois de criar, abra o projeto no VS Code por meio do comando:
+
+    code hibernate-example
+
+Na sequência, abra o arquivo `pom.xml` e adicione as seguintes dependências:
 
 ```xml
  <!-- Hibernate -->
@@ -71,15 +73,15 @@ Depois de criar, abra o projeto no VS Code: `code hibernate-example`. Na sequên
 
 Caso você deseje configurar o seu projeto por meio da [extensão](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-quarkus) do Quarkus para VS Code ou por meio do [CLI](https://quarkus.io/guides/cli-tooling), aqui está a lista de dependências que serão necessárias:
 
-    quarkus-hibernate-orm                             
-    quarkus-hibernate-orm-panache                     
-    quarkus-jdbc-mysql                                
-    quarkus-resteasy                                  
-    quarkus-resteasy-jackson 
+    quarkus-hibernate-orm
+    quarkus-hibernate-orm-panache
+    quarkus-jdbc-mysql
+    quarkus-resteasy
+    quarkus-resteasy-jackson
 
 ## Etapa 2 - Mapeamento objeto relacional
 
-Um vez que tenhamos o nosso projeto configurado, o próximo passo é implementar as classes e fazer o mapeamento com o banco de dados relacional. Para persistir um objeto Java devemos iniciar utilizando a anotação [`@Entity`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-entity), como mostra o exemplo da classe `User`abaixo:
+Um vez que tenhamos o nosso projeto configurado, o próximo passo é implementar as classes e fazer o mapeamento com o banco de dados relacional. Para persistir um objeto Java devemos iniciar utilizando a anotação [`@Entity`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-entity), como mostra o exemplo da classe `User` abaixo:
 
 ```java
 package dev.pw2.model;
@@ -95,9 +97,9 @@ public class User extends PanacheEntity {
 }
 ```
 
-Note que nessa classe utilizamos a anotação `@Entity` e herdamos da classe `PanacheEntity`. A classe `PanacheEntity` fornece um conjunto de métodos que facilitam a criação consultas no banco de dados. Quando herdamos de `PanacheEntity`, abrimos mão  de controlar o identificador da entidade/objeto (chave primária do banco - `id`), porém, se você quiser ter o controle sobre o `id`, herde da classe `PanacheEntityBase`. 
+Note que utilizamos a anotação `@Entity` e herdamos da classe `PanacheEntity`. A classe `PanacheEntity` fornece um conjunto de métodos que facilitam a criação consultas no banco de dados. Quando herdamos de `PanacheEntity`, abrimos mão  de controlar o identificador da entidade/objeto (chave primária do banco - `id`), porém, se você quiser ter o controle sobre o `id`, herde da classe `PanacheEntityBase`.
 
-Quando **não** utilizamos a classe `PanacheEntity`, devemos controlar o identificador da entidade por meio da anotação [`@Id`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-id). Consequentemente, também necessitamos informar como os valores de chave primária são gerados por meio da anotação [`@GeneratedValue`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-generatedvalue). Nesse caso, a classe `User` ficaria parecido com o código abaixo:
+Quando **não** utilizamos a classe `PanacheEntity`, devemos controlar o identificador da entidade por meio da anotação [`@Id`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-id). Consequentemente, também necessitamos informar como os valores de chave primária são gerados por meio da anotação [`@GeneratedValue`](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#annotations-jpa-generatedvalue). Nesse caso, a classe `User` ficaria como código parecido com:
 
 ```java
 @Entity
@@ -120,7 +122,7 @@ O mapeamento do tipo [one-to-many](https://wiki.eclipse.org/EclipseLink/UserGuid
 <a href="https://wiki.eclipse.org/File:Onetomany_map_fig.gif">
 <img src="https://wiki.eclipse.org/images/9/9e/Onetomany_map_fig.gif" width="35%" height="35%" />
 </a> <br/>
-Figura 3 - Exemplo de relacionamento um para muitos. Fonte: [EclipseLink](https://www.eclipse.org/eclipselink/)
+Figura 3 - Exemplo de relacionamento um para muitos da documentação do EclipseLink
 </center>
 
 A anotação `@OneToMany`possui os seguintes atributos:
@@ -160,10 +162,10 @@ public class User extends PanacheEntity {
     private List<Message> messages;
 
     public User() {
-        this.messages = new ArrayList<>();   
+        this.messages = new ArrayList<>();
     }
 
-    // 🚨 os métodos foram omitidos    
+    // 🚨 os métodos foram omitidos
 
 }
 
@@ -179,7 +181,7 @@ Os mapeamentos [many-to-many](https://wiki.eclipse.org/EclipseLink/UserGuide/JPA
 <a href="https://wiki.eclipse.org/File:Mmmapfig.gif">
 <img src="https://wiki.eclipse.org/images/e/ef/Mmmapfig.gif" width="35%" height="35%" />
 </a><br/>
-Figura 4 - Exemplo de relacionamento muitos para muitos. Fonte: [EclipseLink](https://www.eclipse.org/eclipselink/)
+Figura 4 - Exemplo de relacionamento muitos para muitos da documentação do EclipseLink
 </center>
 
 A anotação `@ManyToOne` possui os seguintes atributos:
@@ -225,7 +227,7 @@ public class User extends PanacheEntity {
         this.channels = new ArrayList<>();
     }
 
-    // 🚨 os métodos foram omitidos    
+    // 🚨 os métodos foram omitidos
 
 ```
 
@@ -322,7 +324,7 @@ Se você chegou até aqui, basta executar o projeto quarkus no terminal:
 
 Como não fizemos nenhuma configuração de banco de dados, o Quarkus irá automaticamente baixar uma imagem e irá executar um banco de dados MySQL 🐬 por meio do Docker 🐳. Mas como o Quarkus sabe que ele deve baixar um container do MySQL? isso ocorre por meio da dependência `quarkus-jdbc-mysql` que foi adicionada ao projeto. 🚨 Note que é importante ter o Docker instalado na sua máquina para que esse recurso funcione adequadamente.
 
-Depois que o banco estiver ativo e rodando, você poderá testar as URLs para ver se você consegue salvar um usuário e recuperar um usuário, são elas: 🌐
+Depois que o banco estiver ativo e rodando, você poderá testar as URLs 🌐 para ver se você consegue salvar e recuperar um objeto da classe `User`:
 
     http://localhost:8080/user/save/{name}
 
@@ -334,7 +336,7 @@ Depois que o banco estiver ativo e rodando, você poderá testar as URLs para ve
 
 Alternativamente, você também poderá configurar as conexões com o seu banco de dados por meio do arquivo `src/main/resources/application.properties`, como por exemplo:
 
-    quarkus.datasource.db-kind=mysql 
+    quarkus.datasource.db-kind=mysql
     quarkus.datasource.username=hibernate
     quarkus.datasource.password=hibernate
     quarkus.datasource.jdbc.url=jdbc:mysql://localhost:3306/hibernate
@@ -344,7 +346,7 @@ Se você necessitar de um banco de dados MySQL, você poderá utilizar o Docker 
 
     docker-compose up -d
 
-```xml
+```yml
 version: "3.7"
 volumes:
   database:
@@ -385,6 +387,7 @@ public class User extends PanacheEntity {
     private List<Channel> channels;
 
 }
+```
 
 ```java
 // 🚨  vários trechos do código dessa classe foram omitidos
@@ -451,4 +454,3 @@ cq.select(cb.count(e));
 Query query = em.createQuery(cq);
 List<User> users = (List<User>) query.getResultList();
 ```
-
