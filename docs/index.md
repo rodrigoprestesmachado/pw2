@@ -22,7 +22,7 @@ Quarkus
 
 * [Instalação](topicos/quarkus-install/install.md)
   
-* [JPA](topicos/jpa/jpa.md) (em processo de revisão)
+* [Hibernate](topicos/jpa/hibernate.md)
 
 # Conteúdo de terceiros
 

@@ -1,0 +1,16 @@
+version: "3.7"
+volumes:
+  database:
+services:
+  db:
+    image: mysql:latest
+    container_name: hibernate
+    ports:
+      - 3306:3306
+    volumes:
+      - database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=hibernate
+      - MYSQL_DATABASE=hibernate
+      - MYSQL_USER=hibernate
+      - MYSQL_PASSWORD=hibernate

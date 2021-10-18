@@ -5,17 +5,17 @@ User "0..*" -- "0..*" Channel : join
 Channel "1" --> "0..*" Message : contains
 
 class User {
- - Number id
+ - Long id
  - String name
 }
 
 class Channel {
- -Number id
+ - Long id
  - String hash
 }
 
 class Message {
- -Number id
+ - Long id
  - String text
 }
 
