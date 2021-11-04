@@ -23,7 +23,7 @@ Imagine que tenhamos que implementar um RESTful Web Service para um sistema bate
 💡 Uma dica, a última versão do código desse tutorial no VS Code abra um terminal e digite:
 
     git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-    code pw2/exemplos/hibernate-example
+    code pw2/exemplos/pw2-hibernate
 
 ## Etapa 1: projeto Quarkus
 
@@ -31,17 +31,17 @@ Independente do que desejamos implementar, o primeiro passo é criar um projeto 
 
     mvn io.quarkus.platform:quarkus-maven-plugin:2.3.0.Final:create \
     -DprojectGroupId=dev.pw2 \
-    -DprojectArtifactId=hibernate-example \
+    -DprojectArtifactId=pw2-hibernate \
     -DclassName="dev.pw2.UserWS" \
     -Dpath="/user/list"
 
 Se você estiver no Windows (cmd):
 
-    mvn io.quarkus.platform:quarkus-maven-plugin:2.3.0.Final:create -DprojectGroupId=dev.pw2 -DprojectArtifactId=hibernate-example -DclassName="dev.pw2.UserWS" -Dpath="/user/list"
+    mvn io.quarkus.platform:quarkus-maven-plugin:2.3.0.Final:create -DprojectGroupId=dev.pw2 -DprojectArtifactId=pw2-hibernate -DclassName="dev.pw2.UserWS" -Dpath="/user/list"
 
 Depois de criar, abra o projeto no VS Code por meio do comando:
 
-    code hibernate-example
+    code pw2-hibernate
 
 Na sequência, abra o arquivo `pom.xml` e adicione as seguintes dependências:
 
