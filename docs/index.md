@@ -21,8 +21,10 @@ Jakarta EE
 Quarkus
 
 * [Instalação](topicos/quarkus-install/install.md)
-  
+
 * [Hibernate](topicos/jpa/hibernate.md)
+
+* [Metrics](topicos/metrics/metrics.md)
 
 # Conteúdo de terceiros
 
