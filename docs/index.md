@@ -26,6 +26,8 @@ Quarkus
 
 * [Metrics](topicos/metrics/metrics.md)
 
+* [Health](topicos/health/health.md)
+
 # Conteúdo de terceiros
 
 * Essa página reune [conteúdos](topicos/terceiros/terceiros.md) relevantes de terceiros que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
