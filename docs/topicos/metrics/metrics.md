@@ -29,7 +29,7 @@ O MicroProfile Metrics possui um conjunto de anotações que podem serem usadas 
 * @Gauge - Expõe o valor de retorno do método anotado como uma métrica
 * @ConcurrenceGauge - Conta as invocações paralelas
 
-# Tutorial
+# Como implementar?
 
 Vamos implementar um exemplo de métricas em um micro serviço escrito com o Quarkus.
 
@@ -103,12 +103,12 @@ Por sua vez, no método `check` utilizamos o código `this.histogram.update(numb
 ## Consultas 🔎
 
 Você pode obter informações de qualquer métrica consultando um endpoint específico usando o método OPTION HTTP. Os metadados são expostos por padrão em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou application e metric-name é o nome propriamente dito da métrica (no caso de um aplicativo, aquele definido no atributo name).
+## Código 💡
 
-💡 O código desse tutorial está disponível no Github:
+O código desse tutorial está disponível no Github:
 
     git clone -b dev https://github.com/rodrigoprestesmachado/pw2
     code pw2/exemplos/metrics
-
 # Referências 📚
 
 SMALLRYE METRICS: Disponível em: [https://quarkus.io/guides/smallrye-metrics](https://quarkus.io/guides/smallrye-metrics)
