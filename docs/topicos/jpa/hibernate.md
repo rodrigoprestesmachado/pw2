@@ -11,7 +11,7 @@ No Hibernate, existe uma segunda API chamada de _Hibernate Native API_ que imple
     Figura 1 - Visão geral sobre o Hibernate
 </center>
 
-# Tutorial
+# Como implementar?
 
 Imagine que tenhamos que implementar um RESTful Web Service para um sistema bate-papo (_chat_), assim, como ilustração, considere o seguinte diagrama de classes:
 

@@ -1,6 +1,6 @@
 # Microprofile Configuration
 
-O sistema de configuração de um Quarkus utiliza a especificação [Microprofile Config.](https://github.com/eclipse/microprofile-config) implementada com o [SmallRye Config](https://github.com/smallrye/smallrye-config). As configurações são provenientes de várias [fontes](https://quarkus.io/guides/config-reference#environment-variables) de dados, como por exemplo: propriedades do sistema, arquivos `.env`, arquivos yaml, entre outros.
+O sistema de configuração de um Quarkus utiliza a especificação [Microprofile Config.](https://github.com/eclipse/microprofile-config) implementada com o [SmallRye Config](https://github.com/smallrye/smallrye-config). As configurações são provenientes de várias [fontes](https://quarkus.io/guides/config-reference#configuration-sources) de dados, como por exemplo: propriedades do sistema, arquivos `.env`, arquivos yaml, entre outros.
 
 ## Propriedade de sistema
 
