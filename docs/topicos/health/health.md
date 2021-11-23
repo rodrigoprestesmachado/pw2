@@ -1,6 +1,6 @@
 # Health 🩺
 
-As verificações de Health checks são usadas para verificar o estado de um serviço. Esse tipo de recurso visa é propício para ambientes de infraestrutura em nuvem onde processos automatizados mantêm o estado de nós de computação (kubernetes por exemplo).
+As verificações de Health checks são usadas para verificar o estado de um serviço. Esse tipo de recurso é propício para ambientes de infraestrutura em nuvem onde processos automatizados mantêm o estado de nós de computação (kubernetes por exemplo).
 
 Nesse contexto, as verificações de integridade são usadas para determinar se um nó de computação precisa ser descartado/encerado e/ou eventualmente substituído por outra instância. Assim, o Health checks não se destina (embora possa ser usado) como uma solução de monitoramento de serviços para operadores humanos.
 

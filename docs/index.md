@@ -28,7 +28,7 @@ Quarkus
 
 * [Health](topicos/health/health.md)
 
-* [COnfig](topicos/configuration/configuration.md)
+* [Config](topicos/configuration/configuration.md)
 
 # Conteúdo de terceiros
 
