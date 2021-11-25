@@ -71,6 +71,36 @@ Para executar um serviço com um determinado perfil, você deve utilizar a propr
 
     ./mvnw compile quarkus:dev -Dquarkus.profile=build
 
+## Arquivos .env e YAML
+
+O Quarkus pode trabalhar com arquivos [.env](https://quarkus.io/guides/config-reference#env-file) e [YAML](https://quarkus.io/guides/config-yaml). Os arquivos `.env` devem ser localizados na raiz de um projeto Quarkus e possuem o seguinte formato:
+
+    QUARKUS_DATASOURCE_PASSWORD=youshallnotpass 
+
+Já no caso de arquivos YAML é necessário instalar uma dependência `quarkus-config-yaml`no `pom.xml`:
+
+````xml
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-config-yaml</artifactId>
+</dependency>
+```
+
+Depois disso o Quarkus se comporta de uma maneira similar aos arquivos `application.properties`. Por exemplo, observe o arquivo  `application.properties` abaixo:
+
+```yaml
+    pw2.message=hello
+    pw2.name=world
+```
+
+Agora, verifique as mesmas propriedades escritas no formato YAML:
+
+```yaml
+    pw2:
+        message: hello
+        name: world
+```
+
 # Referências 📚
 
 * SMALLRYE CONFIG disponível em: [https://quarkus.io/guides/config-reference](https://quarkus.io/guides/config-reference)
