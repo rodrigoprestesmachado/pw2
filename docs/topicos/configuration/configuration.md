@@ -71,3 +71,11 @@ Para executar um serviço com um determinado perfil, você deve utilizar a propr
 
     ./mvnw compile quarkus:dev -Dquarkus.profile=build
 
+# Referências 📚
+
+* SMALLRYE CONFIG disponível em: [https://quarkus.io/guides/config-reference](https://quarkus.io/guides/config-reference)
+
+<center>
+<a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+</center>

@@ -85,5 +85,7 @@ Se você digitar `quarkus --help` será possível verificar todas as [funcionali
 
 Outra forma ótima de se utilizar o Quarkus é por meio de uma [extensão](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-quarkus) do VSCode. Essa extensão permite, por exemplo, que você crie um projeto Quarkus, adicione extensões ao seu projeto, depure um projeto, faça um build de um projeto, etc.
 
-
-
+<center>
+<a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+</center>
