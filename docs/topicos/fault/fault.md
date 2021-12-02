@@ -2,7 +2,7 @@
 
 De forma geral, os serviços dependem da estrutura de rede para funcionarem de forma adequada. Porém, a rede é um ponto crítico para o bom funcionamento de um serviço uma vez que podem apresentar diversos problemas, tais como: saturação, mudança de topologia inesperada, atualizações, falhas de hardware, entre outros.
 
-Por essa razão, o [Micro profile](https://github.com/eclipse/microprofile-fault-tolerance/) implementou um conjunto de anotações para que você possa tentar tornar um serviço um pouco mais tolerante quando acontecer uma falha. Novamente, a implementação dessas anotações ficam ao encargo do [SmallRye Fault Tolerance] (https://github.com/smallrye/smallrye-fault-tolerance/).
+Por essa razão, o [Micro profile](https://github.com/eclipse/microprofile-fault-tolerance/) implementou um conjunto de anotações para que você possa tentar tornar um serviço um pouco mais tolerante quando ocorrer uma falha. Novamente, a implementação dessas anotações ficam ao encargo do [SmallRye Fault Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/).
 
 As principais anotações para aumento da resiliência do seu serviço são: `@Retry`, `@Fallback`, `@Timeout` e `@CircuitBreaker`.
 
@@ -21,8 +21,8 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.4.1.Final:create \
     -DprojectGroupId=dev.pw2 \
     -DprojectArtifactId=fault-tolerance \
     -Dextensions="quarkus-smallrye-fault-tolerance" \
-	-DclassName="dev.pw2.FaultService" \
-	-Dpath="/fault"
+    -DclassName="dev.pw2.FaultService" \
+    -Dpath="/fault"
 
 code fault-tolerance
 ```
