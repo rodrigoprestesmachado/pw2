@@ -30,6 +30,8 @@ Quarkus
 
 * [Config](topicos/configuration/configuration.md)
 
+* [Fault tolerance](topicos/fault/fault.md)
+
 # Conteúdo de terceiros
 
 * Essa página reune [conteúdos](topicos/terceiros/terceiros.md) relevantes de terceiros que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
