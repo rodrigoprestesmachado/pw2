@@ -140,6 +140,10 @@ export default function () {
 
 A configuração acima faz com que o k6 crie 10 unidades virtuais (vu) que irão disparar requisições HTTP com um intervalo de 1 segundo dentro de um tempo de 10 segundos. 🚨 Um detalhe, o objeto `exec` pode ser utilizado para identificar qual vu que está realizando a requisição (`exec.vu.idInTest`).
 
+Para rodar o k6 com a configuração acima, crie um arquivo .js e depois execute o commando `run` do `k6`, por exemplo:
+
+    k6 run k6.js
+
 # Código 💡
 
 Um código de exemplo sobre Fault Tolerance está disponível no Github:
