@@ -77,13 +77,14 @@ O Quarkus pode trabalhar com arquivos [.env](https://quarkus.io/guides/config-re
 
     QUARKUS_DATASOURCE_PASSWORD=youshallnotpass 
 
-Já no caso de arquivos YAML é necessário instalar uma dependência `quarkus-config-yaml`no `pom.xml`:
+Já no caso de arquivos YAML é necessário instalar uma dependência `quarkus-config-yaml` no seu `pom.xml`:
 
 ````xml
 <dependency>
     <groupId>io.quarkus</groupId>
     <artifactId>quarkus-config-yaml</artifactId>
 </dependency>
+```
 
 Depois disso o Quarkus se comporta de uma maneira similar aos arquivos `application.properties`. Por exemplo, observe o arquivo  `application.properties` abaixo:
 
