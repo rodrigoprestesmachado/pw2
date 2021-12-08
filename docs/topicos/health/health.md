@@ -97,8 +97,10 @@ A URL `/q/health-ui` permite que você veja suas verificações de saúde em uma
 
 O código desse tutorial está disponível no Github:
 
-    git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-    code pw2/exemplos/health
+```sh
+git clone -b dev https://github.com/rodrigoprestesmachado/pw2
+code pw2/exemplos/health
+```
 
 # Referências 📚
 
