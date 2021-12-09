@@ -20,7 +20,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.smallrye.jwt.build.Jwt;
 
-@Path("/secure")
+@Path("/secured")
 public class TokenSecuredResource {
 
     @Inject
