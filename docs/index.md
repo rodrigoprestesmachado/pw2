@@ -32,6 +32,10 @@ Quarkus
 
 * [Fault tolerance](topicos/fault/fault.md)
 
+* [Rest Client](topicos/rest-client/rest-client.md)
+
+* [JSON Web Token](topicos/jwt/jwt.md)
+
 # Conteúdo de terceiros
 
 * Essa página reune [conteúdos](topicos/terceiros/terceiros.md) relevantes de terceiros que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
