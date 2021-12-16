@@ -103,6 +103,67 @@ Por sua vez, no método `check` utilizamos o código `this.histogram.update(numb
 ## Consultas 🔎
 
 Você pode obter informações de qualquer métrica consultando um endpoint específico usando o método OPTION HTTP. Os metadados são expostos por padrão em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou application e metric-name é o nome propriamente dito da métrica (no caso de um aplicativo, aquele definido no atributo name).
+
+## Prometheus
+
+Para rodar o [Prometheus](https://prometheus.io), utilize, por exemplo, o arquivo `docker-compose.yml` `abaixo:
+
+```yml
+version: "3.9"
+volumes:
+    metrics:
+services:
+    prometheus:
+      image: bitnami/prometheus:latest
+      container_name: prometheus
+      ports:
+        - 9090:9090
+      volumes:
+        - metrics:/etc/prometheus
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+```
+
+A última linha do arquivo `docker-compose.yml` mostra que o prometheus necessita de um arquivo de configuração chamado `prometheus.yml`. Um exemplo de arquivo `prometheus.yml` pode ser observado abaixo:
+
+```yml
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    metrics_path: "/q/metrics"
+
+    # No Windows utilize `host.docker.internal` ao invés de `docker.for.mac`
+    # para acessar um serviço externo ao container
+    # https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
+    static_configs:
+      - targets: ["docker.for.mac.localhost:8080"]
+```
+
+Uma vez que o Prometheus esteja rodando, ele irá realizar a leitura dos endpoints da aplicação, por meio da sua configuração de "*targets*".
+
 ## Código 💡
 
 O código desse tutorial está disponível no Github:

@@ -97,6 +97,15 @@ Podemos utilizar a extensão `quarkus-oidc-token-propagation` para enviar de for
 
 Nesse caso, devemos anotar o Rest Client com `@AccessToken`. Isto permite que o Rest Client reencaminhe o token recebido para um próximo serviço.
 
+## Código 💡
+
+O código desse tutorial está disponível no Github:
+
+```sh
+git clone -b dev https://github.com/rodrigoprestesmachado/pw2
+cd pw2/exemplos/jwt
+```
+
 # Referências 📚
 
 * Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
