@@ -64,7 +64,7 @@ Pressione 'F' para tela cheia
 * No Jakarta EE, o JAX-RS provê a funcionalidade para Web Services baseados REST (_Representational State Transfer_)
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
-* Os RESTful Web Services utilizam normas bastante consolidadas como: HTTP, XML, URI (_Uniform Resource Identifier_), MIME (_Multipurpose Internet Mail Extensions_)
+* Os RESTful Web Services utilizam normas bastante consolidadas como: HTTP, URI (_Uniform Resource Identifier_), MIME (_Multipurpose Internet Mail Extensions_)
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
 * Assim, eles permitem que os serviços sejam construídos com uma barreira muito baixa para adoção

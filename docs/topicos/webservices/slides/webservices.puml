@@ -1,5 +1,5 @@
 @startuml
-rectangle Browser 
+rectangle Browser
 
 node "Server" {
   Op1 <-right- [WSDL] : exposes
