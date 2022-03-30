@@ -1,5 +1,7 @@
 @startuml
 
+!theme vibrant
+
 [Thunder Client]
 sum - [BFF] : 8081
 getSum - [backend] : 8082

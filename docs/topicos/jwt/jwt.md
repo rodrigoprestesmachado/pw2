@@ -106,7 +106,7 @@ Em uma arquitetura de micro serviços, é bastante comum que necessitemos propag
 O código do exemplo abaixo, apresenta uma arquitetura de micro serviços para suportar um _front-end_, normalmente chamada de _Back-end for Front-end_(BFF). O diagrama de componentes da Figura 1 ilustra os serviços e suas relações.
 
 <center>
-    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Diagrama de classes" width="25%" height="25%"/> <br/>
+    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Diagrama de classes" width="60%" height="60%"/> <br/>
     Figura 1 - Back-end for Front-end (BFF)
 </center>
 
