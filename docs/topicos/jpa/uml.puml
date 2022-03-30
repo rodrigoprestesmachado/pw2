@@ -1,5 +1,7 @@
 @startuml
 
+!theme vibrant
+
 User "1" --> "0..*" Message : send
 User "0..*" -- "0..*" Channel : join
 Channel "1" --> "0..*" Message : contains

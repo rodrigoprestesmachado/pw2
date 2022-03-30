@@ -29,15 +29,15 @@ public class Backend {
 
     /* Recuperando uma informação do token  */
     @Inject
-    @Claim(standard = Claims.gender)
-    String gender;
+    @Claim(standard = Claims.email)
+    String email;
 
     @GET
     @Path("/{a}/{b}")
     @Produces(MediaType.TEXT_PLAIN)
     @RolesAllowed({ "Admin" })
     public int getSum(@PathParam("a") int a, @PathParam("b") int b){
-        LOGGER.log(Level.INFO, "Backend: {0}", gender);
+        LOGGER.log(Level.INFO, "Backend: {0}", email);
         return a + b;
     }
 

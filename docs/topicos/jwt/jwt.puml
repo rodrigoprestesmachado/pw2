@@ -2,21 +2,17 @@
 
 !theme vibrant
 
-[Thunder Client]
-sum - [BFF] : 8081
-getSum - [backend] : 8082
-getjwt - [Users] : 8080
-validadeToken - [Users] : 8080
-
 database Data {
-
 }
 
-[Thunder Client] --> getjwt : (1)
+[Front-end]
+sum - [BFF] : 8081/8445
+getSum - [Backend] : 8082/8444
+getjwt - [Users] : 8080/8443
+
+[Front-end] --> getjwt : (1)
 Users --> Data : (2)
-[Thunder Client] --> sum : (3)
-sum --> validadeToken : (4) *
-getSum --> validadeToken : (5) *
-sum --> getSum : (6)
+[Front-end] --> sum : (3)
+sum --> getSum : (4)
 
 @enduml

@@ -1,10 +1,14 @@
-# JSON Web Token
+# JSON Web Token 🔑
 
-Um JSON Web Token (JWT) é um padrão da Internet para a criação de um token (sequência de caracteres) normalmente criptografado cujo seu corpo contém o JSON com um conjunto de declarações específicas de uma aplicação, como por exemplo, nome de um usuário, e-mail e papéis.
+Um JSON Web Token (JWT) é um [padrão](https://datatracker.ietf.org/doc/html/rfc7519) para a criação de tokens, sequências de caracteres normalmente criptografadas, capazes de transportar dados no formato JSON. A principal utilização desse padrão se da na geração de tokens para controlar o acesso aos métodos de serviços. Do ponto de vista prático, um JWT é uma String codificada que possui três trechos separados por um ponto (.): cabeçalho, carga (_payload_) de declarações (*claims*) e assinatura do JWT.
 
-## Como implementar?
+O cabeçalho normalmente contém duas informações, o tipo do token (nesse caso JWT) e o algoritmo de assinatura que está sendo utilizado, como por exemplo, [HMAC](https://pt.wikipedia.org/wiki/HMAC), [SHA256](https://pt.wikipedia.org/wiki/SHA-2) ou [RSA](https://pt.wikipedia.org/wiki/RSA_(sistema_criptográfico)). A carga (_payload_) de declarações (*claims*) é a segunda parte de um token. As declarações são dados específicos do sistema em questão, como por exemplo, declarações sobre um usuário, nome, e-mail, papel (_role_), entre outros. Finalmente, a assinatura se constitui como a terceira parte de um JWT, trata-se da concatenação de hashes gerados a partir do cabeçalho e da carga com o objetivo de garantir a integridade do token.
 
-Para criar a aplicação com as extenões `smallrye-jwt` e `smallrye-jwt-build`:
+💡 Para saber mais e também conseguir visualizar as três partes de um JWT de forma prática visite o site [jwt.io](https://jwt.io/#debugger-io) e assista ao [vídeo](https://www.youtube.com/watch?v=_XbXkVdoG_0). Além disso, existe um segundo [vídeo](https://www.youtube.com/watch?v=soGRyl9ztjI) que compara, por meio de analogias, os métodos de autenticação por sessão e token (se necessitar, coloque as legendas em português e assista aos vídeos pausadamente).
+
+## Como implementar? 🤓
+
+Para criar um serviço no Quarkus com suporte ao JWT necessitamos de duas extensões `smallrye-jwt` e `smallrye-jwt-build`, por exemplo:
 
 ```sh
 mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
@@ -13,10 +17,13 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
     -DclassName="dev.rpmhub.TokenSecuredResource" \
     -Dpath="/secured" \
     -Dextensions="resteasy,resteasy-jackson,smallrye-jwt,smallrye-jwt-build"
-cd jwt
 ```
 
-## Gerando chaves públicas e privadas com OpenSSL
+## Gerando chaves públicas e privadas com OpenSSL 🔐
+
+Os tokens trabalham com o esquema de criptografia assimétrica utilizando chaves públicas e privadas, ou seja, podemos utilizar a chave pública de um serviço _X_ para poder assinar os tokens e, por sua vez, o serviço _X_  possui uma chave privada para poder abrir a mensagem.
+
+💡 Veja o [vídeo](https://www.youtube.com/watch?v=AQDCe585Lnc) para entender mais sobre criptografia assimétrica.
 
 ```sh
 # Para criar uma chave privada
@@ -43,9 +50,9 @@ Depois de gerar as chaves, devemos indicar a chave privada por meio da proprieda
     smallrye.jwt.sign.key.location=privateKey.pem
 ```
 
-## Gerando um JSON Web Token (JWT)
+## Gerando um JSON Web Token (JWT) 🏭
 
-Um JWT nada mais é que uma string codificada que possui 3 partes separadas por um ponto (.): cabeçalho, declarações (*claims*) e assinatura JWT. Para gerar um token podemos utiliza a classe `io.smallrye.jwt.build.Jwt`, veja um exemplo:
+Como visto anteriormente, um JWT nada mais é que uma String codificada que possui três: cabeçalho,  carga (_payload_) de declarações (*claims*) e assinatura. Para gerar um token podemos utiliza a classe `io.smallrye.jwt.build.Jwt`, veja um exemplo:
 
 ```java
 @GET
@@ -63,9 +70,9 @@ public String generate(@Context SecurityContext ctx) {
 
 No exemplo acima o token é construído por meio do método `issuer`, o assunto ou usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final da criação do token para assinar (chave privada) e efetivamente construir o token.
 
-🚨 Note que o método do exemplo utiliza a anotação `@PermitAll` para permitir um acesso livre ao método.
+🚨 Note que o método do exemplo acima utiliza a anotação `@PermitAll` para liberar o acesso ao método.
 
-## Configurando o Acesso
+## Restringindo o Acesso 🚪
 
 Para restringir o acesso a um método devemos utilizar a anotação `@RolesAllowed`. Logo, temos que informar quais são as *roles* que poderão acessar aquele método, observe o exemplo abaixo:
 
@@ -84,11 +91,13 @@ public long sum(@Context SecurityContext ctx, @PathParam("a") long a, @PathParam
 }
 ```
 
-No exemplo, podemos também observar que as informações contidas no token podem ser recuperadas por intermédio da anotação `@Claim`. Apesar do exemplo não mostrar, também é possível injetar o token diretamente por meio de um objeto da classe `org.eclipse.microprofile.jwt.JsonWebToken` que, por sua vez, possui métodos para você recuperar informações sobre o token, como por exemplo, o usuário:  `token.getName()`. Para saber mais, por favor acesse: [Using the JsonWebToken and Claim Injection](https://quarkus.io/guides/security-jwt#using-the-jsonwebtoken-and-claim-injection)
+No exemplo, podemos também observar que as informações contidas no token podem ser recuperadas por intermédio da anotação `@Claim`. Além disso, o método `sum` foi decorado com a anotação `@RolesAllowed({ "User" })`, assim, o método está restrito para requisições que encaminhem tokens que contenham o papel "User". Apesar do exemplo não mostrar, também é possível injetar o token diretamente por meio de um objeto da classe `org.eclipse.microprofile.jwt.JsonWebToken` que, por sua vez, possui métodos para você recuperar informações sobre o token, como por exemplo, o nome de um usuário:  `token.getName()`.
 
-## Validando um token
+💡 Para saber mais sobre recuperação de informações de um JWT acesse: [Using the JsonWebToken and Claim Injection](https://quarkus.io/guides/security-jwt#using-the-jsonwebtoken-and-claim-injection)
 
-Quando um serviço deseja validar um token, ele deve saber quem é o emissor (*issuer*) do JWT. Assim, no Quarkus/Microprofile devemos que adicionar nos serviços que recebem os tokens duas configurações no arquivo `application.properties`: (1) `mp.jwt.verify.issuer` - que indica a url do emissor do token e (2) `mp.jwt.verify.publickey.location` - que indica a chave pública, veja o exemplo abaixo:
+## Validando um JWT
+
+Quando um serviço deseja validar um token, ele deve saber quem é o emissor (*Issuer*) do JWT. Assim, no Quarkus/Microprofile devemos que adicionar nos serviços que recebem os tokens duas configurações no arquivo `application.properties`: (1) `mp.jwt.verify.issuer` - que indica a url do emissor do token e (2) `mp.jwt.verify.publickey.location` - que indica a chave pública, veja o exemplo abaixo:
 
 ```sh
     mp.jwt.verify.issuer=http://localhost:8080
@@ -97,25 +106,46 @@ Quando um serviço deseja validar um token, ele deve saber quem é o emissor (*i
 
 🚨 Uma observação importante, no caso de desenvolvimento de um serviço nativo ([GraalVM](https://www.graalvm.org)) a propriedade `mp.jwt.verify.publickey.location` deve ser substituída por `quarkus.native.resources.includes=publicKey.pem`.
 
-# Propagação de JSON Web Token
+# Propagação de JWT 🔌
 
 Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar os tokens entre os serviços, assim, para transmitir tokens de maneira automática, devemos primeiro importar a extensão `quarkus-oidc-token-propagation`. Logo, devemos anotar o Rest Client com `@AccessToken`, pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de um serviço para o outro.
 
-## Exemplo de código 💡
+# Hyper Text Transfer Protocol Secure (HTTPS)
 
-O código do exemplo abaixo, apresenta uma arquitetura de micro serviços para suportar um _front-end_, normalmente chamada de _Back-end for Front-end_(BFF). O diagrama de componentes da Figura 1 ilustra os serviços e suas relações.
+Um dos problemas do JWT é que o token pode ser capturado, nesse caso, se faz necessário utilizar _Hyper Text Transfer Protocol Secure_ (HTTPS) para fazer com queo JWT trafegue sempre numa conexão criptografada. Assim, pare gerar uma chave privada e um certificado utilize o comando:
+
+```sh
+    keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 365 -keysize 2048
+```
+
+🚨 Nota, o formato keystore.jks armazena tanto o certificado quanto a sua chave privada.
+
+Para informar o caminho do arquivo keystore.jks adicione a seguinte propriedades do arquivo `application.properties` do Quarkus:
+
+```
+    quarkus.http.ssl.certificate.key-store-file=keystore.jks
+```
+
+## Exemplo de código 🖥️
+
+O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro serviços para suportar um _front-end_, normalmente chamado de _Back-end for Front-end_ (BFF). Como exemplo, o diagrama de componentes da Figura 1 ilustra os serviços e suas relações.
 
 <center>
-    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Diagrama de classes" width="60%" height="60%"/> <br/>
+    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml">
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Back-end for Front-end (BFF)" width="40%" height="40%"/>
+    </a>
+    <br/>
     Figura 1 - Back-end for Front-end (BFF)
 </center>
 
-O JWT nesse exemplo é utilizado para proteger os métodos dos serviços "BFF" e "Backend". Desta maneira, é necessário se obter um token por meio do serviço de "usuários" para depois conseguir acessar os demais serviços. Para baixar o código desse pequeno exemplo utilize os seguintes comandos:
+O JWT do exemplo é utilizado para proteger os métodos dos serviços "BFF" e "Backend". Desta maneira, é necessário se obter um token por meio do serviço de "usuários" para depois conseguir acessar os demais serviços. Para baixar o código desse pequeno exemplo utilize os seguintes comandos:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 cd pw2/exemplos/bff
 ```
+
+🚨 Atenção, no diretório `bff` você irá encontrar um projeto para cada serviço (users, bff e backend) conforme apresentado na Figura 1.
 
 # Referências 📚
 
