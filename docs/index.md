@@ -22,6 +22,10 @@ Quarkus
 
 * [Instalação](topicos/quarkus-install/install.md)
 
+* [Rest Client](topicos/rest-client/rest-client.md)
+
+* [JSON Web Token](topicos/jwt/jwt.md)
+
 * [Hibernate](topicos/jpa/hibernate.md)
 
 * [Metrics](topicos/metrics/metrics.md)
@@ -31,10 +35,6 @@ Quarkus
 * [Config](topicos/configuration/configuration.md)
 
 * [Fault tolerance](topicos/fault/fault.md)
-
-* [Rest Client](topicos/rest-client/rest-client.md)
-
-* [JSON Web Token](topicos/jwt/jwt.md)
 
 * [Trace e Logging](topicos/loging/logging.md)
 

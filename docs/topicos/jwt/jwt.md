@@ -1,5 +1,7 @@
 # JSON Web Token
 
+Um JSON Web Token (JWT) é um padrão da Internet para a criação de um token (sequência de caracteres) normalmente criptografado cujo seu corpo contém o JSON com um conjunto de declarações específicas de uma aplicação, como por exemplo, nome de um usuário, e-mail e papéis.
+
 ## Como implementar?
 
 Para criar a aplicação com as extenões `smallrye-jwt` e `smallrye-jwt-build`:
@@ -17,14 +19,14 @@ cd jwt
 ## Gerando chaves públicas e privadas com OpenSSL
 
 ```sh
-# Chave privada
+# Para criar uma chave privada
 openssl genrsa -out rsaPrivateKey.pem 2048
 
-# Chave pública
-openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
-
-# Convertendo a chave privada para o formato PKCS#8
+# Converter a chave privada para o formato PKCS#8
 openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
+
+# Para criar uma chave pública
+openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
 ```
 
 🚨 Uma observação, atualmente o JWT suporta chaves no formato:
@@ -35,19 +37,11 @@ openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -ou
 * JSON Web Key (JWK) Base64 URL encoded
 * JSON Web Key Set (JWKS) Base64 URL encoded
 
-Depois de gerar as chaves, indique a chave privada por meio da propriedade `smallrye.jwt.sign.key.location` e a chave pública com as propriedades `smallrye.jwt.sign.key.location`e  `quarkus.native.resources.includes` (código nativo), veja o exemplo abaixo:
+Depois de gerar as chaves, devemos indicar a chave privada por meio da propriedade `smallrye.jwt.sign.key.location` no arquivo de `application.properties`, veja o exemplo abaixo:
 
 ```sh
     smallrye.jwt.sign.key.location=privateKey.pem
-    mp.jwt.verify.publickey.location=publicKey.pem
-    quarkus.native.resources.includes=publicKey.pem
 ```
-
-## Configurando o Emissor do Token
-
-O emissor (*issuer*) deve ser configurado para que, posteriormente, possa validar os tokens. No Quarkus/Microprofile podemos fazer isso com a propriedade `mp.jwt.verify.issuer` no `application.properties`, por exemplo:
-
-    mp.jwt.verify.issuer=http://localhost:8080
 
 ## Gerando um JSON Web Token (JWT)
 
@@ -61,24 +55,25 @@ Um JWT nada mais é que uma string codificada que possui 3 partes separadas por 
 public String generate(@Context SecurityContext ctx) {
     return Jwt.issuer("http://localhost:8080")
             .upn("rodrigo@rpmhub.dev")
-            .groups(new HashSet<>(Arrays.asList("User")))
-            .claim(Claims.birthdate.name(), "2001-07-13")
+            .groups(new HashSet<>(Arrays.asList("User", "Admin")))
+            .claim(Claims.full_name, "Rodrigo Prestes Machado")
             .sign();
 }
 ```
 
-No exemplo acima o token é construido com indicando o `issuer`, o assunto ou usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final da criação do token para criptografar e efetivamente construir o token.
+No exemplo acima o token é construído por meio do método `issuer`, o assunto ou usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final da criação do token para assinar (chave privada) e efetivamente construir o token.
 
 🚨 Note que o método do exemplo utiliza a anotação `@PermitAll` para permitir um acesso livre ao método.
 
-
 ## Configurando o Acesso
 
-Para configurar o acesso a um método devemos utilizar a anotação `@RolesAllowed`. Logo, temos que informar quais são as *roles* que poderão acessar aquele método, veja o exemplo abaixo:
+Para restringir o acesso a um método devemos utilizar a anotação `@RolesAllowed`. Logo, temos que informar quais são as *roles* que poderão acessar aquele método, observe o exemplo abaixo:
 
 ```java
+/* Recuperando uma informação do token */
 @Inject
-JsonWebToken token;
+@Claim(standard = Claims.full_name)
+String fullName;
 
 @GET
 @Path("/sum/{a}/{b}")
@@ -89,28 +84,44 @@ public long sum(@Context SecurityContext ctx, @PathParam("a") long a, @PathParam
 }
 ```
 
-No exemplo, podemos também observar que o token pode ser injetado por intermédio da classe `org.eclipse.microprofile.jwt.JsonWebToken`. Apesar do exemplo não mostrar, um objeto da classe `JsonWebToken` possui métodos para você recuperar informações sobre o token, como por exemplo, o usuário:  `token.getName()`.
+No exemplo, podemos também observar que as informações contidas no token podem ser recuperadas por intermédio da anotação `@Claim`. Apesar do exemplo não mostrar, também é possível injetar o token diretamente por meio de um objeto da classe `org.eclipse.microprofile.jwt.JsonWebToken` que, por sua vez, possui métodos para você recuperar informações sobre o token, como por exemplo, o usuário:  `token.getName()`. Para saber mais, por favor acesse: [Using the JsonWebToken and Claim Injection](https://quarkus.io/guides/security-jwt#using-the-jsonwebtoken-and-claim-injection)
+
+## Validando um token
+
+Quando um serviço deseja validar um token, ele deve saber quem é o emissor (*issuer*) do JWT. Assim, no Quarkus/Microprofile devemos que adicionar nos serviços que recebem os tokens duas configurações no arquivo `application.properties`: (1) `mp.jwt.verify.issuer` - que indica a url do emissor do token e (2) `mp.jwt.verify.publickey.location` - que indica a chave pública, veja o exemplo abaixo:
+
+```sh
+    mp.jwt.verify.issuer=http://localhost:8080
+    mp.jwt.verify.publickey.location=publicKey.pem
+```
+
+🚨 Uma observação importante, no caso de desenvolvimento de um serviço nativo ([GraalVM](https://www.graalvm.org)) a propriedade `mp.jwt.verify.publickey.location` deve ser substituída por `quarkus.native.resources.includes=publicKey.pem`.
 
 # Propagação de JSON Web Token
 
-Podemos utilizar a extensão `quarkus-oidc-token-propagation` para enviar de forma automática o token quando um Rest Cliente necessitar realizar uma chamada para um outro serviço. Esse tipo de situação se mostra bastante corriqueira quando um sistema é concebido numa arquitetura orientada a micro serviços.
+Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar os tokens entre os serviços, assim, para transmitir tokens de maneira automática, devemos primeiro importar a extensão `quarkus-oidc-token-propagation`. Logo, devemos anotar o Rest Client com `@AccessToken`, pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de um serviço para o outro.
 
-Nesse caso, devemos anotar o Rest Client com `@AccessToken`. Isto permite que o Rest Client reencaminhe o token recebido para um próximo serviço.
+## Exemplo de código 💡
 
-## Código 💡
+O código do exemplo abaixo, apresenta uma arquitetura de micro serviços para suportar um _front-end_, normalmente chamada de _Back-end for Front-end_(BFF). O diagrama de componentes da Figura 1 ilustra os serviços e suas relações.
 
-O código desse tutorial está disponível no Github:
+<center>
+    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Diagrama de classes" width="25%" height="25%"/> <br/>
+    Figura 1 - Back-end for Front-end (BFF)
+</center>
+
+O JWT nesse exemplo é utilizado para proteger os métodos dos serviços "BFF" e "Backend". Desta maneira, é necessário se obter um token por meio do serviço de "usuários" para depois conseguir acessar os demais serviços. Para baixar o código desse pequeno exemplo utilize os seguintes comandos:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-cd pw2/exemplos/jwt
+cd pw2/exemplos/bff
 ```
 
 # Referências 📚
 
-* Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
+* Usando JWT RBAC. Disponível em: [https://quarkus.io/guides/security-jwt](https://quarkus.io/guides/security-jwt)
 
-* Usando JWT RBAC. Disponível em: [https://quarkus.io/guides/security-jwt#generating-a-jwt](https://quarkus.io/guides/security-jwt#generating-a-jwt)
+* Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
