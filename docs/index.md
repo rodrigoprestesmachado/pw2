@@ -16,9 +16,9 @@ Micro serviços com Quarkus/Microprofile
 
 * [Health](topicos/health/health.md)
 
-* [Metrics](topicos/metrics/metrics.md)
-
 * [Fault tolerance](topicos/fault/fault.md)
+
+* [Metrics](topicos/metrics/metrics.md)
 
 * [Trace e Logging](topicos/loging/logging.md)
 

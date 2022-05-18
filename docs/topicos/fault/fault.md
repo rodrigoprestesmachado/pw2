@@ -1,23 +1,27 @@
 # Fault Tolerance 🆘
 
-De forma geral, os serviços dependem da estrutura de rede para funcionarem de forma adequada. Porém, a rede é um ponto crítico para o bom funcionamento de um serviço uma vez que podem apresentar diversos problemas, tais como: saturação, mudança de topologia inesperada, atualizações, falhas de hardware, entre outros.
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/fault/slides/index.html#/" title="Fault Tolerance" width="90%" height="500" style="border:none;"></iframe>
+</center>
 
-Por essa razão, o [Micro profile](https://github.com/eclipse/microprofile-fault-tolerance/) implementou um conjunto de anotações para que você possa tentar tornar um serviço um pouco mais tolerante quando ocorrer uma falha. Novamente, a implementação dessas anotações ficam ao encargo do [SmallRye Fault Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/).
+De forma geral, os serviços dependem da estrutura de rede para funcionarem de maneira adequada. Porém, a rede é um ponto crítico para o bom funcionamento de um serviço uma vez que podem apresentar diversos problemas, tais como: saturação, mudança de topologia inesperada, atualizações, falhas de hardware, entre outros.
+
+Por essa razão, o [Microprofile](https://github.com/eclipse/microprofile-fault-tolerance/) implementou um conjunto de anotações para que você possa tentar tornar um serviço um pouco mais resiliente quando uma falha ocorrer. A implementação concreta das dessas anotações projetadas no Microprofile ficam ao encargo do [SmallRye Fault Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/).
 
 As principais anotações para aumento da resiliência do seu serviço são: `@Retry`, `@Fallback`, `@Timeout` e `@CircuitBreaker`.
 
-* `@Retry` – Trata-se de uma das formas mais simples e efetivas para que um serviço se recupere de um problema de rede é tentar novamente a mesma operação.
+* `@Retry` – Tentar novamente, trata-se da forma mais simples e efetiva para que um serviço se recupere de um problema de rede.
 * `@Fallback` – Invoca um método quando algum erro ocorrer.
 * `@Timeout` – evita que a execução do serviço espere para sempre.
 * `@Bulkhead` - O padrão bulkhead limita as operações que podem ser executadas ao mesmo tempo, mantendo as novas solicitações em espera, até que as solicitações de execução atuais possam termina.
 * `@CircuitBreaker` - Evita realizar chamadas desnecessárias se um erro ocorrer.
 
-# Como implementar?
+# Configurações
 
 Inicialmente, crie um projeto que tenha suporte para tolerância a falhas:
 
 ```sh
-mvn io.quarkus.platform:quarkus-maven-plugin:2.4.1.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:2.9.0.Final:create \
     -DprojectGroupId=dev.pw2 \
     -DprojectArtifactId=fault-tolerance \
     -Dextensions="quarkus-smallrye-fault-tolerance" \
@@ -50,7 +54,7 @@ public String getName(@PathParam("name") String name) {
 }
 ```
 
-Se o método `getName` receber a String `error` como parâmetro de entrada, então, a exceção  `WebApplicationException` será lançada. Porém, a anotação `@Retry` irá fazer com que o método `getName` seja executado novamente por três vezes (*maxRetries*) e com um intervalo de tempo de dois segundos (*delay*).
+Se o método `getName` receber a String `error` como parâmetro de entrada, então, a exceção  `WebApplicationException` será lançada. Porém, a anotação `@Retry` irá fazer com que o método `getName` seja executado novamente por três vezes (*maxRetries*) num intervalo de tempo de dois segundos (*delay*).
 
 ## Fallback
 
@@ -63,8 +67,7 @@ Caso um método não consiga se recuperar de uma falha, podemos implementar um m
 @Retry(maxRetries = 3, delay = 2000)
 @Fallback(fallbackMethod = "recover")
 public String getName(@PathParam("name") String name) {
-    // 🚨 o código do método anterior foi suprimido, pois,
-    // não existem alterações nesse trecho
+    // 🚨 o código do método do exemplo anterior foi suprimido
 }
 
 // Método que irá ser executado caso o método getName não se recupere da falha
@@ -87,8 +90,7 @@ public String recover(String name) {
 @Fallback(fallbackMethod = "recover")
 @Timeout(7000)
 public String getName(@PathParam("name") String name) {
-    // 🚨 o código do método anterior foi suprimido, pois,
-    // não existem alterações nesse trecho
+    // 🚨 o código do método do exemplo anterior foi suprimido
 }
 ```
 
@@ -107,7 +109,7 @@ public String bulkhead(@PathParam("name") String name) {
 }
 ```
 
-Quando `@Bulkhead` é usado sem a anotação `@Asynchronous`, a abordagem de isolamento será de [`semáforo`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_semaphore_style_bulkhead), ou seja, permite apenas o número concomitante de configuração de solicitações. Porém, quando `@Bulkhead` for usado com `@Asynchronous`, a abordagem de isolamento de será [`thread pool`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_thread_pool_style_bulkhead), permitindo configurar as solicitações simultâneas junto com um tamanho da fila de espera, por exemplo:
+Quando `@Bulkhead` é usado sem a anotação `@Asynchronous`, a abordagem de isolamento será de [`semáforo`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_semaphore_style_bulkhead), ou seja, permite apenas o número concomitante de requisições. Porém, quando `@Bulkhead` for usado com `@Asynchronous`, a abordagem de isolamento de será [`thread pool`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_thread_pool_style_bulkhead), permitindo configurar as solicitações simultâneas junto com um tamanho da fila de espera, por exemplo:
 
 ```java
 // máximo de 2 requisições concorrentes serão permitidas
