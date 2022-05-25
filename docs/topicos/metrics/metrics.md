@@ -1,31 +1,36 @@
 # Metrics no Microprofile/Quarkus 📏
 
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/metrics/slides/index.html#/" title="Microprofile Metrics" width="90%" height="500" style="border:none;"></iframe>
+</center>
+
 A especificação [Metrics](https://github.com/eclipse/microprofile-metrics/) do Microprofile fornece uma maneira de construir e expor métricas do seu serviço para ferramentas de monitoramento, como por exemplo, o [Prometheus](https://prometheus.io)/[OpenMetrics](https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md).
 
-Para habilitar MicroProfile Metrics em um aplicativo Quarkus, você precisa importar a extensão `quarkus-smallrye-metrics` ([SmallRye Metrics](https://github.com/smallrye/smallrye-metrics/)). Com a extensão `quarkus-smallrye-metrics` adicionada no projeto, o Quarkus fornece um endpoint padrão (ex.: http://localhost:8080/q/metrics) no formato Prometheus. Entretanto, o formato pode ser alterado para JSON trocando-se o cabeçalho da requisição HTTP Accept para `application/json`.
+Para utiilzar o MicroProfile Metrics em um aplicativo Quarkus, você precisa importar a extensão `quarkus-smallrye-metrics` ([SmallRye Metrics](https://github.com/smallrye/smallrye-metrics/)). Com a extensão `quarkus-smallrye-metrics` adicionada no projeto, o Quarkus fornece um endpoint padrão (ex.: http://localhost:8080/q/metrics) no formato Prometheus. Entretanto, o formato pode ser alterado para JSON trocando-se o cabeçalho da requisição HTTP Accept para `application/json`.
 
 Se você olhar para a saída do endpoint padrão (http://localhost:8080/q/metrics), verás diversos parâmetros prefixados:
 
 * base (`q/metrics/base`) - informações essenciais do servidor, como por exemplo, o número de classes carregadas por uma máquina virtual, ou o número de processos rodando na máquina virtual, etc.
-* vendor  (`q/metrics/vendor`) - informações especificar sobre um fornecedor, como por exemplo, o tempo de CPU utilizado por cada processo, ou o uso recente de CPU por todo os sistema, etc.
-* application (`q/metrics/application`) - Informações personalizadas desenvolvidas por meio do mecanismo de extensão do MicroProfile Metrics.
+* vendor  (`q/metrics/vendor`) - informações especificas sobre um fornecedor, como por exemplo, o tempo de CPU utilizado por cada processo, ou o uso recente de CPU por todo os sistema, etc.
+* application (`q/metrics/application`) - informações personalizadas desenvolvidas por meio do mecanismo de extensão do MicroProfile Metrics.
 
 Como pode ser observado, em um serviço existem muitos valores possíveis para serem monitorados, os mais comuns são:
 
-* Memória
+* Tempo de CPU
+* Memória ocupada
 * Espaço em disco
-* Rede
-* Recursos da JVM
 * Desempenho de métodos críticos
 * Métricas de negócios (por exemplo, o número de pagamentos por segundo)
+* Quesões de Rede
+* Recursos ocupados pela JVM
 * Saúde geral do seu cluster
 
 O MicroProfile Metrics possui um conjunto de anotações que podem serem usadas para criamos métricas espefíficas (`q/metrics/application`) para o serviço, são elas:
 
-* @Counted - Conta o número de invocações
-* @Timed - Rastreia a duração de uma invocação
-* @SimplyTimed - Rastreia a duração das invocações sem cálculos de média e distribuição. Uma versão simplificada do @Timed.
-* @Metered - Rastreia a frequência de invocações
+* @Counted - Conta o número de invocações de um método
+* @Timed - Monitora a duração de uma invocação
+* @SimplyTimed - Monitora a duração das invocações sem considerar cálculos como média e distribuição, ou seja, trata-se de uma versão simplificada do @Timed.
+* @Metered - Monitora a frequência de invocações
 * @Gauge - Expõe o valor de retorno do método anotado como uma métrica
 * @ConcurrenceGauge - Conta as invocações paralelas
 
@@ -102,7 +107,7 @@ Por sua vez, no método `check` utilizamos o código `this.histogram.update(numb
 
 ## Consultas 🔎
 
-Você pode obter informações de qualquer métrica consultando um endpoint específico usando o método OPTION HTTP. Os metadados são expostos por padrão em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou application e metric-name é o nome propriamente dito da métrica (no caso de um aplicativo, aquele definido no atributo name).
+Você pode obter informações de qualquer métrica consultando um endpoint específico usando o método OPTION do HTTP. Os metadados são expostos por padrão em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou application e metric-name é o nome propriamente dito da métrica (no caso de um aplicativo, aquele definido no atributo name).
 
 ## Prometheus
 
@@ -166,7 +171,7 @@ Uma vez que o Prometheus esteja rodando, ele irá realizar a leitura dos endpoin
 
 ## Código 💡
 
-O código desse tutorial está disponível no Github:
+um código de exemplo sobre esse tópico está disponível no Github:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
