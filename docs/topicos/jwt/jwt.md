@@ -54,7 +54,9 @@ Depois de gerar as chaves, devemos indicar a chave privada por meio da proprieda
 
 ## Gerando um JSON Web Token (JWT) 🏭
 
-Como visto anteriormente, um JWT nada mais é que uma String codificada que possui três: cabeçalho,  carga (_payload_) de declarações (*claims*) e assinatura. Para gerar um token podemos utiliza a classe `io.smallrye.jwt.build.Jwt`, veja um exemplo:
+Como visto anteriormente, um JWT nada mais é que uma String codificada que possui três: cabeçalho,  carga (_payload_) de declarações (*claims*) e assinatura. Para gerar
+e assinar um token podemos utiliza a classe `io.smallrye.jwt.build.Jwt`, veja
+um exemplo:
 
 ```java
 @GET
@@ -70,7 +72,8 @@ public String generate(@Context SecurityContext ctx) {
 }
 ```
 
-No exemplo acima o token é construído por meio do método `issuer`, o assunto ou usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final da criação do token para assinar (chave privada) e efetivamente construir o token.
+No exemplo acima o token é construído por meio do método `issuer`, o assunto ou usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final da criação do token para assinar
+e efetivamente construir o token.
 
 🚨 Note que o método do exemplo acima utiliza a anotação `@PermitAll` para liberar o acesso ao método.
 
@@ -149,9 +152,10 @@ O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro servi
     Figura 1 - Exemplo de uso do JWT no contexto de um Back-end for Front-end (BFF)
 </center>
 
-O JWT do exemplo é utilizado para proteger os métodos dos serviços "First" e "Second". Desta maneira, é necessário se
-obter um token por meio do serviço de "Users" para depois conseguir acessar os demais serviços. Para baixar o código
-desse exemplo utilize os seguintes comandos:
+O JWT do exemplo é utilizado para proteger os métodos dos serviços "First" e "Second".
+Desta maneira, é necessário se obter um token por meio do serviço de "Users" para
+depois conseguir acessar os demais serviços. Para baixar o código desse exemplo
+utilize os seguintes comandos:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
@@ -160,6 +164,39 @@ cd pw2/exemplos/jwt
 
 🚨 Atenção, no diretório `jwt` você irá encontrar um projeto para cada serviço (users,
 first e second) conforme apresentado na Figura 1.
+
+## Sign e Encrypt
+
+Um JWT pode ser assinado, com o objetivo de verificar a validade, e criptografado, quando o _payload_ (_claims_) possuir dados sensíveis. O [exemplo acima disponível no Github](https://github.com/rodrigoprestesmachado/pw2/exemplos/jwt), utiliza os dois processos ao mesmo tempo por meio dos métodos `innerSign()` e `encrypt()`, observe o exemplo:
+
+```java
+@GET
+@Path("/jwt")
+@PermitAll
+@Produces(MediaType.TEXT_PLAIN)
+public String generate(@Context SecurityContext ctx) {
+    return Jwt.issuer("http://localhost:8080")
+            .upn("rodrigo@rpmhub.dev")
+            .groups(new HashSet<>(Arrays.asList("User", "Admin")))
+            .claim(Claims.full_name, "Rodrigo Prestes Machado")
+            .innerSign()
+            .encrypt();
+}
+```
+
+Para gerar um JWT com esses métodos `innerSign()` e `encrypt()` se faz necessário configurar o Quarkus com a seguintes
+propriedades:
+
+    smallrye.jwt.sign.key.location=privateKey.pem
+    smallrye.jwt.encrypt.key.location=publicKey.pem
+
+Por outro lado, para poder validar o JWT e também descriptografar:
+
+    mp.jwt.verify.publickey.location=publicKey.pem
+    mp.jwt.decrypt.key.location=privateKey.pem
+
+🚨 Para saber mais detalhes, sobre esse processo de assinatura e criptografia, por favor acesse:
+[https://smallrye.io/docs/smallrye-jwt/generate-jwt.html](https://smallrye.io/docs/smallrye-jwt/generate-jwt.html)
 
 # Referências 📚
 

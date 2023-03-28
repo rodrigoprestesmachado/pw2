@@ -6,8 +6,8 @@ database Data {
 }
 
 [Front-end]
-sum - [First] : 8081/8445
-getSum - [Second] : 8082/8444
+sum - [First] : 8081/8444
+getSum - [Second] : 8082/8445
 jwt - [Users] : 8080/8443
 
 [Front-end] --> jwt : (1)
