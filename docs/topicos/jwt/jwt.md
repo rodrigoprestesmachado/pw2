@@ -23,7 +23,7 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
 
 Os tokens trabalham com o esquema de criptografia assimétrica utilizando chaves públicas e privadas, ou seja, podemos
 utilizar a chave pública de um serviço _X_ para poder assinar os tokens e, por sua vez, o serviço _X_  possui uma chave
-privada para poder abrir a mensagem.
+privada para poder validar a mensagem.
 
 💡 Veja o [vídeo](https://www.youtube.com/watch?v=AQDCe585Lnc) para entender mais sobre criptografia assimétrica.
 
