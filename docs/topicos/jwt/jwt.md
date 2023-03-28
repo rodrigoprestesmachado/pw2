@@ -21,7 +21,9 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
 
 ## Gerando chaves públicas e privadas com OpenSSL 🔐
 
-Os tokens trabalham com o esquema de criptografia assimétrica utilizando chaves públicas e privadas, ou seja, podemos utilizar a chave pública de um serviço _X_ para poder assinar os tokens e, por sua vez, o serviço _X_  possui uma chave privada para poder abrir a mensagem.
+Os tokens trabalham com o esquema de criptografia assimétrica utilizando chaves públicas e privadas, ou seja, podemos
+utilizar a chave pública de um serviço _X_ para poder assinar os tokens e, por sua vez, o serviço _X_  possui uma chave
+privada para poder abrir a mensagem.
 
 💡 Veja o [vídeo](https://www.youtube.com/watch?v=AQDCe585Lnc) para entender mais sobre criptografia assimétrica.
 
@@ -112,7 +114,8 @@ Em uma arquitetura de micro serviços, é bastante comum que necessitemos propag
 
 # Hyper Text Transfer Protocol Secure (HTTPS)
 
-Um dos problemas do JWT é que o token pode ser capturado, nesse caso, se faz necessário utilizar _Hyper Text Transfer Protocol Secure_ (HTTPS) para fazer com queo JWT trafegue sempre numa conexão criptografada. Assim, pare gerar uma chave privada e um certificado utilize o comando:
+Um dos problemas do JWT é que o token pode ser capturado, nesse caso, se faz necessário utilizar _Hyper Text Transfer Protocol Secure_ (HTTPS) para fazer com que o JWT trafegue sempre numa conexão criptografada. Assim, pare gerar uma chave privada e um certificado
+utilize o comando:
 
 ```sh
     keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 365 -keysize 2048
@@ -126,6 +129,14 @@ Para informar o caminho do arquivo keystore.jks adicione a seguinte propriedades
     quarkus.http.ssl.certificate.key-store-file=keystore.jks
 ```
 
+🚨 Nota, quando você estiver utilizando Rest Client se faz necessário utilizar a propriedade `quarkus.tls.trust-all`
+para que o cliente confie em certificados não homologados por uma unidade certificadora. Assim, adicione a seguinte linha
+no arquivo de properties do serviço que utiliza um Rest Client:
+
+```
+    quarkus.tls.trust-all=true
+```
+
 ## Exemplo de código 🖥️
 
 O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro serviços para suportar um _front-end_, normalmente chamado de _Back-end for Front-end_ (BFF). Como exemplo, o diagrama de componentes da Figura 1 ilustra os serviços e suas relações.
@@ -135,17 +146,20 @@ O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro servi
         <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Back-end for Front-end (BFF)" width="40%" height="40%"/>
     </a>
     <br/>
-    Figura 1 - Back-end for Front-end (BFF)
+    Figura 1 - Exemplo de uso do JWT no contexto de um Back-end for Front-end (BFF)
 </center>
 
-O JWT do exemplo é utilizado para proteger os métodos dos serviços "BFF" e "Backend". Desta maneira, é necessário se obter um token por meio do serviço de "usuários" para depois conseguir acessar os demais serviços. Para baixar o código desse pequeno exemplo utilize os seguintes comandos:
+O JWT do exemplo é utilizado para proteger os métodos dos serviços "First" e "Second". Desta maneira, é necessário se
+obter um token por meio do serviço de "Users" para depois conseguir acessar os demais serviços. Para baixar o código
+desse exemplo utilize os seguintes comandos:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-cd pw2/exemplos/bff
+cd pw2/exemplos/jwt
 ```
 
-🚨 Atenção, no diretório `bff` você irá encontrar um projeto para cada serviço (users, bff e backend) conforme apresentado na Figura 1.
+🚨 Atenção, no diretório `jwt` você irá encontrar um projeto para cada serviço (users,
+first e second) conforme apresentado na Figura 1.
 
 # Referências 📚
 
