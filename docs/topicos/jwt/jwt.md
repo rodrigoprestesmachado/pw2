@@ -63,7 +63,7 @@ um exemplo:
 @Path("/jwt")
 @PermitAll
 @Produces(MediaType.TEXT_PLAIN)
-public String generate(@Context SecurityContext ctx) {
+public String generate() {
     return Jwt.issuer("http://localhost:8080")
             .upn("rodrigo@rpmhub.dev")
             .groups(new HashSet<>(Arrays.asList("User", "Admin")))
@@ -91,7 +91,7 @@ String fullName;
 @Path("/sum/{a}/{b}")
 @RolesAllowed({ "User" })
 @Produces(MediaType.TEXT_PLAIN)
-public long sum(@Context SecurityContext ctx, @PathParam("a") long a, @PathParam("b") long b) {
+public long sum(@PathParam("a") long a, @PathParam("b") long b) {
     return a + b;
 }
 ```
@@ -167,7 +167,8 @@ first e second) conforme apresentado na Figura 1.
 
 ## Sign e Encrypt
 
-Um JWT pode ser assinado, com o objetivo de verificar a validade, e criptografado, quando o _payload_ (_claims_) possuir dados sensíveis. O [exemplo acima disponível no Github](https://github.com/rodrigoprestesmachado/pw2/exemplos/jwt), utiliza os dois processos ao mesmo tempo por meio dos métodos `innerSign()` e `encrypt()`, observe o exemplo:
+Um JWT pode ser assinado, com o objetivo de verificar a validade, e criptografado, quando o _payload_ (_claims_) possuir dados sensíveis. O [exemplo acima disponível no Github](https://github.com/rodrigoprestesmachado/pw2/tree/dev/exemplos/jwt),
+utiliza os dois processos ao mesmo tempo por meio dos métodos `innerSign()` e `encrypt()`, observe o exemplo:
 
 ```java
 @GET
