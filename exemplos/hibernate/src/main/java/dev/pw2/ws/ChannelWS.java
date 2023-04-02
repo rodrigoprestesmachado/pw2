@@ -7,17 +7,17 @@
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  *
 */
-package dev.pw2;
+package dev.pw2.ws;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import dev.pw2.model.Channel;
 import dev.pw2.model.User;
@@ -42,12 +42,14 @@ public class ChannelWS {
    public User add(@PathParam("idChannel") Long idChannel, @PathParam("idUser") Long idUser) {
 
       Channel channel = Channel.findById(idChannel);
-      if (channel == null)
-         throw new BadRequestException("Channel not found");
+      if (channel == null){
+        throw new BadRequestException("Channel not found");
+      }
 
       User user = User.findById(idUser);
-      if (user == null)
-         throw new BadRequestException("User not found");
+      if (user == null){
+        throw new BadRequestException("User not found");
+      }
 
       channel.addUser(user);
       user.addChannel(channel);

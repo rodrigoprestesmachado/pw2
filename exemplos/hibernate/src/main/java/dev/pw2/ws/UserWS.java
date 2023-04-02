@@ -6,23 +6,23 @@
  * You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
 */
-package dev.pw2;
+package dev.pw2.ws;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import dev.pw2.model.User;
 
-@Path("/user")
-@Transactional
 // 1 - Podemos delegar o controle de transação utilizando a anotação
 // @Transactional nos métodos ou no nível da classe.
+@Path("/user")
+@Transactional
 public class UserWS {
 
     @GET
