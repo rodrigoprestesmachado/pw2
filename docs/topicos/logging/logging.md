@@ -1,8 +1,41 @@
 # Trace e Log
 
-Esse tutorial mostra os principais passos para você adicionar uma ferramenta de *trace* chamada Jaeger e também uma ferramenta para consolidar logs chamada Graylog
+Esse tutorial mostra os principais passos para você adicionar uma ferramenta
+de *trace* chamada Jaeger e também uma ferramenta para consolidar _logs_ chamada
+Graylog
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/logging/slides/index.html#/"
+        title="Trace e Log" width="90%" height="500" style="border:none;">
+    </iframe>
+</center>
 
 ## Jaeger
+
+Inspirado no [Dapper](https://research.google/pubs/pub36356/) e [OpenZipkin](https://zipkin.io/)
+O Jaeger foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído.
+Ele fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo
+que os desenvolvedores vejam o desempenho e o comportamento do serviço em tempo
+real.
+
+O Jaeger opera por meio do rastreamento de solicitações de serviços (*requests*),
+registrando informações sobre cada solicitação à medida que ela passa pelos
+diferentes serviços do sistema. Esses registros são coletados e analisados pelo
+Jaeger, permitindo que os desenvolvedores vejam como as solicitações estão sendo
+processadas e onde ocorrem possíveis gargalos ou falhas.
+
+Com o Jaeger, os desenvolvedores podem identificar rapidamente problemas de
+desempenho e depurar problemas de falhas em aplicativos distribuídos complexos,
+ajudando a melhorar a eficiência e a confiabilidade do sistema como um todo.
+
+Entre as principais funcionalidades do Jaeger estão: Rastreamento de
+solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas
+e notificações, armazenamento em longo prazo e integração com outras ferramentas.
+
+Entretanto, o Jaeger possui algumas desvantagens, são elas: impacto no
+desempenho do sistema (_overhead_), gerenciamento de dados,
+conhecimento especializado e integração com algumas ferramentas pode ser um
+desafio
 
 O Jaeger é uma aplicação que segue implementa a especificação [MicroProfile OpenTracing](https://github.com/eclipse/microprofile-opentracing/) implementada por meio do [SmallRye OpenTracing](https://github.com/smallrye/smallrye-opentracing/).
 
@@ -23,7 +56,9 @@ services:
         - "14268:14268"
 ```
 
-Vamos aos passos de configuração do Jaeger em um projeto Quarkus: Primeiro, instale a extensão `quarkus-smallrye-opentracing` no seu projeto. Depois, configure o seu `application.properties` com as configurações do Jaeger:
+Vamos aos passos de configuração do Jaeger em um projeto Quarkus: Primeiro,
+instale a extensão `quarkus-smallrye-opentracing` no seu projeto. Depois,
+configure o seu `application.properties` com as configurações do Jaeger:
 
 ```sh
 quarkus.jaeger.service-name=myservice
@@ -35,6 +70,23 @@ quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{pa
 🚨 No exemplo acima, "*myservice*" será o nome do ser serviço no Jaeger.
 
 ## GrayLog
+
+Graylog é uma plataforma de gerenciamento e análise de _logs_ que permite
+coletar, processar e analisar registros de várias fontes, como aplicativos,
+serviços, sistemas operacionais e dispositivos de rede.
+
+O  GrayLog oferece uma interface da web para pesquisar e analisar _logs_,
+bem como ferramentas de alerta para notificar as equipes quando ocorrem
+eventos importantes. O Graylog oferece recursos de pesquisa avançada, permitindo
+que os usuários encontrem rapidamente informações específicas em seus logs.
+Além disso, o Graylog oferece recursos de análise de log, como gráficos e
+métricas, que podem ajudar as equipes de operações e desenvolvimento a
+identificar tendências de desempenho e problemas recorrentes.
+
+O Graylog é uma ferramenta de código aberto que oferece uma variedade de
+integrações com outras ferramentas populares, [Kafka](https://kafka.apache.org),
+[Prometheus](https://prometheus.io) e outros, permitindo que os usuários
+personalizem a plataforma de acordo com suas necessidades.
 
 Para colocar o GrayLog para rodar utilize, por exemplo, o `docker-compose.yml` abaixo:
 
@@ -82,7 +134,10 @@ networks:
     driver: bridge
 ```
 
-Agora, vamos aos passos para configurar o GrayLog no Quarkus: Primeiro,  instale a extensão `quarkus-logging-gelf` no seu projeto. Depois, configure o `application.properties` para permitir que as mensagens do seu projeto possam ser encaminhadas para o GrayLog.
+Agora, vamos aos passos para configurar o GrayLog no Quarkus: Primeiro, instale
+a extensão `quarkus-logging-gelf` no seu projeto. Depois, configure o
+`application.properties` para permitir que as mensagens do seu projeto possam
+ser encaminhadas para o GrayLog.
 
 ```sh
 quarkus.log.handler.gelf.enabled=true
