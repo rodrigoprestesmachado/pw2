@@ -1,7 +1,7 @@
 # Trace e Log
 
 Esse tutorial mostra os principais passos para você adicionar uma ferramenta
-de *trace* chamada Jaeger e também uma ferramenta para consolidar _logs_ chamada
+de *trace* chamada Jaeger e também uma ferramenta para consolidar __logs__ chamada
 Graylog
 
 <center>
@@ -12,30 +12,23 @@ Graylog
 
 ## Jaeger
 
-Inspirado no [Dapper](https://research.google/pubs/pub36356/) e [OpenZipkin](https://zipkin.io/)
-O Jaeger foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído.
-Ele fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo
-que os desenvolvedores vejam o desempenho e o comportamento do serviço em tempo
-real.
+Inspirado no [Dapper](https://research.google/pubs/pub36356/) e [OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io) foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído. Ele fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo que os desenvolvedores vejam o desempenho e o comportamento do serviço em tempo real.
 
-O Jaeger opera por meio do rastreamento de solicitações de serviços (*requests*),
-registrando informações sobre cada solicitação à medida que ela passa pelos
-diferentes serviços do sistema. Esses registros são coletados e analisados pelo
-Jaeger, permitindo que os desenvolvedores vejam como as solicitações estão sendo
-processadas e onde ocorrem possíveis gargalos ou falhas.
+O [Jaeger](https://www.jaegertracing.io) opera por meio do rastreamento de
+solicitações de serviços (*requests*), registrando informações sobre cada
+solicitação à medida que ela passa pelos diferentes serviços do sistema. Esses
+registros são coletados e analisados pelo Jaeger, permitindo que os
+desenvolvedores vejam como as solicitações estão sendo processadas e onde ocorrem possíveis gargalos ou falhas.
 
 Com o Jaeger, os desenvolvedores podem identificar rapidamente problemas de
-desempenho e depurar problemas de falhas em aplicativos distribuídos complexos,
-ajudando a melhorar a eficiência e a confiabilidade do sistema como um todo.
+desempenho e depurar problemas de falhas em aplicativos distribuídos complexos, ajudando a melhorar a eficiência e a confiabilidade do sistema como um todo.
 
 Entre as principais funcionalidades do Jaeger estão: Rastreamento de
-solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas
-e notificações, armazenamento em longo prazo e integração com outras ferramentas.
+solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas e notificações, armazenamento em longo prazo e integração com outras ferramentas.
 
 Entretanto, o Jaeger possui algumas desvantagens, são elas: impacto no
-desempenho do sistema (_overhead_), gerenciamento de dados,
-conhecimento especializado e integração com algumas ferramentas pode ser um
-desafio
+desempenho do sistema (_overhead_), gerenciamento de dados, conhecimento especializado e integração com algumas ferramentas pode ser um
+desafio.
 
 O Jaeger é uma aplicação que segue implementa a especificação [MicroProfile OpenTracing](https://github.com/eclipse/microprofile-opentracing/) implementada por meio do [SmallRye OpenTracing](https://github.com/smallrye/smallrye-opentracing/).
 
@@ -56,6 +49,21 @@ services:
         - "14268:14268"
 ```
 
+Para executar um arquivo `docker-compose.yml`, siga os seguintes passos:
+
+1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
+   Você pode seguir as instruções de instalação do Docker e do Docker Compose
+   em suas respectivas documentações oficiais.
+1. Navegue até o diretório onde o arquivo `docker-compose.yml` está localizado.
+   Abra um terminal ou prompt de comando no diretório em questão.
+1. Execute o comando `docker-compose up -d` para iniciar todos os contêineres
+   definidos no arquivo docker-compose.yml. Este comando irá baixar as imagens
+   necessárias do Docker Hub e executar os contêineres em questão.
+1. Aguarde até que todos os contêineres sejam iniciados e estejam prontos para
+   uso.
+1. Para interromper e remover todos os contêineres definidos no arquivo
+   `docker-compose.yml`, execute o comando `docker-compose down`.
+
 Vamos aos passos de configuração do Jaeger em um projeto Quarkus: Primeiro,
 instale a extensão `quarkus-smallrye-opentracing` no seu projeto. Depois,
 configure o seu `application.properties` com as configurações do Jaeger:
@@ -67,28 +75,34 @@ quarkus.jaeger.sampler-param=1
 quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n
 ```
 
-🚨 No exemplo acima, "*myservice*" será o nome do ser serviço no Jaeger.
+🚨 A configuração acima mostra como configurar a integração do Jaeger com o
+Quarkus.
+
+1. A primeira linha `quarkus.jaeger.service-name=myservice` define o nome do
+   serviço que está sendo monitorado. Nesse caso, "myservice" é o nome do serviço.
+1. A segunda linha `quarkus.jaeger.sampler-type=const` define o tipo de
+   amostragem que está sendo usado. "**_const_**" significa que todas as amostras
+   serão coletadas.
+1. A terceira linha `quarkus.jaeger.sampler-param=1` define o parâmetro de
+   amostragem. Nesse caso, está definido como 1, o que significa que todas as
+   amostras serão coletadas.
+1. A quarta linha `quarkus.log.console.format=%d{HH:mm:ss} %-5p
+   traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId},
+   sampled=%X{sampled} [%c{2.}] (%t) %s%e%n` define o formato de log que será
+   usado.
 
 ## GrayLog
 
-Graylog é uma plataforma de gerenciamento e análise de _logs_ que permite
-coletar, processar e analisar registros de várias fontes, como aplicativos,
-serviços, sistemas operacionais e dispositivos de rede.
+O [Graylog](https://www.graylog.org) é uma ferramenta de gerenciamento e análise de logs que permite coletar, processar e analisar registros de várias fontes, como aplicativos, serviços, sistemas operacionais e dispositivos de rede.
 
-O  GrayLog oferece uma interface da web para pesquisar e analisar _logs_,
-bem como ferramentas de alerta para notificar as equipes quando ocorrem
-eventos importantes. O Graylog oferece recursos de pesquisa avançada, permitindo
-que os usuários encontrem rapidamente informações específicas em seus logs.
-Além disso, o Graylog oferece recursos de análise de log, como gráficos e
-métricas, que podem ajudar as equipes de operações e desenvolvimento a
-identificar tendências de desempenho e problemas recorrentes.
+O [Graylog](https://www.graylog.org) oferece uma interface da Web para pesquisar e analisar logs, bem como ferramentas de alerta para notificar as equipes quando ocorrem eventos importantes. Além disso, o Graylog oferece recursos de análise de log, como gráficos e métricas, que podem ajudar as equipes de operações e desenvolvimento a identificar tendências de desempenho e problemas recorrentes.
 
-O Graylog é uma ferramenta de código aberto que oferece uma variedade de
-integrações com outras ferramentas populares, [Kafka](https://kafka.apache.org),
-[Prometheus](https://prometheus.io) e outros, permitindo que os usuários
-personalizem a plataforma de acordo com suas necessidades.
+O [Graylog](https://www.graylog.org) é uma ferramenta de código aberto que
+oferece uma variedade de integrações com outras ferramentas populares,
+[Kafka](https://kafka.apache.org), [Prometheus](https://prometheus.io) e outros, permitindo que os usuários personalizem a plataforma de acordo com suas necessidades.
 
-Para colocar o GrayLog para rodar utilize, por exemplo, o `docker-compose.yml` abaixo:
+Para colocar o GrayLog para rodar utilize, por exemplo, o `docker-compose.yml`
+abaixo:
 
 ```yml
 version: '3.9'
@@ -134,8 +148,9 @@ networks:
     driver: bridge
 ```
 
-Agora, vamos aos passos para configurar o GrayLog no Quarkus: Primeiro, instale
-a extensão `quarkus-logging-gelf` no seu projeto. Depois, configure o
+Depois de executar o comando `docker-compose up -d`, você pode acessar o GrayLog.
+
+Agora, vamos aos passos para configurar o GrayLog no Quarkus: Primeiro, instale a extensão `quarkus-logging-gelf` no seu projeto. Depois, configure o
 `application.properties` para permitir que as mensagens do seu projeto possam
 ser encaminhadas para o GrayLog.
 
@@ -145,6 +160,15 @@ quarkus.log.handler.gelf.host=localhost
 quarkus.log.handler.gelf.port=12201
 ```
 
+Esse código configura as propriedades de registro (_logging_) do Quarkus para
+enviar _logs_ em formato GELF (Graylog Extended Log Format) para um servidor
+local hospedado em `localhost` na porta `12201`.
+
+O GELF é um formato de registro que permite a estruturação de dados adicionais
+nos _logs_, como campos adicionais, tags e outras informações importantes, além das mensagens padrão de registro. Essas informações adicionais podem ser usadas para melhorar a análise de _logs_ e a depuração de problemas no sistema.
+
+Ao configurar essas propriedades, o Quarkus enviará _logs_ formatados em GELF para o servidor hospedado em `localhost` na porta `12201`, permitindo que o servidor colete e analise os _logs_ do aplicativo Quarkus.
+
 Finalmente, crie um "*input*" no GrayLog:
 
 ```sh
@@ -153,7 +177,22 @@ curl -H "Content-Type: application/json" -H "Authorization: Basic YWRtaW46YWRtaW
 http://localhost:9000/api/system/inputs
 ```
 
-🚨 Um "*input*" também pode ser criado pelo console de administração do GrayLog (System → Input → Select GELF UDP).
+🚨 Um "*input*" também pode ser criado pelo console de administração do
+GrayLog(System → Input → Select GELF UDP).
+
+Na prática, um _input_ é uma fonte de dados que o Graylog pode monitorar e coletar informações. Por exemplo, se você tem um aplicativo executando em um servidor, é possível configurar um _input_ para coletar os _logs_ desse servidor.
+
+Embora o [Graylog](https://www.graylog.org) seja uma plataforma de
+gerenciamento e análise de logs robusta e altamente escalável, há algumas
+desvantagens a serem consideradas:
+
+1. Configuração complexa: A configuração inicial do Graylog pode ser complexa,
+   principalmente se você tiver muitas fontes de dados diferentes ou se precisar criar filtros e alertas personalizados.
+2. Requer habilidades técnicas: Para aproveitar ao máximo o Graylog, é
+   necessário ter conhecimento técnico em sistemas operacionais, redes,
+   bancos de dados, entre outras áreas, o que pode ser um desafio para equipes
+   que não possuem essas habilidades internamente.
+3. Alto consumo de recursos: O Graylog é uma plataforma de log que requer muitos recursos para executar de forma eficiente, o que pode ser um problema para organizações com limitações de recursos de hardware ou nuvem.
 
 ## Código 💡
 
@@ -161,7 +200,7 @@ Um exemplo funcional do Jaeger e GrayLog pode ser obtido no projeto:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-exemplos/jwt/jwt-provider
+exemplos/jwt
 ```
 
 # Referências 📚
@@ -172,7 +211,12 @@ exemplos/jwt/jwt-provider
 
 * Centralized Log Management. Disponível em: [https://quarkus.io/guides/centralized-log-management](https://quarkus.io/guides/centralized-log-management)
 
+* Jaeger. Disponível em: [https://www.jaegertracing.io](https://www.jaegertracing.io)
+
+* GrayLog. Disponível em: [https://www.graylog.org](https://www.graylog.org)
+
 <center>
-<a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+    <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a>
+    <br/>
+    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
 </center>
