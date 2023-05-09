@@ -12,27 +12,24 @@ Graylog
 
 ## Jaeger
 
-Inspirado no [Dapper](https://research.google/pubs/pub36356/) e [OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io) foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído. Ele fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo que os desenvolvedores vejam o desempenho e o comportamento do serviço em tempo real.
+Inspirado no [Dapper](https://research.google/pubs/pub36356/) e [OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io) foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído. O *trace* é o registo de uma requisição de ponta a ponta em um sistema distribuído. Ele fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo que os desenvolvedores vejam o desempenho e o comportamento do serviço em tempo real.
 
-O [Jaeger](https://www.jaegertracing.io) opera por meio do rastreamento de
-solicitações de serviços (*requests*), registrando informações sobre cada
-solicitação à medida que ela passa pelos diferentes serviços do sistema. Esses
-registros são coletados e analisados pelo Jaeger, permitindo que os
-desenvolvedores vejam como as solicitações estão sendo processadas e onde ocorrem possíveis gargalos ou falhas.
+O [Jaeger](https://www.jaegertracing.io) opera por meio do rastreamento dos *requests*, registrando informações sobre cada solicitação à medida que ela passa pelos diferentes
+serviços do sistema. Esses registros são coletados e analisados pelo Jaeger, permitindo 
+que os desenvolvedores vejam como as solicitações estão sendo processadas e onde ocorrem possíveis gargalos ou falhas.
 
 Com o Jaeger, os desenvolvedores podem identificar rapidamente problemas de
-desempenho e depurar problemas de falhas em aplicativos distribuídos complexos, ajudando a melhorar a eficiência e a confiabilidade do sistema como um todo.
+desempenho e depurar falhas em aplicativos distribuídos complexos, ajudando a melhorar a eficiência e a confiabilidade do sistema como um todo.
 
 Entre as principais funcionalidades do Jaeger estão: Rastreamento de
-solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas e notificações, armazenamento em longo prazo e integração com outras ferramentas.
+solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas e notificações, armazenamento no longo prazo e integração com outras ferramentas.
 
 Entretanto, o Jaeger possui algumas desvantagens, são elas: impacto no
-desempenho do sistema (_overhead_), gerenciamento de dados, conhecimento especializado e integração com algumas ferramentas pode ser um
-desafio.
+desempenho do sistema (_overhead_), custo adicional, gerenciamento de dados, conhecimento especializado e integração com algumas ferramentas pode ser um desafio.
 
 O Jaeger é uma aplicação que segue implementa a especificação [MicroProfile OpenTracing](https://github.com/eclipse/microprofile-opentracing/) implementada por meio do [SmallRye OpenTracing](https://github.com/smallrye/smallrye-opentracing/).
 
-Para colocar o Jaeger para rodar utilize, por exemplo, o `docker-compose.yml` abaixo:
+Para executar o Jaeger utilize, por exemplo, o `docker-compose.yml` abaixo:
 
 ```yml
 version: '3.9'
@@ -41,55 +38,51 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
-        - "5775:5775/udp"
-        - "6831:6831/udp"
-        - "6832:6832/udp"
-        - "5778:5778"
-        - "16686:16686"
-        - "14268:14268"
+      - "16686:16686" # Jaeger UI
+      - "14268:14268" # Receive legacy OpenTracing traces, optional
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver, not yet used by Quarkus, optional
+      - "14250:14250" # Receive from external otel-collector, optional
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
 ```
 
 Para executar um arquivo `docker-compose.yml`, siga os seguintes passos:
 
-1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
-   Você pode seguir as instruções de instalação do Docker e do Docker Compose
-   em suas respectivas documentações oficiais.
+1. Certifique-se de ter o [Docker](https://www.docker.com/) e o [Docker Compose](https://docs.docker.com/compose/) instalados em sua máquina.
 1. Navegue até o diretório onde o arquivo `docker-compose.yml` está localizado.
    Abra um terminal ou prompt de comando no diretório em questão.
 1. Execute o comando `docker-compose up -d` para iniciar todos os contêineres
-   definidos no arquivo docker-compose.yml. Este comando irá baixar as imagens
+   definidos no arquivo `docker-compose.yml`. Este comando irá baixar as imagens
    necessárias do Docker Hub e executar os contêineres em questão.
 1. Aguarde até que todos os contêineres sejam iniciados e estejam prontos para
    uso.
-1. Para interromper e remover todos os contêineres definidos no arquivo
+1. Cado deseje interromper e remover todos os contêineres definidos no arquivo
    `docker-compose.yml`, execute o comando `docker-compose down`.
 
+### Jaeger com Quarkus
+
 Vamos aos passos de configuração do Jaeger em um projeto Quarkus: Primeiro,
-instale a extensão `quarkus-smallrye-opentracing` no seu projeto. Depois,
+instale a extensão `quarkus-opentelemetry` no seu projeto. Depois,
 configure o seu `application.properties` com as configurações do Jaeger:
 
 ```sh
-quarkus.jaeger.service-name=myservice
-quarkus.jaeger.sampler-type=const
-quarkus.jaeger.sampler-param=1
+quarkus.otel.service.name=myservice
+quarkus.otel.exporter.otlp.traces.endpoint=http://localhost:4317
 quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n
 ```
 
 🚨 A configuração acima mostra como configurar a integração do Jaeger com o
 Quarkus.
 
-1. A primeira linha `quarkus.jaeger.service-name=myservice` define o nome do
-   serviço que está sendo monitorado. Nesse caso, "myservice" é o nome do serviço.
-1. A segunda linha `quarkus.jaeger.sampler-type=const` define o tipo de
-   amostragem que está sendo usado. "**_const_**" significa que todas as amostras
-   serão coletadas.
-1. A terceira linha `quarkus.jaeger.sampler-param=1` define o parâmetro de
-   amostragem. Nesse caso, está definido como 1, o que significa que todas as
-   amostras serão coletadas.
+1. A primeira linha `quarkus.otel.service.name` define o nome do
+  serviço que está sendo monitorado. Nesse caso, "myservice" é o nome do serviço.
+1. A segunda linha `quarkus.otel.exporter.otlp.traces.endpoint` define o endpoint aonde
+  informações de log serão armazenadas. Neste caso, o endpoint é `http://localhost:4317`.
 1. A quarta linha `quarkus.log.console.format=%d{HH:mm:ss} %-5p
-   traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId},
-   sampled=%X{sampled} [%c{2.}] (%t) %s%e%n` define o formato de log que será
-   usado.
+  traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId},
+  sampled=%X{sampled} [%c{2.}] (%t) %s%e%n` define o formato de log que será
+  usado.
 
 ## GrayLog
 
@@ -111,23 +104,23 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.2
     ports:
-      - "9200:9200"
+      - "9200:9200" # Elasticsearch HTTP
     environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m" # Maximum memory allocation pool
     networks:
-      - graylog
+      - graylog # Use the same network defined above
 
   mongo:
-    image: mongo:4.0
+    image: mongo:4.0 
     networks:
-      - graylog
+      - graylog # Use the same network defined above
 
   graylog:
     image: graylog/graylog:4.2.3-1-jre11
     ports:
-      - "9000:9000"
-      - "12201:12201/udp"
-      - "1514:1514"
+      - "9000:9000" # Graylog web interface and REST API
+      - "12201:12201/udp" # GELF UDP
+      - "1514:1514" # GELF TCP
     environment:
       - TZ=America/Sao_Paulo
       - GRAYLOG_ROOT_TIMEZONE=America/Sao_Paulo
@@ -138,14 +131,14 @@ services:
       - GRAYLOG_ELASTICSEARCH_INDEX_PREFIX=graylog
 
     networks:
-      - graylog
+      - graylog # the network named graylog
     depends_on:
       - elasticsearch
       - mongo
 
 networks:
   graylog:
-    driver: bridge
+    driver: bridge # Use the default bridge driver
 ```
 
 Depois de executar o comando `docker-compose up -d`, você pode acessar o GrayLog.
@@ -193,15 +186,6 @@ desvantagens a serem consideradas:
    bancos de dados, entre outras áreas, o que pode ser um desafio para equipes
    que não possuem essas habilidades internamente.
 3. Alto consumo de recursos: O Graylog é uma plataforma de log que requer muitos recursos para executar de forma eficiente, o que pode ser um problema para organizações com limitações de recursos de hardware ou nuvem.
-
-## Código 💡
-
-Um exemplo funcional do Jaeger e GrayLog pode ser obtido no projeto:
-
-```sh
-git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-exemplos/jwt
-```
 
 # Referências 📚
 

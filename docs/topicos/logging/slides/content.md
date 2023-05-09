@@ -24,13 +24,16 @@ Pressione 'F' para tela cheia
 * O Jaeger é uma ferramenta para a realização de *trace* distribuído.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-* Fornece visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo
+* O *trace* é o registo dos requests de ponta a ponta em um sistema distribuído.
+<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
+
+* Fornece visibilidade do fluxo de trabalho de um serviço, permitindo
 que os desenvolvedores vejam o desempenho e o comportamento do sistema.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
 * Jaeger rastreia as requisições dos serviços e registra as
-informações de cada _request_ à medida que ela passa pelos
-diferentes serviços que compõem a aplicação.
+informações de cada _request_ à medida que passa pelos diferentes serviços 
+que compõem a aplicação.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
 
@@ -38,10 +41,10 @@ diferentes serviços que compõem a aplicação.
 ## Jaeger
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Entre as principais funcionalidades do Jaeger estão:
+* Principais funcionalidades do Jaeger:
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * Rastreamento de solicitações (_requests_)
+  * Rastreamento das solicitações (_requests_) distribuidas
   <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
   * Visualização do fluxo de trabalho
@@ -50,7 +53,7 @@ diferentes serviços que compõem a aplicação.
   * Alertas e notificações
   <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
-  * Armazenamento em longo prazo
+  * Armazenamento
   <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
   * Análise de desempenho
@@ -61,10 +64,10 @@ diferentes serviços que compõem a aplicação.
 ## Jaeger
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Algumas desvantagens:
+* Algumas desvantagens do Jaeger:
   <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
-  * Impacto no desempenho do sistema (_overhead_)
+  * Impacto no desempenho do sistema (_overhead_) e custo
   <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
   * Conhecimento especializado
@@ -87,7 +90,7 @@ diferentes serviços que compõem a aplicação.
 * O GrayLog é uma ferramenta de gerenciamento e análise de logs que permite coletar, processar e analisar registros de várias fontes
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
 
-* Oferece uma interface da Web para pesquisar e analisar logs
+* Oferece uma interface da Web que permite pesquisar e analisar os logs
  <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
 
 * Também oferece ferramentas de alerta para notificar equipes quando ocorrem eventos importantes
@@ -116,7 +119,7 @@ diferentes serviços que compõem a aplicação.
 
 
 <!-- .slide: data-background="#D6B2FF" data-transition="convex" -->
-## Para refletir
+## Teste seus conhecimento
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:back; font-family: Marker Felt;" -->
 
 <center>
