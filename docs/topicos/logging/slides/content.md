@@ -119,7 +119,7 @@ que compõem a aplicação.
 
 
 <!-- .slide: data-background="#D6B2FF" data-transition="convex" -->
-## Teste seus conhecimento
+## Teste seus conhecimentos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:back; font-family: Marker Felt;" -->
 
 <center>
