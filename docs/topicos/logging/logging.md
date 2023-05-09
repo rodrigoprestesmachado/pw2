@@ -27,7 +27,7 @@ solicitações, visualização do fluxo de trabalho, análise de desempenho, ale
 Entretanto, o Jaeger possui algumas desvantagens, são elas: impacto no
 desempenho do sistema (_overhead_), custo adicional, gerenciamento de dados, conhecimento especializado e integração com algumas ferramentas pode ser um desafio.
 
-O Jaeger é uma aplicação que segue implementa a especificação [MicroProfile OpenTracing](https://github.com/eclipse/microprofile-opentracing/) implementada por meio do [SmallRye OpenTracing](https://github.com/smallrye/smallrye-opentracing/).
+O Jaeger é uma aplicação que segue implementa a especificação [OpenTelemetry](https://quarkus.io/guides/opentelemetry).
 
 Para executar o Jaeger utilize, por exemplo, o `docker-compose.yml` abaixo:
 
@@ -191,7 +191,7 @@ desvantagens a serem consideradas:
 
 * Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
 
-* Using Opentracing. Disponível em: [https://quarkus.io/guides/opentracing](https://quarkus.io/guides/opentracing)
+* Using OpenTelemetry. Disponível em: [https://quarkus.io/guides/opentelemetry](https://quarkus.io/guides/opentelemetry)
 
 * Centralized Log Management. Disponível em: [https://quarkus.io/guides/centralized-log-management](https://quarkus.io/guides/centralized-log-management)
 
