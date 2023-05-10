@@ -127,8 +127,8 @@ services:
     ports:
       - "9200:9200"
     environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m" # Use half of the available RAM
+      discovery.type: "single-node" # Disable production mode
     networks:
       - graylog
 
@@ -138,11 +138,11 @@ services:
       - graylog
 
   graylog:
-    image: graylog/graylog:4.3.0
+    image: graylog/graylog:4.3.0 # graylog version
     ports:
-      - "9000:9000"
-      - "12201:12201/udp"
-      - "1514:1514"
+      - "9000:9000" # HTTP
+      - "12201:12201/udp" # GELF UDP
+      - "1514:1514" # GELF TCP
     environment:
       GRAYLOG_HTTP_EXTERNAL_URI: "http://127.0.0.1:9000/"
       # CHANGE ME (must be at least 16 characters)!
