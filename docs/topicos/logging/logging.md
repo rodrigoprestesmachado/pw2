@@ -1,7 +1,7 @@
 # Trace e Log
 
 Esse tutorial mostra os principais passos para você adicionar uma ferramenta
-de *trace* chamada Jaeger e também uma ferramenta para consolidar __logs__ 
+de *trace* chamada Jaeger e também uma ferramenta para consolidar __logs__
 chamada Graylog.
 
 <center>
@@ -12,27 +12,27 @@ chamada Graylog.
 
 ## Jaeger
 
-Inspirado no [Dapper](https://research.google/pubs/pub36356/) e 
-[OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io) 
+Inspirado no [Dapper](https://research.google/pubs/pub36356/) e
+[OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io)
 foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído que 
-implementa a especificação 
-[OpenTelemetry](https://quarkus.io/guides/opentelemetry). O *trace* é o registo 
-de uma requisição de ponta a ponta em um sistema distribuído. Ele fornece 
-visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo que os 
+implementa a especificação
+[OpenTelemetry](https://quarkus.io/guides/opentelemetry). O *trace* é o registo
+de uma requisição de ponta a ponta em um sistema distribuído. Ele fornece
+visibilidade do fluxo de trabalho de um serviço (*trace*), permitindo que os
 desenvolvedores vejam o desempenho e o comportamento do serviço em tempo real.
 
-O [Jaeger](https://www.jaegertracing.io) opera por meio do rastreamento dos 
-*requests*, registrando informações sobre cada solicitação à medida que ela 
-passa pelos diferentes serviços do sistema. Esses registros são coletados e 
-analisados pelo Jaeger, permitindo  que os desenvolvedores vejam como as 
+O [Jaeger](https://www.jaegertracing.io) opera por meio do rastreamento dos
+*requests*, registrando informações sobre cada solicitação à medida que ela
+passa pelos diferentes serviços do sistema. Esses registros são coletados e
+analisados pelo Jaeger, permitindo  que os desenvolvedores vejam como as
 solicitações estão sendo processadas e onde ocorrem possíveis gargalos ou falhas.
 
-Com o Jaeger, os desenvolvedores podem identificar rapidamente problemas de 
-desempenho e depurar falhas em aplicativos distribuídos complexos, ajudando a 
+Com o Jaeger, os desenvolvedores podem identificar rapidamente problemas de
+desempenho e depurar falhas em aplicativos distribuídos complexos, ajudando a
 melhorar a eficiência e a confiabilidade do sistema como um todo.
 
 Entre as principais funcionalidades do Jaeger estão: Rastreamento de
-solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas 
+solicitações, visualização do fluxo de trabalho, análise de desempenho, alertas
 e notificações, armazenamento no longo prazo e integração com outras ferramentas.
 
 Para executar o Jaeger utilize, por exemplo, o `docker-compose.yml` abaixo:
@@ -55,7 +55,7 @@ services:
 
 Para executar um arquivo `docker-compose.yml`, siga os seguintes passos:
 
-1. Certifique-se de ter o [Docker](https://www.docker.com/) e o 
+1. Certifique-se de ter o [Docker](https://www.docker.com/) e o
   [Docker Compose](https://docs.docker.com/compose/) instalados em sua máquina.
 1. Navegue até o diretório onde o arquivo `docker-compose.yml` está localizado.
   Abra um terminal ou prompt de comando no diretório em questão.
@@ -68,8 +68,8 @@ Para executar um arquivo `docker-compose.yml`, siga os seguintes passos:
   `docker-compose.yml`, execute o comando `docker-compose down`.
 
 Cabe ressaltar, que o Jaeger possui algumas desvantagens, são elas: impacto no
-desempenho do sistema (_overhead_), custo adicional, gerenciamento de dados, 
-conhecimento especializado e integração com algumas ferramentas pode ser um 
+desempenho do sistema (_overhead_), custo adicional, gerenciamento de dados,
+conhecimento especializado e integração com algumas ferramentas pode ser um
 desafio.
 
 ### Jaeger com Quarkus
@@ -87,10 +87,10 @@ quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{pa
 🚨 A configuração acima mostra como configurar a integração do Jaeger com o
 Quarkus.
 
-1. A primeira linha `quarkus.otel.service.name` define o nome do serviço que 
+1. A primeira linha `quarkus.otel.service.name` define o nome do serviço que
   está sendo monitorado. Nesse caso, "myservice" é o nome do serviço.
-1. A segunda linha `quarkus.otel.exporter.otlp.traces.endpoint` define o 
-  endpoint aonde informações de log serão armazenadas. Neste caso, o endpoint 
+1. A segunda linha `quarkus.otel.exporter.otlp.traces.endpoint` define o
+  endpoint aonde informações de log serão armazenadas. Neste caso, o endpoint
   é `http://localhost:4317`.
 1. A quarta linha `quarkus.log.console.format=%d{HH:mm:ss} %-5p
   traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId},
@@ -105,8 +105,8 @@ como aplicativos, serviços, sistemas operacionais e dispositivos de rede.
 
 O [Graylog](https://www.graylog.org) oferece uma interface da Web para pesquisar
 e analisar logs, bem como ferramentas de alerta para notificar as equipes quando
-ocorrem eventos importantes. Além disso, o Graylog oferece recursos de análise 
-de log, como gráficos e métricas, que podem ajudar as equipes de operações e 
+ocorrem eventos importantes. Além disso, o Graylog oferece recursos de análise
+de log, como gráficos e métricas, que podem ajudar as equipes de operações e
 desenvolvimento a identificar tendências de desempenho e problemas recorrentes.
 
 O [Graylog](https://www.graylog.org) é uma ferramenta de código aberto que
@@ -119,47 +119,45 @@ Para colocar o GrayLog para rodar utilize, por exemplo, o `docker-compose.yml`
 abaixo:
 
 ```yml
-version: '3.9'
-services:
+version: '3.2'
 
+services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.2
+    image: docker.io/elastic/elasticsearch:7.16.3
     ports:
-      - "9200:9200" # Elasticsearch HTTP
+      - "9200:9200"
     environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m" # Maximum memory allocation pool
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: "single-node"
     networks:
-      - graylog # Use the same network defined above
+      - graylog
 
   mongo:
-    image: mongo:4.0 
+    image: mongo:4.0
     networks:
-      - graylog # Use the same network defined above
+      - graylog
 
   graylog:
-    image: graylog/graylog:4.2.3-1-jre11
+    image: graylog/graylog:4.3.0
     ports:
-      - "9000:9000" # Graylog web interface and REST API
-      - "12201:12201/udp" # GELF UDP
-      - "1514:1514" # GELF TCP
+      - "9000:9000"
+      - "12201:12201/udp"
+      - "1514:1514"
     environment:
-      - TZ=America/Sao_Paulo
-      - GRAYLOG_ROOT_TIMEZONE=America/Sao_Paulo
-      - GRAYLOG_PASSWORD_SECRET=somepasswordsomepassword
+      GRAYLOG_HTTP_EXTERNAL_URI: "http://127.0.0.1:9000/"
+      # CHANGE ME (must be at least 16 characters)!
+      GRAYLOG_PASSWORD_SECRET: "forpasswordencryption"
       # Password: admin
-      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
-      - GRAYLOG_ELASTICSEARCH_INDEX_PREFIX=graylog
-
+      GRAYLOG_ROOT_PASSWORD_SHA2: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
     networks:
-      - graylog # the network named graylog
+      - graylog
     depends_on:
       - elasticsearch
       - mongo
 
 networks:
   graylog:
-    driver: bridge # Use the default bridge driver
+    driver: bridge
 ```
 
 Depois de executar o comando `docker-compose up -d`, você pode acessar o GrayLog.
@@ -217,7 +215,7 @@ desvantagens a serem consideradas:
   bancos de dados, entre outras áreas, o que pode ser um desafio para equipes
   que não possuem essas habilidades internamente.
 1. Alto consumo de recursos: O Graylog é uma plataforma de log que requer muitos
-  recursos para executar de forma eficiente, o que pode ser um problema para 
+  recursos para executar de forma eficiente, o que pode ser um problema para
   organizações com limitações de recursos de hardware ou nuvem.
 
 # Referências 📚
