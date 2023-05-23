@@ -11,6 +11,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Util class to convert a model to entity
+ */
 public class Converter<T, J> {
 
     /**
@@ -23,21 +26,26 @@ public class Converter<T, J> {
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public J convert(T t, Class j) throws NoSuchMethodException, SecurityException, InstantiationException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public J convert(T t, Class j) throws NoSuchMethodException,
+        SecurityException, InstantiationException,
+        IllegalAccessException, IllegalArgumentException,
+        InvocationTargetException {
 
         // Instanciante a java generic object
         Constructor<J> constructor = j.getConstructor();
-        final J i = constructor.newInstance();
+        J i = constructor.newInstance();
 
         // Get all methods from java generic object
         Method[] methods = i.getClass().getMethods();
         // Iterate over all methods
         for (Method method : methods) {
             // If method starts with "set" then invoke it
-            if (method.getName().startsWith("set") && !method.getName().contains("Id")) {
+            if (method.getName().startsWith("set") &&
+                !method.getName().contains("Id")) {
                 String getMethodName = getMethodName(method.getName());
-                method.invoke(i, t.getClass().getDeclaredMethod(getMethodName).invoke(t));
+                method.invoke(i, t.getClass().getDeclaredMethod(getMethodName)
+                    .invoke(t));
             }
         }
         return i;

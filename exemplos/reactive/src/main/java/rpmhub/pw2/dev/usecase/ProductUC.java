@@ -11,6 +11,9 @@ import rpmhub.pw2.dev.model.Product;
 
 public class ProductUC implements ProductI {
 
+    /**
+     * Stores a business rule: sku is required.
+     */
     @Override
     public Product create(String sku, String name, String description) {
        if (sku == null || sku.isEmpty()) {

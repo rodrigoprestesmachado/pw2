@@ -8,6 +8,7 @@
 package rpmhub.pw2.dev.controllers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
@@ -21,23 +22,30 @@ import rpmhub.pw2.dev.util.Converter;
 @ApplicationScoped
 public class ProductController {
 
-    Converter productConverter = new Converter<Product, ProductEntity>();
+    // Clean architecture - Use case layer
     ProductUC productUC = new ProductUC();
-    ProductRepository productRepository = new ProductRepository();
+
+    // Repository layer
+    ProductRepository productRep = new ProductRepository();
+
+    // Convert from Product to ProductEntity with reflection
+    Converter<Product, ProductEntity> converter = new Converter<>();
 
     @WithSession
-    public Uni<ProductEntity> createProduct(String sku, String name, String description ) {
+    public Uni<ProductEntity> createProduct(String sku, String name,
+            String description) {
         Product p = productUC.create(sku, name, description);
-        Uni<ProductEntity> on = null;
+        Uni<ProductEntity> uni = null;
         try {
-            ProductEntity entity = (ProductEntity) productConverter.convert(p, ProductEntity.class);
-            on = productRepository.persist(entity);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
-            // TODO Auto-generated catch block
+            ProductEntity entity = (ProductEntity)
+                converter.convert(p, ProductEntity.class);
+            uni = productRep.persist(entity);
+        } catch (NoSuchMethodException | SecurityException |
+                    InstantiationException | IllegalAccessException |
+                    IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return on;
+        return uni;
     }
 
 }
