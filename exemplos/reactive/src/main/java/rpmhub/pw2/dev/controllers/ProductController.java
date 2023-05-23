@@ -8,7 +8,6 @@
 package rpmhub.pw2.dev.controllers;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
@@ -37,9 +36,8 @@ public class ProductController {
         Product p = productUC.create(sku, name, description);
         Uni<ProductEntity> uni = null;
         try {
-            ProductEntity entity = (ProductEntity)
-                converter.convert(p, ProductEntity.class);
-            uni = productRep.persist(entity);
+            ProductEntity entity = converter.convert(p, ProductEntity.class);
+            uni = productRep.saveProduct(entity);
         } catch (NoSuchMethodException | SecurityException |
                     InstantiationException | IllegalAccessException |
                     IllegalArgumentException | InvocationTargetException e) {

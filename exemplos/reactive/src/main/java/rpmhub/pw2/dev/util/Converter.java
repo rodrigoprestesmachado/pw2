@@ -41,6 +41,7 @@ public class Converter<T, J> {
         // Iterate over all methods
         for (Method method : methods) {
             // If method starts with "set" then invoke it
+            // ignoring the "setId" method
             if (method.getName().startsWith("set") &&
                 !method.getName().contains("Id")) {
                 String getMethodName = getMethodName(method.getName());

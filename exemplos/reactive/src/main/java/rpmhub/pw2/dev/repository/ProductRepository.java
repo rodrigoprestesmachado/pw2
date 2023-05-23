@@ -7,8 +7,15 @@
  */
 package rpmhub.pw2.dev.repository;
 
+import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheRepository;
+import io.smallrye.mutiny.Uni;
 import rpmhub.pw2.dev.entities.ProductEntity;
 
 public class ProductRepository implements PanacheRepository<ProductEntity> {
+
+    public Uni<ProductEntity> saveProduct(ProductEntity product) {
+        return Panache.<ProductEntity>withTransaction(product::persist);
+    }
+
 }

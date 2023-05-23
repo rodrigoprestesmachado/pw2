@@ -7,10 +7,6 @@
  */
 package rpmhub.pw2.dev.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter @Setter
 public class Product {
 
     private String sku;
@@ -20,6 +16,30 @@ public class Product {
     public Product(String sku, String name, String description) {
         this.sku = sku;
         this.name = name;
+        this.description = description;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
