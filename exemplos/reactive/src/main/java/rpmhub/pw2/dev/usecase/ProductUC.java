@@ -7,12 +7,14 @@
  */
 package rpmhub.pw2.dev.usecase;
 
-import rpmhub.pw2.dev.model.Product;
-
-public class ProductUC implements ProductI {
+import rpmhub.pw2.dev.entities.Product;
+/**
+ * Application Business Rules layer of Clean Architecture
+ */
+public class ProductUC implements ProductUCI {
 
     /**
-     * Stores a business rule: sku is required.
+     * Stores a business rule: a product must have a sku.
      */
     @Override
     public Product create(String sku, String name, String description) {

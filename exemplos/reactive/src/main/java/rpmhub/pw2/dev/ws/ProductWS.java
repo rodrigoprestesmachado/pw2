@@ -16,11 +16,13 @@ import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import rpmhub.pw2.dev.controllers.ProductController;
-import rpmhub.pw2.dev.entities.ProductEntity;
 
+/**
+ * Frameworks and Drivers layer of Clean Architecture
+ */
 @Path("/product ")
 public class ProductWS {
 
@@ -32,14 +34,19 @@ public class ProductWS {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<ProductEntity> createProduct(@FormParam("sku") String sku,
+    public Uni<Response> createProduct(@FormParam("sku") String sku,
             @FormParam("name") String name,
             @FormParam("description") String description) {
-            return controller.createProduct(sku, name, description)
-                .onItem()
-                    .ifNull().failWith(new WebApplicationException(500))
+                return controller.createProduct(sku, name, description)
                 .onFailure()
-                    .invoke(e -> new WebApplicationException(500));
+                    .transform(exception ->{
+                        String message = exception.getMessage();
+                        throw new ServiceException(message,
+                            Response.Status.BAD_REQUEST);
+                    })
+                .onItem().ifNotNull().transform(product -> {
+                    return Response.ok(product).build();
+                });
     }
 
 }

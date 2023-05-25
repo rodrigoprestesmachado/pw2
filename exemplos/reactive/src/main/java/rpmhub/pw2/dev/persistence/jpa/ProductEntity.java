@@ -5,7 +5,7 @@
  * License. You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
-package rpmhub.pw2.dev.entities;
+package rpmhub.pw2.dev.persistence.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,6 +17,9 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Interface Adapter layer of Clean Architecture
+ */
 @Entity
 @Getter @Setter
 @Table(name = "Product")

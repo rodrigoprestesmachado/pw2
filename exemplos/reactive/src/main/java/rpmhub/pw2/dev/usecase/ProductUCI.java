@@ -7,9 +7,12 @@
  */
 package rpmhub.pw2.dev.usecase;
 
-import rpmhub.pw2.dev.model.Product;
+import rpmhub.pw2.dev.entities.Product;
 
-public interface ProductI {
+/**
+ * Application Business Rules layer of Clean Architecture
+ */
+public interface ProductUCI {
 
     /**
      * Create a product

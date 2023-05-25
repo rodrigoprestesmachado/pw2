@@ -5,8 +5,11 @@
  * License. You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
-package rpmhub.pw2.dev.model;
+package rpmhub.pw2.dev.entities;
 
+/**
+ * Enterprise Business Rules layer of Clean Architecture
+ */
 public class Product {
 
     private String sku;

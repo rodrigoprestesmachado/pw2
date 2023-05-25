@@ -7,43 +7,44 @@
  */
 package rpmhub.pw2.dev.controllers;
 
-import java.lang.reflect.InvocationTargetException;
+import org.modelmapper.ModelMapper;
 
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import rpmhub.pw2.dev.entities.ProductEntity;
-import rpmhub.pw2.dev.model.Product;
-import rpmhub.pw2.dev.repository.ProductRepository;
+import jakarta.inject.Inject;
+import rpmhub.pw2.dev.entities.Product;
+import rpmhub.pw2.dev.persistence.jpa.ProductEntity;
+import rpmhub.pw2.dev.persistence.repository.ProductRepository;
 import rpmhub.pw2.dev.usecase.ProductUC;
-import rpmhub.pw2.dev.util.Converter;
+import rpmhub.pw2.dev.usecase.ProductUCI;
 
+/**
+ * Interface Adapter layer of Clean Architecture
+ */
 @ApplicationScoped
 public class ProductController {
 
-    // Clean architecture - Use case layer
-    ProductUC productUC = new ProductUC();
+    // Persistence
+    @Inject
+    ProductRepository pRepository;
 
-    // Repository layer
-    ProductRepository productRep = new ProductRepository();
+    // Clean architecture - use case layer
+    ProductUCI uCase = new ProductUC();
 
-    // Convert from Product to ProductEntity with reflection
-    Converter<Product, ProductEntity> converter = new Converter<>();
+    // Mapper (from https://modelmapper.org)
+    ModelMapper mapper = new ModelMapper();
 
     @WithSession
     public Uni<ProductEntity> createProduct(String sku, String name,
             String description) {
-        Product p = productUC.create(sku, name, description);
-        Uni<ProductEntity> uni = null;
-        try {
-            ProductEntity entity = converter.convert(p, ProductEntity.class);
-            uni = productRep.saveProduct(entity);
-        } catch (NoSuchMethodException | SecurityException |
-                    InstantiationException | IllegalAccessException |
-                    IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return uni;
+        // Create a product according to the business rules defined in the
+        // use case
+        Product product = uCase.create(sku, name, description);
+        // Convert to entity
+        ProductEntity productEntity = mapper.map(product, ProductEntity.class);
+        // Persist the entity
+        return pRepository.saveProduct(productEntity);
     }
 
 }
