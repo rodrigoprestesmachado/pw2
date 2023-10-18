@@ -154,6 +154,39 @@ public String getName(@PathParam("name") String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Circuit Breaker
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+<img src="https://smallrye.io/docs/smallrye-fault-tolerance/6.2.6/_images/circuit-breaker-d4de8eed326379e7fdfe50126a827e4a7d0db05a.svg"/>
+<!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Circuit Breaker
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+```java
+
+@CircuitBreaker(requestVolumeThreshold = 2)
+public Integer getAvailability(Coffee coffee) {
+    maybeFail();
+    return new Random().nextInt(30);
+}
+
+private void maybeFail() {
+    // introduce some artificial failures
+    final Long invocationNumber = counter.getAndIncrement();
+    // alternate 2 successful and 2 failing invocations
+    if (invocationNumber % 4 > 1) {
+        throw new RuntimeException("Service failed.");
+    }
+}
+
+```
+<!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## @Bulkhead
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
