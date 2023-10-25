@@ -8,6 +8,8 @@
 */
 package edu.ifrs;
 
+import java.util.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -21,6 +23,15 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/payment")
 public class Payment {
 
+    /**
+     * This line initializes a logger object for the Checkout class.
+     */
+    Logger logger = Logger.getLogger(Payment.class.getName());
+
+    /**
+     * Injects an instance of the InvoiceRepository class to be used in the
+     * service.
+     */
     @Inject
     InvoiceRepository invoiceRepository;
 
@@ -41,6 +52,8 @@ public class Payment {
     public Invoice confirmPayment(
             @FormParam("cardNumber") String cardNumber,
             @FormParam("value") String value) {
+
+        logger.info("confirmPayment payment in payment service");
 
         // Create a new invoice object
         Invoice invoice = new Invoice();

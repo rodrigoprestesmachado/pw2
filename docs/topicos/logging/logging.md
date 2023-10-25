@@ -12,9 +12,9 @@ chamada Graylog.
 
 ## Jaeger
 
-Inspirado no [Dapper](https://research.google/pubs/pub36356/) e
-[OpenZipkin](https://zipkin.io/) o [Jaeger](https://www.jaegertracing.io)
-foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído que 
+Inspirado no [Dapper](https://research.google/pubs/pub36356/) e no
+[OpenZipkin](https://zipkin.io/), o [Jaeger](https://www.jaegertracing.io)
+foi desenvolvido pela Uber e é uma ferramenta de *trace* distribuído que
 implementa a especificação
 [OpenTelemetry](https://quarkus.io/guides/opentelemetry). O *trace* é o registo
 de uma requisição de ponta a ponta em um sistema distribuído. Ele fornece
@@ -71,6 +71,11 @@ Cabe ressaltar, que o Jaeger possui algumas desvantagens, são elas: impacto no
 desempenho do sistema (_overhead_), custo adicional, gerenciamento de dados,
 conhecimento especializado e integração com algumas ferramentas pode ser um
 desafio.
+
+Para ver a interface do usuário do Jaeger, abra o navegador e acesse
+`http://localhost:16686`. A interface do usuário do Jaeger permite que você
+visualize os *traces* e analise o desempenho do sistema.
+
 
 ### Jaeger com Quarkus
 
@@ -133,12 +138,12 @@ services:
       - graylog
 
   mongo:
-    image: mongo:4.0
+    image: mongo:5.0
     networks:
       - graylog
 
   graylog:
-    image: graylog/graylog:4.3.0 # graylog version
+    image: graylog/graylog:5.1
     ports:
       - "9000:9000" # HTTP
       - "12201:12201/udp" # GELF UDP
@@ -160,7 +165,9 @@ networks:
     driver: bridge
 ```
 
-Depois de executar o comando `docker-compose up -d`, você pode acessar o GrayLog.
+Depois de executar o comando `docker-compose up -d`, você pode acessar o GrayLog
+por meio do navegador em `http://localhost:9000`. O nome de usuário padrão é
+`admin` e a senha padrão é `admin`.
 
 Crie um "*input*" no GrayLog:
 
@@ -171,7 +178,7 @@ http://localhost:9000/api/system/inputs
 ```
 
 🚨 Um "*input*" também pode ser criado pelo console de administração do
-GrayLog(System → Input → Select GELF UDP).
+GrayLog(System → Inputs → Select GELF UDP).
 
 Na prática, um _input_ é uma fonte de dados que o Graylog pode monitorar e
 coletar informações. Por exemplo, se você tem um aplicativo executando em um
@@ -191,7 +198,7 @@ quarkus.log.handler.gelf.port=12201
 ```
 
 Esse código configura as propriedades de registro (_logging_) do Quarkus para
-enviar _logs_ em formato GELF (Graylog Extended Log Format) para um servidor
+enviar _logs_ em formato GELF (_Graylog Extended Log Format_) para um servidor
 local hospedado em `localhost` na porta `12201`.
 
 O GELF é um formato de registro que permite a estruturação de dados adicionais
@@ -205,7 +212,7 @@ servidor colete e analise os _logs_ do aplicativo Quarkus.
 
 Embora o [Graylog](https://www.graylog.org) seja uma plataforma de
 gerenciamento e análise de logs robusta e altamente escalável, há algumas
-desvantagens a serem consideradas:
+desvantagens que devem ser consideradas:
 
 1. Configuração complexa: A configuração inicial do Graylog pode ser complexa,
   principalmente se você tiver muitas fontes de dados diferentes ou se precisar
