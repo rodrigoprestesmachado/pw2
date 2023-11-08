@@ -8,11 +8,16 @@
 */
 package edu.ifrs;
 
+import java.util.List;
+
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import io.quarkus.oidc.token.propagation.AccessToken;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -36,8 +41,19 @@ public interface IPayment {
     @Path("/payment")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice confirmPayment(
+    Invoice confirmPayment(
         @FormParam("cardNumber") String cardNumber,
         @FormParam("value") String value);
+
+    /**
+     * Retrieves a list of invoices for the authenticated user.
+     *
+     * @return A list of Invoice objects in JSON format.
+     */
+    @GET
+    @Path("/payment/getAllInvoices")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("User")
+    List<Invoice> getInvoices();
 
 }

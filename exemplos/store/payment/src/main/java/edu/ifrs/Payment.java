@@ -8,6 +8,7 @@
 */
 package edu.ifrs;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -15,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -66,6 +68,20 @@ public class Payment {
 
         // Return the created and persisted invoice object
         return invoice;
+    }
+
+    /**
+     * Retrieves a list of all invoices from the database.
+     *
+     * @return A list of Invoice objects.
+     */
+    @GET
+    @Path("/getAllInvoices")
+    @Transactional
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("User")
+    public List<Invoice> getInvoices(){
+        return invoiceRepository.findAll().list();
     }
 
 }
