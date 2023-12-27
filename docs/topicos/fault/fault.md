@@ -146,6 +146,128 @@ Para rodar o k6 com a configuração acima, crie um arquivo .js e depois execute
 
     k6 run k6.js
 
+## Circuit Breaker
+
+A anotação `@CircuitBreaker` evita realizar chamadas desnecessárias se um erro
+ocorrer. O trecho de código abaixo mostra o uso da anotação `@CircuitBreaker`.
+
+O circuito será fechado novamente após um tempo de espera (pr padrão 5 segundos).
+Caso o método anotado com o `circuitBreaker` volte a falhar, o circuito será
+aberto novamente. Observe o [exemplo](https://pt.quarkus.io/guides/smallrye-fault-tolerance#adding-resiliency-circuit-breaker) abaixo:
+
+```java
+public class CoffeeRepositoryService {
+
+    private AtomicLong counter = new AtomicLong(0);
+
+    /**
+     * Returns the availability of a coffee.
+     *
+     * @param coffee The coffee to check availability for.
+     * @return An integer representing the availability of the coffee.
+     */
+    @CircuitBreaker(requestVolumeThreshold = 2)
+    public Integer getAvailability(Coffee coffee) {
+        maybeFail();
+        // Java expression that generates a random integer between 0 (inclusive)
+        // and 30 (exclusive)
+        return new Random().nextInt(30);
+    }
+
+    /**
+     * This method introduces artificial failures in the service. It throws a
+     * RuntimeException every other invocation, alternating between 2 successful
+     * and 2 failing invocations.
+     */
+    private void maybeFail() {
+        // introduce some artificial failures
+        final Long invocationNumber = counter.getAndIncrement();
+        // alternate 2 successful and 2 failing invocations
+        if (invocationNumber % 4 > 1) {
+            throw new RuntimeException("Service failed.");
+        }
+    }
+```
+
+```java
+@Path("/circuit")
+public class CoffeeResource {
+
+    private Long counter = 0L;
+
+    @Inject
+    CoffeeRepositoryService coffeeRepository;
+
+    Logger LOGGER = Logger.getLogger(CoffeeResource.class.getName());
+
+    @GET
+    @Path("/{id}/availability")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response availability(@PathParam("id") int id) {
+
+        final Long invocationNumber = counter++;
+
+        Coffee coffee = coffeeRepository.getCoffeeById(id);
+        // check that coffee with given id exists, return 404 if not
+        if (coffee == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        try {
+            Integer availability = null;
+            if (coffee != null) {
+                availability = coffeeRepository.getAvailability(coffee);
+            }
+
+            if (availability != null) {
+                LOGGER.log(Level.INFO, () -> "Sucesso: " + invocationNumber);
+                return Response.ok(availability).build();
+            } else {
+                LOGGER.log(Level.SEVERE, () -> "Falha, coffee nulo:" + invocationNumber);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("Coffee is null")
+                        .type(MediaType.TEXT_PLAIN_TYPE)
+                        .build();
+            }
+        } catch (RuntimeException e) {
+            String message = String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage());
+            LOGGER.log(Level.SEVERE, () -> "Falha:" + invocationNumber);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(message)
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build();
+        }
+    }
+
+}
+```
+
+O disjuntor começa fechado. Nesse estado, o disjuntor mantém uma janela
+deslizante (_rolling window_) das invocações recentes. Para cada invocação, a
+janela deslizante registra se ela foi concluída com sucesso ou falhou.
+
+A janela deslizante deve estar cheia para tomar qualquer decisão de transição
+de estado. Por exemplo, se a janela deslizante tiver tamanho 10, um disjuntor
+fechado sempre permite pelo menos 10 invocações.
+
+Se a janela deslizante contiver um número de falhas maior do que a taxa
+configurada, um disjuntor fechado muda para o estado aberto. Quando o disjuntor
+estiver aberto, as invocações não são permitidas. Em vez disso, o disjuntor
+falha rapidamente e lança a exceção CircuitBreakerOpenException.
+
+Por exemplo, se a janela deslizante tiver tamanho 10 e a taxa de falha for de
+0,5, isso significa que 5 invocações das últimas 10 invocações devem falhar para
+que o disjuntor mude para o estado aberto.
+
+Após algum tempo, um disjuntor aberto passa para o estado meio-aberto para
+determinar se a falha rápida ainda é apropriada. Um disjuntor meio-aberto
+permite que algumas tentativas prossigam. Se todas elas tiverem sucesso, o
+disjuntor retorna ao estado fechado e as invocações são permitidas novamente.
+Se algumas invocações de sonda falharem, o disjuntor volta ao estado aberto e
+as invocações são impedidas.
+
+
 # Código 💡
 
 Um código de exemplo sobre Fault Tolerance está disponível no Github:

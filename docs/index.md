@@ -20,7 +20,7 @@ Micro serviços com Quarkus/Microprofile
 
 * [Metrics](topicos/metrics/metrics.md)
 
-* [Trace e Logging](topicos/loging/logging.md)
+* [Trace e Logging](topicos/logging/logging.md)
 
 Jakarta EE
 
