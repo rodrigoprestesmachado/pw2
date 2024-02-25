@@ -22,7 +22,7 @@ Micro serviços com Quarkus/Microprofile
 
 * [Trace e Logging](topicos/logging/logging.md)
 
-Jakarta EE
+Jakarta EE (conteúdo antigo)
 
 * [Configuração do ambiente](topicos/ambiente/ambiente.md)
 

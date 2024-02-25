@@ -1,4 +1,4 @@
-# Configuração do ambiente 
+# Configuração do ambiente
 
 ## VSCode e Open Liberty
 
