@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Tutoriais de microserviços
 nav_exclude: true
 ---

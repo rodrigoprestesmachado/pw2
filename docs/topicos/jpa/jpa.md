@@ -1,3 +1,9 @@
+---
+layout: default
+title: Configurações de JPA (Java Persistence API) ☕ e Docker 🐳
+nav_exclude: true
+---
+
 # Configurações de JPA (Java Persistence API) ☕ e Docker 🐳
 
 ## Configurando um projeto JakartaEE/Microprofile no Docker

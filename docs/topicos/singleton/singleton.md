@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Singleton Session Beans
 nav_exclude: true
 ---

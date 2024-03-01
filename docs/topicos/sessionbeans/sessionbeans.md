@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Session beans
 nav_exclude: true
 ---

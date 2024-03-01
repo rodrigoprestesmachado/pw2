@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Configuração do ambiente
 nav_exclude: true
 ---

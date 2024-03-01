@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Google Kubernets Engine - GKE
 nav_exclude: true
 ---

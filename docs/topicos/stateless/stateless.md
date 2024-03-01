@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Stateless Session Beans
 nav_exclude: true
 ---

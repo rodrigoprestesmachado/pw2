@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Message Driven Beans (MDB)
 nav_exclude: true
 ---

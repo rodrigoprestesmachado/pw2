@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: minimal
 title: Instalação do projeto CrudWS
 nav_exclude: true
 ---
