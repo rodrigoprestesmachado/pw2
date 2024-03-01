@@ -1,3 +1,9 @@
+---
+layout: default
+title: Rest Client
+nav_order: 4
+---
+
 # Rest Client
 
 O [MicroProfile Rest Client](https://github.com/eclipse/microprofile-rest-client) fornece uma maneira para invocarmos serviços RESTful sobre HTTP. O MicroProfile Rest Client tenta usar APIs [Jakarta RESTful Web Services 2.1](https://jakarta.ee/specifications/restful-ws/2.1/) para manter compatibilidades e melhorar as questões de reuso.

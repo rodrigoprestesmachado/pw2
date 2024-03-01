@@ -1,3 +1,9 @@
+---
+layout: default
+title: Configuração do ambiente
+nav_exclude: true
+---
+
 # Introdução
 
 <center>

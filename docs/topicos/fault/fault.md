@@ -1,3 +1,9 @@
+---
+layout: default
+title: Fault Tolerance
+nav_order: 9
+---
+
 # Fault Tolerance 🆘
 
 <center>

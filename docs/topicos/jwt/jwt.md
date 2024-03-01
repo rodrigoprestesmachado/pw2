@@ -1,3 +1,9 @@
+---
+layout: default
+title: JSON Web Token
+nav_order: 5
+---
+
 # JSON Web Token 🔑
 
 Um JSON Web Token (JWT) é um [padrão](https://datatracker.ietf.org/doc/html/rfc7519) para a criação de tokens, sequências de caracteres normalmente criptografadas, capazes de transportar dados no formato JSON. A principal utilização desse padrão se da na geração de tokens para controlar o acesso aos métodos de serviços. Do ponto de vista prático, um JWT é uma String codificada que possui três trechos separados por um ponto (.): cabeçalho, carga (_payload_) de declarações (*claims*) e assinatura do JWT.

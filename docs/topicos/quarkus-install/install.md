@@ -1,3 +1,9 @@
+---
+layout: default
+title: Instalação do Quarkus
+nav_order: 2
+---
+
 # Instalação do Quarkus
 
 Essa página tem como o objetivo de orientar sobre a instalação do Quarkus.

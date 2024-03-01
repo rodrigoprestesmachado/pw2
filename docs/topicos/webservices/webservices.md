@@ -1,11 +1,19 @@
-# Web Services
+---
+layout: default
+title: Web Services
+nav_order: 3
+---
+
+# Web Services 🌐
 
 <center>
-<iframe src="https://pw2.rpmhub.dev/topicos/webservices/slides/index.html#/" title="Web Services" width="90%" height="500" style="border:none;"></iframe>
+    <iframe src="https://pw2.rpmhub.dev/topicos/webservices/slides/index.html#/"
+        title="Web Services" width="90%" height="500" style="border:none;">
+    </iframe>
 </center>
 
 
-## Introdução
+## Resumo 📝
 
 Um Web Service é uma tecnologia que permite a comunicação entre diferentes
 sistemas de software pela internet, mais especificamente, pela World Wide Web.
@@ -60,7 +68,7 @@ Services em Java.
 
 ---
 
-## Exercício
+## Exercício 📝
 
 Desenvolva um Web Service em Rest utilizando o framework Quarkus que permita
 realizar as seguintes conversões de unidades de medida:
@@ -110,7 +118,6 @@ public class ConversionResourceTest {
     }
 }
 ```
-
 
 ## RESTFul Web Services (legado)
 

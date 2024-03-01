@@ -1,3 +1,9 @@
+---
+layout: default
+title: Trace e Log
+nav_order: 11
+---
+
 # Trace e Log
 
 Esse tutorial mostra os principais passos para você adicionar uma ferramenta

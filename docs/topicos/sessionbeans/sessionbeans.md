@@ -1,10 +1,16 @@
+---
+layout: default
+title: Session beans
+nav_exclude: true
+---
+
 # Session beans
 
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/sessionbeans/slides/index.html#/" title="Session beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-# Referência 
+# Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#the-lifecycles-of-enterprise-beans)
 

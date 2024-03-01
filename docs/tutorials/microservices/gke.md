@@ -1,3 +1,9 @@
+---
+layout: default
+title: Google Kubernets Engine - GKE
+nav_exclude: true
+---
+
 # Google Kubernets Engine - GKE
 
 Alguns comandos úteis para a criação e deploy no GKE

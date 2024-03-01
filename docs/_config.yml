@@ -1,4 +1,7 @@
-title: PW2
-description: Disciplina de Programação para Web II
-show_downloads: false
-theme: jekyll-theme-hacker
+remote_theme: pmarsceill/just-the-docs
+aux_links:
+  "Programação para Web II":
+    - "https://pw2.rpmhub.dev"
+
+# Footer content appears at the bottom of every page's main content
+footer_content: "Copyright &copy; 2024 RPM Hub. Distributed by Apache 2.0 license."

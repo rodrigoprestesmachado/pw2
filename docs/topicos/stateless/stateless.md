@@ -1,3 +1,9 @@
+---
+layout: default
+title: Stateless Session Beans
+nav_exclude: true
+---
+
 # Stateless Session Beans
 
 <center>

@@ -1,4 +1,10 @@
-# Trilha de aprendizagem
+---
+layout: default
+title: Home
+nav_order: 1
+---
+
+# Programação para Web II
 
 Micro serviços com Quarkus/Microprofile
 
@@ -22,7 +28,7 @@ Micro serviços com Quarkus/Microprofile
 
 * [Trace e Logging](topicos/logging/logging.md)
 
-Jakarta EE (conteúdo antigo)
+Jakarta EE (conteúdo legado)
 
 * [Configuração do ambiente](topicos/ambiente/ambiente.md)
 
@@ -38,13 +44,13 @@ Jakarta EE (conteúdo antigo)
 
   * [Message Driven](topicos/mdb/mdb.md)
 
+# Comunidade da disciplina
+
+Comunidade [Discord](https://discord.com/invite/C29cqvm): canal `#pw2`
+
 # Conteúdo de terceiros
 
 * Essa página reúne [conteúdos](topicos/terceiros/terceiros.md) relevantes que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
-
-# Comunidade
-
-Comunidade [Discord](https://discord.com/invite/C29cqvm): canal `#pw2`
 
 <center>
   <a href="https://rpmhub.dev" target="blanck"><img src="imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>

@@ -1,4 +1,10 @@
-# Metrics no Microprofile/Quarkus 📏
+---
+layout: default
+title: Metrics
+nav_order: 10
+---
+
+# Metrics 📏
 
 <center>
     <iframe src="https://pw2.rpmhub.dev/topicos/metrics/slides/index.html#/" title="Microprofile Metrics" width="90%" height="500" style="border:none;"></iframe>
