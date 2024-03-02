@@ -4,13 +4,13 @@ title: Home
 nav_order: 1
 ---
 
-# Programação para Web II
-
-Micro serviços com Quarkus/Microprofile
+# Programação para Web II 🖥️
 
 * [Instalação](topicos/quarkus-install/install.md)
 
 * [Web Services](topicos/webservices/webservices.md)
+
+* [Micro Serviços](topicos/microservices/introduction.md)
 
 * [Rest Client](topicos/rest-client/rest-client.md)
 
@@ -28,7 +28,7 @@ Micro serviços com Quarkus/Microprofile
 
 * [Trace e Logging](topicos/logging/logging.md)
 
-Jakarta EE (conteúdo legado)
+Jakarta EE (antigo)
 
 * [Configuração do ambiente](topicos/ambiente/ambiente.md)
 
@@ -46,7 +46,8 @@ Jakarta EE (conteúdo legado)
 
 # Comunidade da disciplina
 
-Comunidade [Discord](https://discord.com/invite/C29cqvm): canal `#pw2`
+Comunidade da disciplina no [Discord](https://discord.com/invite/C29cqvm):
+canal `#pw2`
 
 # Conteúdo de terceiros
 

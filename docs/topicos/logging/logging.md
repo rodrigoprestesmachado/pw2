@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Trace e Log
-nav_order: 11
+nav_order: 12
 ---
 
 # Trace e Log

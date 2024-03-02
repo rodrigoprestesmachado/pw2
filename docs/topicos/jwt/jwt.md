@@ -1,7 +1,7 @@
 ---
 layout: default
 title: JSON Web Token
-nav_order: 5
+nav_order: 6
 ---
 
 # JSON Web Token 🔑

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Fault Tolerance
-nav_order: 9
+nav_order: 10
 ---
 
 # Fault Tolerance 🆘

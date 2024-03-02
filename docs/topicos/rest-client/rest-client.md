@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Rest Client
-nav_order: 4
+nav_order: 5
 ---
 
 # Rest Client

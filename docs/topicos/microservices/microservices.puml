@@ -1,0 +1,11 @@
+@startuml
+package "Aplicação" {
+    [Frontend] --> [API Gateway]
+    [API Gateway] --> [Microserviço 1]
+    [API Gateway] --> [Microserviço 2]
+    [API Gateway] --> [Microserviço 3]
+    [Microserviço 1] --> [Banco de Dados 1]
+    [Microserviço 2] --> [Banco de Dados 2]
+    [Microserviço 3] --> [Banco de Dados 3]
+}
+@enduml
