@@ -4,13 +4,15 @@ title: Introdução aos micro serviços
 nav_order: 4
 ---
 
+# Micro Serviços
+
 <center>
     <iframe src="https://pw2.rpmhub.dev/topicos/microservices/slides/index.html#/"
     title="Microservices" width="90%" height="500" style="border:none;">
     </iframe>
 </center>
 
-# Introdução aos Micro Serviços
+## Resumo
 
 Os micro serviços são uma maneira conceber a
 arquitetura interna de um sistema onde as funcionalidades são vistas como
@@ -21,7 +23,7 @@ poderia ser organizado um sistema baseado em micro serviços.
 
 <center>
     <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/microservices/microservices.puml">
-        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/microservices/microservices.puml" alt="Back-end for Front-end (BFF)" width="40%" height="40%"/>
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/microservices/microservices.puml" alt="Microservices" width="50%" height="50%"/>
     </a>
     <br/>
     Figura 1 - Exemplo de arquitetura baseada em micro serviços.
@@ -57,7 +59,7 @@ auxiliam a construção de serviços: Serviços Web em REST, manipulação de da
 em JSON, virtualização/docker, entre muitas outras. A seguir vamos discutir as
 principais vantagens e desvantagens dessa abordagem.
 
-## Principais Vantagens
+### Principais Vantagens
 
 * **Escalabilidade Independente:** Cada micro serviço pode ser escalado de forma
 independente, permitindo dimensionar apenas os componentes que estão
@@ -89,7 +91,7 @@ frequentes.
 independente em diferentes micro serviços, acelerando o desenvolvimento e
 permitindo atualizações mais rápidas.
 
-## Principais Desvantagens
+### Principais Desvantagens
 
 * **Complexidade Operacional:** Gerenciar e operar um grande número de micro
 serviços pode aumentar a complexidade operacional, exigindo ferramentas e
