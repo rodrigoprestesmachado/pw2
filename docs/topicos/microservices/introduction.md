@@ -12,7 +12,7 @@ nav_order: 4
     </iframe>
 </center>
 
-## Resumo
+## Resumo 📖
 
 Os micro serviços são uma maneira conceber a
 arquitetura interna de um sistema onde as funcionalidades são vistas como
@@ -127,6 +127,57 @@ pontos de entrada.
 serviços pode exigir uma mudança na cultura organizacional, incluindo uma
 abordagem mais colaborativa entre equipes e uma mentalidade orientada
 a serviços.
+
+### Arquitetura de Micro Serviços
+
+A arquitetura de micro serviços é uma abordagem de arquitetura de software que
+consiste em dividir uma aplicação em um conjunto de serviços independentes, cada
+um executando um processo de negócio específico. Cada serviço é construído em
+torno de uma ou mais funcionalidades de negócio e pode ser implantado,
+escalado e gerenciado de forma independente. Os micro serviços se comunicam
+entre si através de APIs, geralmente usando protocolos de comunicação como HTTP,
+REST, gRPC, entre outros.
+
+Um tipo de arquitetura de micro serviços que tem ganhado popularidade nos últimos
+anos é a arquitetura de _cloud-native_, que é projetada para ser executada em
+ambientes de nuvem e aproveitar os recursos e serviços oferecidos por plataformas
+de nuvem como AWS, Azure, Google Cloud, entre outros. A arquitetura de
+_cloud-native_ é caracterizada por ser altamente distribuída, resiliente,
+escalável e elástica, e geralmente é baseada em contêineres e orquestradores de
+contêineres.
+
+Numa arquitetura de micro serviços, existe pelo menos dois tipos de _workflows_
+bastante conhecidos, são eles: coreografia e orquestração. Na coreografia, cada
+micro serviço é responsável por coordenar suas próprias ações, enquanto na
+orquestração, um serviço central é responsável por coordenar as ações dos
+demais serviços. A escolha entre coreografia e orquestração depende do contexto
+e dos requisitos do sistema, e ambas as abordagens têm vantagens e desvantagens.
+
+### Eclipse MicroProfile
+
+O [Eclipse MicroProfile](https://microprofile.io) é uma iniciativa de código
+aberto que visa acelerar a inovação em micro serviços baseados em Java. O
+MicroProfile foi criado em 2016 por um grupo de empresas e indivíduos que
+estavam interessados em promover tecnologias de micro serviços para a plataforma
+Java. O objetivo do MicroProfile é fornecer um conjunto de especificações e APIs
+que podem ser usadas para construir e implantar aplicativos de micro serviços
+baseados em Java.
+
+O MicroProfile é baseado em tecnologias e padrões de código aberto, incluindo
+Java EE, JAX-RS, CDI, JSON-P, JSON-B, JWT, OpenAPI, entre outros. O MicroProfile
+também se integra com outras tecnologias de código aberto, como Kubernetes,
+Docker, Prometheus, Jaeger, entre outros. O MicroProfile é projetado para ser
+leve, modular e fácil de usar, e é adequado para construir aplicativos de micro
+serviços que são executados em ambientes de nuvem.
+
+## Exercícios 📝
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/microservices/questions.html"
+    title="Introdução" width="90%" height="500"
+    style="border:none;background-color:white;">
+    </iframe>
+</center>
 
 # Referências
 
