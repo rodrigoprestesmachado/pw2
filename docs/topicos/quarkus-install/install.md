@@ -46,44 +46,6 @@ de se utilizar o SDKMAN é que ele alterar a versão do Java que está sendo
 utilizada na sua máquina de maneira descomplicada. Para saber mais sobre o
 SDKMAN, por favor, consulte a [documentação](https://sdkman.io) da ferramenta.
 
-### Maven 🌐
-
-O Maven é uma ferramenta de automação de compilação utilizada principalmente
-para projetos Java. Ele é utilizado para gerar um artefato (geralmente um
-arquivo `.jar` ou `.war`) a partir do código fonte do projeto. Além disso,
-o Maven gerencia as dependências do projeto, o ciclo de vida do *build*, teste e
-a até mesmo a distribuição do projeto.
-
-Para instalar o Maven utilizando o SDKMAN, digite o seguinte comando:
-
-    sdk install maven
-
-## Quarkus CLI ⚙️
-
-Outra forma bastante útil de se trabalhar com o Quarkus é por meio de sua
-interface de linha de comando (_Command Line Interface_). Para instalar o
-Quarkus CLI, por meio do SDKMAN, digite o seguinte comando:
-
-    sdk install quarkus
-
-Faça um teste para ver se o Quarkus foi instalado corretamente:
-
-    quarkus --version
-
-Se você digitar `quarkus --help` será possível verificar todas as
-[funcionalidades do CLI](https://quarkus.io/guides/cli-tooling#using-the-cli),
-entre elas: criar um projeto (app ou linha de comando), fazer um *build*, rodar
-um projeto em modo de desenvolvimento, entre outros.
-
-## Quarkus no VSCode 🖥️
-
-A [extensão](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-quarkus)
-do Quarkus para o VSCode é uma ferramenta que permite que você crie,
-desenvolva, gerencie dependências, teste, etc. de aplicações Quarkus diretamente
-do seu editor de código. Para instalar a extensão, abra o VSCode e digite
-`Quarkus` na barra de pesquisa de extensões. A extensão oficial do Quarkus
-é a primeira opção que aparece na lista.
-
 ## Quarkus IO
 
 Uma das formas mais fáceis de iniciar um projeto com o Quarkus é acessar o site
@@ -113,35 +75,95 @@ Depois de configurar, o site irá permitir que você faça um *download* do proj
 
     ./mvnw compile quarkus:dev
 
+## Quarkus no VSCode 🖥️
+
+A [extensão](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-quarkus)
+do Quarkus para o VSCode é uma ferramenta que permite que você crie,
+desenvolva, gerencie dependências, teste, etc. de aplicações Quarkus diretamente
+do seu editor de código. Para instalar a extensão, abra o VSCode e digite
+`Quarkus` na barra de pesquisa de extensões. A extensão oficial do Quarkus
+é a primeira opção que aparece na lista.
+
+Para, por exemplo, criar um novo projeto Quarkus, pressione `ctrl + shift + p`
+e digite `Quarkus: Create a Quarkus Project`. Isso fará com que o VSCode
+abre uma janela para que você possa escolher o gerenciador de dependências, a
+versão do Quarkus que você deseja utilizar, o nome do projeto, as dependências,
+entre outras configurações.
+
+## Quarkus CLI 📟
+
+Outra forma bastante útil de se trabalhar com o Quarkus é por meio de sua
+interface de linha de comando (_Command Line Interface_). Para instalar o
+Quarkus CLI, por meio do SDKMAN, digite o seguinte comando:
+
+    sdk install quarkus
+
+Faça um teste para ver se o Quarkus foi instalado corretamente:
+
+    quarkus --version
+
+Se você digitar `quarkus --help` será possível verificar todas as
+[funcionalidades do CLI](https://quarkus.io/guides/cli-tooling#using-the-cli),
+entre elas: criar um projeto (app ou linha de comando), fazer um *build*, rodar
+um projeto em modo de desenvolvimento, entre outros.
+
+Um resumo (em inglês) das funcionalidades do Quarkus CLI pode ser encontrado
+no vídeo [Quarkus CLI](https://www.youtube.com/watch?v=BL67jwPYvRs).
+
 ## Codespace 🚀
 
-Outra forma de se trabalhar com o Quarkus é por meio do [Codespace](https://github.com/features/codespaces)
-do GitHub. O Codespace é um ambiente de desenvolvimento que roda na nuvem e
-que permite que você desenvolva, teste e depure o seu código
-diretamente do seu navegador. O Codespace utiliza o [Visual Studio Code](https://code.visualstudio.com)
-como editor de código e permite que você instale diversas extensões como a do
-Quarkus.
+Outra forma de se trabalhar com o Quarkus é por meio do [Codespace](https://github.com/features/codespaces) do GitHub. O Codespace é um ambiente de desenvolvimento que roda
+na nuvem e que permite que você desenvolva, teste e depure o seu código
+diretamente do seu navegador. O Codespace utiliza o
+[Visual Studio Code](https://code.visualstudio.com) como editor de código e
+permite que você instale diversas extensões como a do Quarkus.
 
-Assim, depois de criar uma máquina no Codespace, você pode acessá-lo por meio do
-navegador. Logo, crie um diretório chamado `devcontainer`, dentro desse diretório
-adicione um arquivo chamado `devcontainer.json`. Dentro desse arquivo, coloque a
-configuração do container para que o Quarkus possa ser executado no Codespace.
-[Quarkus Codespace](https://gist.github.com/rodrigoprestesmachado/84feb44d39bb944f4581cbb8c55e032d).
+Para criar uma máquina no Codespace, procure a opção `Codespace` no seu
+menu do GitHub. Logo, procure um template em branco e clique em
+`Use this template`. Depois de criar uma máquina no Codespace, você pode
+acessá-lo por meio do navegador. Logo, crie um diretório chamado `devcontainer`
+e, dentro desse diretório, adicione um arquivo chamado `devcontainer.json`.
+Copie e cope no arquivo `devcontainer.json` a [configuração](https://gist.github.com/rodrigoprestesmachado/84feb44d39bb944f4581cbb8c55e032d) do Quarkus para o
+Codespace.
+
+Depois de colar a configuração no arquivo `devcontainer.json`, pressione o
+atalho `ctrl + shift + p` e digite `Codespace: Rebuild Container`. Isso fará
+com que o Codespace faça um *build* da máquina com a configuração que você
+acabou de adicionar.
 
 A configuração acima possui o Java 21, Maven, Docker e o Quarkus CLI. Além disso,
 o VSCode irá instalar várias extensões, entre elas o Java Extension Pack e o
 Quarkus.
 
-* Uma dica, uma máquina com pelo menos 4 cores e 16GB de memória RAM fará com que
-  o seu desenvolvimento seja mais confortável.
+### Dicas 📌
+
+* Crie uma máquina com pelo menos 4 cores e 16GB de memória RAM pois, isto fará
+com que o seu desenvolvimento seja mais confortável no Codespaces. Para alterar
+a configuração pressione `ctrl + shift + p` e digite
+`Codespace: change machine type`. Neste sentido, utilize o [Github student pack](https://education.github.com/pack) para ter mais tempo de acesso a máquinas mais potentes no Codespace.
 
 * Uma segunda dica é abrir a porta 8080 no Codespace para que você possa acessar
-  a aplicação por meio do navegador. Para isso, procure a aba `Ports` no Codespace
-  e adicione a porta 8080.
+a aplicação por meio do navegador. Para isso, procure a aba `Ports` no Codespace
+e adicione a porta 8080.
+
+### Maven (opcional) 🌐
+
+O Maven é uma ferramenta de automação de compilação utilizada principalmente
+para projetos Java. Ele é utilizado para gerar um artefato (geralmente um
+arquivo `.jar` ou `.war`) a partir do código fonte do projeto. Além disso,
+o Maven gerencia as dependências do projeto, o ciclo de vida do *build*, teste e
+a até mesmo a distribuição do projeto.
+
+Para instalar o Maven utilizando o SDKMAN, digite o seguinte comando:
+
+    sdk install maven
 
 # Referências 📚
 
+* Quarkus IO. [Quarkus.io](https://quarkus.io/). Acesso em 2024.
+
 * Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
+
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
