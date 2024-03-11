@@ -12,7 +12,6 @@ nav_order: 3
     </iframe>
 </center>
 
-
 ## Resumo 📝
 
 Um Web Service é uma tecnologia que permite a comunicação entre diferentes
@@ -126,6 +125,10 @@ Certifique-se de implementar corretamente os casos de teste do exercício.
             .body("value", is(1.852f));
     }
 ```
+
+    ⚠️ Caso você tenha dificuldades para implementar o exercício, consulte o
+    código fonte do projeto [PW2 ConversionService](https://github.com/rpmhubdev/pw2-conversion)
+    para obter um exemplo.
 
 ## RESTFul Web Services (legado)
 
