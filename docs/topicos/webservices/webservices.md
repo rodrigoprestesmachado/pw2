@@ -88,11 +88,16 @@ realizar as seguintes conversões de unidades de medida:
 Certifique-se de implementar corretamente os casos de teste do exercício.
 
 ```java
-@QuarkusTest
-public class ConversionResourceTest {
-
+/**
+     * Test case for converting kilometers to miles.
+     *
+     * This test sends a POST request to the "/Conversion/km-to-miles"
+     * endpoint with a body of "50" (representing 50 kilometers per hour).
+     * The expected result is a response with a status code of 200 and a
+     * body of "31.06855" (the equivalent value in miles per hour).
+    */
     @Test
-    public void testConversionKmMiles() {
+    void testConversionKmMiles() {
         given()
             .contentType(ContentType.TEXT)
             // 50 quilômetros por hora
@@ -100,23 +105,26 @@ public class ConversionResourceTest {
         .when()
             .post("/Conversion/km-to-miles")
         .then()
+            .contentType(ContentType.TEXT)
             .statusCode(200)
-            // O resultado esperado para 50 km/h
-            .body(equalTo("31.06855"));
+            .body(is("31.06855"));
     }
 
+    /**
+     * Test case to verify the conversion from knots to kilometers per hour.
+     * The expected value for 1 knot in km/h is 1.852.
+    */
     @Test
-    public void testConversionKnotsKm() {
+    void testConversionKnotsKm() {
         given()
-            .contentType(ContentType.JSON)
+            .contentType(ContentType.TEXT)
         .when()
+            .contentType(ContentType.JSON)
             .get("/Conversion/knots-to-km/1")
         .then()
             .statusCode(200)
-            // O valor esperado para 1 nó em km/h é 1.852
-            .body("valor", is(1.852f));
+            .body("value", is(1.852f));
     }
-}
 ```
 
 ## RESTFul Web Services (legado)
