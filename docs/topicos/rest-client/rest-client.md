@@ -14,9 +14,12 @@ nav_order: 5
 
 # Resumo 📝
 
-O [MicroProfile Rest Client](https://github.com/eclipse/microprofile-rest-client) fornece uma maneira para invocarmos serviços RESTful sobre HTTP. O MicroProfile Rest Client tenta usar APIs [Jakarta RESTful Web Services 2.1](https://jakarta.ee/specifications/restful-ws/2.1/) para manter compatibilidades e melhorar as questões de reuso.
+O [MicroProfile Rest Client](https://github.com/eclipse/microprofile-rest-client)
+fornece uma maneira para invocarmos serviços RESTful sobre HTTP. O MicroProfile
+Rest Client tenta usar APIs [Jakarta RESTful Web Services 2.1](https://jakarta.ee/specifications/restful-ws/2.1/) para manter compatibilidades e melhorar as questões de reuso.
 
-Para criar um projeto Quarkus com suporte ao Rest Cliente utilize o seguinte comando:
+Para criar um projeto Quarkus com suporte ao Rest Cliente utilize o seguinte
+comando:
 
 ```sh
 mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
@@ -34,7 +37,12 @@ foram adicionadas ao projeto.
 ## Implementação 🛠️
 
 Imagine que temos que nos comunicar um um RESTful Web Service de um carrinho de
-compras em um serviço de pagamento:
+compras (checkout) em um serviço de pagamento (payment):
+
+<center>
+    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/topicos/rest-client/store.puml" alt="Carrinho de compras" width="25%" height="25%"/> <br/>
+    Figura 1 - Diagrama de sequência de um carrinho de compras.
+</center>
 
 Para criarmos um Rest Client que se comunique com o serviço de pagamento temos
 que primeiro declarar uma interface, assim, observe o trecho de código abaixo:
@@ -125,6 +133,15 @@ Quando um usuário solicita um empréstimo, o serviço de gerenciamento de
 empréstimos deve verificar se o livro está disponível no catálogo de livros e
 marcá-lo como emprestado. Neste sentido, um Rest Client deve ser utilizado para
 comunicar com o serviço de catálogo de livros.
+
+A Figura 2 apresenta um diagrama de sequência que ilustra a comunicação entre
+os serviços.
+
+<center>
+    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/master/docs/topicos/rest-client/books.puml" alt="Biblio" width="25%" height="25%"/> <br/>
+    Figura 2 - Diagrama de sequência do exercícios.
+</center>
+
 
 ### Testes e Integração
 

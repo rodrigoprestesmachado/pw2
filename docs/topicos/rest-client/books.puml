@@ -1,0 +1,23 @@
+@startuml
+actor User
+participant "Serviço de Gerenciamento de Empréstimos" as LoanManagement
+participant "Serviço de Catálogo de Livros" as Catalog
+
+User -> LoanManagement: Solicita empréstimo de livro
+activate LoanManagement
+LoanManagement -> Catalog: Consulta catálogo de livros disponíveis
+activate Catalog
+Catalog --> LoanManagement: Lista de livros disponíveis
+deactivate Catalog
+LoanManagement --> User: Mostra lista de livros disponíveis
+deactivate LoanManagement
+
+User -> LoanManagement: Seleciona livro para empréstimo
+activate LoanManagement
+LoanManagement -> Catalog: Marca livro como emprestado
+activate Catalog
+Catalog --> LoanManagement: Confirmação de empréstimo
+deactivate Catalog
+LoanManagement --> User: Confirmação de empréstimo realizado
+deactivate LoanManagement
+@enduml
