@@ -126,7 +126,7 @@ empréstimos deve verificar se o livro está disponível no catálogo de livros 
 marcá-lo como emprestado. Neste sentido, um Rest Client deve ser utilizado para
 comunicar com o serviço de catálogo de livros.
 
-## Testes e Integração
+### Testes e Integração
 
 - Teste individualmente cada serviço para garantir que as operações de
   empréstimo e consulta de livros estão funcionando corretamente.
