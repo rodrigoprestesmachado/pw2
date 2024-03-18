@@ -1,4 +1,4 @@
-<!-- .slide: data-background-opacity="0.3" data-background-image="https://pw2.rpmhub.dev/topicos/microservices/slides/img/title.jpg" data-transition="convex" -->
+<!-- .slide: data-background-opacity="0.3" data-background-image="https://pw2.rpmhub.dev/topicos/fault/slides/img/title.jpg" data-transition="convex" -->
 # Fault Tolerance
 <!-- .element: style="margin-bottom:100px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 
