@@ -40,7 +40,10 @@ Imagine que temos que nos comunicar um um RESTful Web Service de um carrinho de
 compras (checkout) em um serviço de pagamento (payment):
 
 <center>
-    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/store.puml" alt="Carrinho de compras" width="35%" height="35%"/> <br/>
+    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/store.puml" target="blanck">
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/store.puml" alt="Carrinho de compras" width="50%" height="50%"/>
+    </a>
+    <br/>
     Figura 1 - Diagrama de sequência de um carrinho de compras.
 </center>
 
@@ -138,7 +141,10 @@ A Figura 2 apresenta um diagrama de sequência que ilustra a comunicação entre
 os serviços.
 
 <center>
-    <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" alt="Biblio" width="35%" height="35%"/> <br/>
+    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" target="blanck">
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" alt="Biblio" width="50%" height="50%"/>
+    </a>
+    <br/>
     Figura 2 - Diagrama de sequência do exercícios.
 </center>
 
