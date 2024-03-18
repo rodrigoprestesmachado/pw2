@@ -96,10 +96,10 @@ por intermédio do Github:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-# Rest cliente
-code pw2/exemplos/rest-client/client
-# serviço
-code pw2/exemplos/rest-client/service
+# Serviço de checkout
+code pw2/exemplos/store/checkout
+# Serviço de pagamento
+code pw2/exemplos/store/payment
 ```
 
 ## Exercício Prático 🏋️
@@ -145,7 +145,7 @@ os serviços.
         <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" alt="Biblio" width="50%" height="50%"/>
     </a>
     <br/>
-    Figura 2 - Diagrama de sequência do exercícios.
+    Figura 2 - Diagrama de sequência do exercício.
 </center>
 
 
