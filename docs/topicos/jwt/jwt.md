@@ -49,7 +49,7 @@ autorizar as solicitações.
 
 <center>
     <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/funcionamento.puml">
-        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/funcionamento.puml" alt="Funcionamento do JWT" width="40%" height="40%"/>
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/funcionamento.puml" alt="Funcionamento do JWT" width="60%" height="60%"/>
     </a>
     <br/>
     Figura 1 - Funcionamento básico de um JWT.
@@ -70,9 +70,32 @@ por diversas linguagens de programação e _frameworks_.
 token, como por exemplo, o nome do usuário, o papel (_role_) e outras
 informações específicas da aplicação.
 
-## Como implementar? 🤓
+## Formato de um JWT 📝
 
-Para criar um serviço no Quarkus com suporte ao JWT necessitamos de duas extensões `smallrye-jwt` e `smallrye-jwt-build`, por exemplo:
+Um JWT é uma String codificada que possui três partes separadas por um ponto
+(.): cabeçalho, carga (_payload_) de declarações (*claims*) e assinatura do JWT.
+
+Um JWT tem o seguinte formato:
+
+```
+    xxxxx.yyyyy.zzzzz
+```
+
+* **Cabeçalho**: contém duas informações, o tipo do token (nesse caso JWT) e o
+algoritmo de assinatura que está sendo utilizado.
+
+* **Carga (_payload_) de declarações (*claims*)**: contém informações específicas
+do sistema em questão, como por exemplo, declarações sobre um usuário, nome,
+e-mail, papel (_role_), entre outros.
+
+* **Assinatura**: é a concatenação de hashes gerados a partir do cabeçalho e da
+carga com o objetivo de garantir a integridade do token.
+
+
+## Como implementar no Quarkus? 🤓
+
+Para criar um serviço no Quarkus com suporte ao JWT necessitamos de duas
+extensões `smallrye-jwt` e `smallrye-jwt-build`, por exemplo:
 
 ```sh
 mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
@@ -83,12 +106,17 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
     -Dextensions="resteasy,resteasy-jackson,smallrye-jwt,smallrye-jwt-build"
 ```
 
-## Gerando chaves públicas e privadas com OpenSSL 🔐
+* `smallrye-jwt`: fornece suporte para a validação de tokens JWT.
+* `smallrye-jwt-build`: fornece suporte para a construção de tokens JWT.
 
-Os tokens trabalham com o esquema de criptografia assimétrica utilizando chaves
-públicas e privadas, ou seja, podemos utilizar a chave pública de um serviço _X_
-para poder assinar os tokens e, por sua vez, o serviço _X_  possui uma chave
-privada para poder validar a mensagem.
+## Chaves públicas e privadas 🔐
+
+Inicialmente é necessário gerar um par de chaves pública e privada para poder
+assinar e validar os tokens. Para isso, podemos utilizar o [OpenSSL](https://www.openssl.org),
+que forneces um conjunto de ferramentas de código aberto para criptografia.
+No caso do JWT, a assinatura é feita por meio de chaves assimétricas, ou seja,
+a chave privada é utilizada para assinar o token e a chave pública é utilizada
+para validar a assinatura.
 
 💡 Veja o [vídeo](https://www.youtube.com/watch?v=AQDCe585Lnc) para entender
 mais sobre criptografia assimétrica.
@@ -122,9 +150,10 @@ propriedade `smallrye.jwt.sign.key.location` no arquivo de
 
 ## Gerando um JSON Web Token (JWT) 🏭
 
-Como visto anteriormente, um JWT nada mais é que uma String codificada que
-possui três: cabeçalho,  carga (_payload_) de declarações (*claims*) e
-assinatura. Para gerar e assinar um token podemos utiliza a classe
+Depois de criarmos e configurarmos as chaves, podemos escrever um código para
+gerar um JWT. Como visto anteriormente, um JWT nada mais é que uma String
+codificada que possui três: cabeçalho,  carga (_payload_) de declarações
+(*claims*) e assinatura. Para gerar e assinar um token podemos utiliza a classe
 `io.smallrye.jwt.build.Jwt`, veja um exemplo:
 
 ```java
@@ -202,7 +231,6 @@ pública, veja o exemplo abaixo:
 `mp.jwt.verify.publickey.location` deve ser substituída por
 `quarkus.native.resources.includes=publicKey.pem`.
 
-
 ## Sign e Encrypt
 
 Um JWT pode ser assinado, com o objetivo de verificar a validade, e
@@ -240,6 +268,15 @@ Por outro lado, para poder validar o JWT e também descriptografar:
 🚨 Para saber mais detalhes, sobre esse processo de assinatura e criptografia,
 por favor acesse: [https://smallrye.io/docs/smallrye-jwt/generate-jwt.html](https://smallrye.io/docs/smallrye-jwt/generate-jwt.html)
 
+## Propagação de JWT 🔌
+
+Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar
+os tokens entre os serviços de maneira automática. Para fazermos isso no Quarkus
+inicialmente temos que adicionar a extensão `quarkus-oidc-token-propagation` no
+arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com `@AccessToken`,
+pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de
+um serviço para o outro.
+
 # Hyper Text Transfer Protocol Secure (HTTPS)
 
 Um dos problemas do JWT é que o token pode ser capturado, nesse caso, se faz
@@ -262,24 +299,13 @@ Para informar o caminho do arquivo keystore.jks adicione a seguinte propriedades
 ```
 
 🚨 Nota, quando você estiver utilizando Rest Client se faz necessário utilizar a
- propriedade `quarkus.tls.trust-all`
-para que o cliente confie em certificados não homologados por uma unidade
-certificadora. Assim, adicione a seguinte linha no arquivo de properties do
-serviço que utiliza um Rest Client:
+propriedade `quarkus.tls.trust-all` para que o cliente confie em certificados
+não homologados por uma unidade certificadora. Assim, adicione a seguinte linha
+no arquivo de properties do serviço que utiliza um Rest Client:
 
 ```
     quarkus.tls.trust-all=true
 ```
-
-## Propagação de JWT 🔌
-
-Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar
-os tokens entre os serviços de maneira automática. Para fazermos isso no Quarkus
-inicialmente temos que adicionar a extensão `quarkus-oidc-token-propagation` no
-arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com `@AccessToken`,
-pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de
-um serviço para o outro.
-
 
 ## Exemplo de código 🖥️
 
