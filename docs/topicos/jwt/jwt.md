@@ -6,6 +6,13 @@ nav_order: 6
 
 # JSON Web Token 🔑
 
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/jwt/slides/index.html#/"
+        title="JSON Web Token" width="90%" height="500" style="border:none;">
+    </iframe>
+</center>
+
 Um JSON Web Token (JWT) é um [padrão](https://datatracker.ietf.org/doc/html/rfc7519)
 para a criação de tokens, sequências de caracteres normalmente criptografadas,
 capazes de transportar dados no formato JSON. A principal utilização desse
