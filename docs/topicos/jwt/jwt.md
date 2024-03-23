@@ -6,7 +6,6 @@ nav_order: 6
 
 # JSON Web Token 🔑
 
-
 <center>
     <iframe src="https://pw2.rpmhub.dev/topicos/jwt/slides/index.html#/"
         title="JSON Web Token" width="90%" height="500" style="border:none;">
@@ -310,29 +309,30 @@ no arquivo de properties do serviço que utiliza um Rest Client:
 ## Exemplo de código 🖥️
 
 O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro
-serviços para suportar um _front-end_, normalmente chamado de _Back-end for
-Front-end_ (BFF). Como exemplo, o diagrama de componentes da Figura 2 ilustra os
-serviços e suas relações.
+serviços para um sistema de comércio eletrônico. Nesse caso, temos um serviço
+de "_Users_", que é responsável por gerar um token JWT, e dois serviços,
+"_Chekout_" e "_Payment_", que são protegidos por esse token. Como exemplo,
+o diagrama de componentes da [Figura 2](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml) ilustra os serviços e suas relações.
 
 <center>
     <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml">
         <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Back-end for Front-end (BFF)" width="40%" height="40%"/>
     </a>
     <br/>
-    Figura 2 - Exemplo de uso do JWT no contexto de um Back-end for Front-end (BFF)
+    Figura 2 - Exemplo de arquitetura de micro serviços.
 </center>
 
-O JWT do exemplo é utilizado para proteger os métodos dos serviços "First" e "Second".
-Desta maneira, é necessário se obter um token por meio do serviço de "Users" para
-depois conseguir acessar os demais serviços. Para baixar o código desse exemplo
-utilize os seguintes comandos:
+O JWT do exemplo é utilizado para proteger os métodos dos serviços dos serviços
+"Checkout" e "Payment". Desta maneira, é necessário se obter um token por meio
+do serviço de "Users" para depois conseguir acessar os demais serviços.
+Para baixar o código desse exemplo utilize os seguintes comandos:
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
-cd pw2/exemplos/jwt
+cd pw2/exemplos/store
 ```
 
-# Referências 📚
+## Referências 📚
 
 * Usando JWT RBAC. Disponível em: [https://quarkus.io/guides/security-jwt](https://quarkus.io/guides/security-jwt)
 
