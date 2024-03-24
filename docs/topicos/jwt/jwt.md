@@ -131,7 +131,11 @@ openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -ou
 openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
 ```
 
-🚨 Uma observação, atualmente o JWT suporta chaves no formato:
+Se você tiver dificuldades para gerar as chaves, por favor, baixe as chaves de
+exemplo: [privateKey.pem](https://github.com/rodrigoprestesmachado/pw2/blob/dev/exemplos/store/users/src/main/resources/privateKey.pem) e
+[publicKey.pem](https://github.com/rodrigoprestesmachado/pw2/blob/dev/exemplos/store/users/src/main/resources/publicKey.pem).
+
+Atualmente o JWT suporta chaves no formato:
 
 * Public Key Cryptography Standards #8 (PKCS#8) PEM
 * JSON Web Key (JWK)
@@ -305,6 +309,9 @@ chave privada e um certificado utilize o comando:
     keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 365 -keysize 2048
 ```
 
+Se você tiver dificuldades para gerar o certificado, por favor, baixe o
+[certificado](https://github.com/rodrigoprestesmachado/pw2/blob/dev/exemplos/store/users/src/main/resources/keystore.jks) de exemplo.
+
 🚨 Nota, o formato keystore.jks armazena tanto o certificado quanto a sua chave
 privada.
 
@@ -350,6 +357,13 @@ Para baixar o código desse exemplo utilize os seguintes comandos:
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 cd pw2/exemplos/store
 ```
+
+## Exercício Prático 🏋️
+
+Com base no exercício [anterior](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html#exercício-prático-%EF%B8%8F), sobre da arquitetura de micro serviços para
+uma rede social de empréstimo de livros, adicione a segurança por meio de JWT.
+Para isso, crie um serviço "_Users_" que seja responsável por gerar um tokens
+JWT.
 
 ## Referências 📚
 
