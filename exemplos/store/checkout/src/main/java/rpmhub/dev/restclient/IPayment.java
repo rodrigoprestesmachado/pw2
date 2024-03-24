@@ -6,7 +6,7 @@
  * You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
 */
-package edu.ifrs;
+package rpmhub.dev.restclient;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import io.quarkus.oidc.token.propagation.AccessToken;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -22,11 +21,12 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import rpmhub.dev.model.Invoice;
 
 /**
  * Interface for payment service.
  */
-@RegisterRestClient(baseUri = "https://localhost:8444/")
+@RegisterRestClient(baseUri = "https://localhost:8445/payment")
 @AccessToken
 public interface IPayment {
 
@@ -38,10 +38,10 @@ public interface IPayment {
      * @return the invoice for the payment
      */
     @POST
-    @Path("/payment")
+    @Path("/pay")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    Invoice confirmPayment(
+    Invoice pay(
         @FormParam("cardNumber") String cardNumber,
         @FormParam("value") String value);
 

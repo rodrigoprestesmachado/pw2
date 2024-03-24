@@ -6,7 +6,7 @@
  * You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
 */
-package edu.ifrs;
+package rpmhub.dev.web;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,6 +21,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import rpmhub.dev.data.InvoiceRepository;
+import rpmhub.dev.model.Invoice;
 
 @Path("/payment")
 public class Payment {
@@ -47,15 +49,16 @@ public class Payment {
      * @return the created and persisted invoice
      */
     @POST
+    @Path("/pay")
     @Transactional
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("User")
-    public Invoice confirmPayment(
+    public Invoice pay(
             @FormParam("cardNumber") String cardNumber,
             @FormParam("value") String value) {
 
-        logger.info("confirmPayment payment in payment service");
+        logger.info("Confirms the payment");
 
         // Create a new invoice object
         Invoice invoice = new Invoice();

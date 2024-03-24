@@ -156,16 +156,17 @@ codificada que possui três: cabeçalho,  carga (_payload_) de declarações
 `io.smallrye.jwt.build.Jwt`, veja um exemplo:
 
 ```java
-@GET
-@Path("/jwt")
+@POST
+@Path("/getJwt")
 @PermitAll
+@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.TEXT_PLAIN)
-public String generate() {
+public String generate(final String fullName) {
     return Jwt.issuer("http://localhost:8080")
-            .upn("rodrigo@rpmhub.dev")
-            .groups(new HashSet<>(Arrays.asList("User", "Admin")))
-            .claim(Claims.full_name, "Rodrigo Prestes Machado")
-            .sign();
+        .upn("rodrigo@rpmhub.dev")
+        .groups(new HashSet<>(Arrays.asList("User", "Admin")))
+        .claim(Claims.full_name, fullName)
+        .sign();
 }
 ```
 
@@ -185,28 +186,31 @@ Para restringir o acesso a um método devemos utilizar a anotação
 acessar aquele método, observe o exemplo abaixo:
 
 ```java
-/* Recuperando uma informação do token */
 @Inject
-@Claim(standard = Claims.full_name)
-String fullName;
+@RestClient
+IPayment paymentService;
 
-@GET
-@Path("/sum/{a}/{b}")
-@RolesAllowed({ "User" })
-@Produces(MediaType.TEXT_PLAIN)
-public long sum(@PathParam("a") long a, @PathParam("b") long b) {
-    return a + b;
+@POST
+@Path("/buy")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+@RolesAllowed("User")
+public Invoice buy(@FormParam("cardNumber") String cardNumber,
+                        @FormParam("value") String value){
+    logger.info("Confirms the payment");
+
+    return paymentService.pay(cardNumber, value);
 }
 ```
 
 No exemplo, podemos também observar que as informações contidas no token podem
-ser recuperadas por intermédio da anotação `@Claim`. Além disso, o método `sum`
+ser recuperadas por intermédio da anotação `@Claim`. Além disso, o método `buy`
 foi decorado com a anotação `@RolesAllowed({ "User" })`, assim, o método está
 estrito para requisições que encaminhem tokens que contenham o papel "User".
 Apesar do exemplo não mostrar, também é possível injetar o token diretamente
 por meio de um objeto da classe `org.eclipse.microprofile.jwt.JsonWebToken` que,
 por sua vez, possui métodos para você recuperar informações sobre o token,
-como por exemplo, o nome de um usuário:  `token.getName()`.
+como por exemplo, o nome de um usuário: `token.getName()`.
 
 💡 Para saber mais sobre recuperação de informações de um JWT acesse:
 [Using the JsonWebToken and Claim Injection](https://quarkus.io/guides/security-jwt#using-the-jsonwebtoken-and-claim-injection)
@@ -232,29 +236,32 @@ pública, veja o exemplo abaixo:
 
 ## Sign e Encrypt
 
-Um JWT pode ser assinado, com o objetivo de verificar a validade, e
-criptografado, quando o _payload_ (_claims_) possuir dados sensíveis. O
-[exemplo acima disponível no Github](https://github.com/rodrigoprestesmachado/pw2/tree/dev/exemplos/jwt),
-utiliza os dois processos ao mesmo tempo por meio dos métodos `innerSign()` e
-`encrypt()`, observe o exemplo:
+Quando o _payload_ (_claims_) possuir dados sensíveis, como por exemplo, um
+número de cartão de crédito, é recomendável criptografar o JWT. Neste caso, o
+JWT pode assinado e criptografado, o que garante a integridade e a
+confidencialidade, por meio dos métodos `innerSign()` e `encrypt()`. O método
+`innerSign()` é utilizado para assinar o token e o método `encrypt()` é
+usado para criptografar o token. Observem o exemplo abaixo:
 
 ```java
-@GET
-@Path("/jwt")
+@POST
+@Path("/getJwt")
 @PermitAll
+@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.TEXT_PLAIN)
-public String generate(@Context SecurityContext ctx) {
+public String generate(final String fullName) {
     return Jwt.issuer("http://localhost:8080")
-            .upn("rodrigo@rpmhub.dev")
-            .groups(new HashSet<>(Arrays.asList("User", "Admin")))
-            .claim(Claims.full_name, "Rodrigo Prestes Machado")
-            .innerSign()
-            .encrypt();
+        .upn("rodrigo@rpmhub.dev")
+        .groups(new HashSet<>(Arrays.asList("User", "Admin")))
+        .claim(Claims.full_name, fullName)
+        .innerSign()
+        .encrypt();
 }
+
 ```
 
 Para gerar um JWT com esses métodos `innerSign()` e `encrypt()` se faz
-necessário configurar o Quarkus com a seguintes propriedades:
+necessário configurar o Quarkus com as seguintes propriedades:
 
     smallrye.jwt.sign.key.location=privateKey.pem
     smallrye.jwt.encrypt.key.location=publicKey.pem
@@ -263,6 +270,11 @@ Por outro lado, para poder validar o JWT e também descriptografar:
 
     mp.jwt.verify.publickey.location=publicKey.pem
     mp.jwt.decrypt.key.location=privateKey.pem
+
+No momento que você configura o Quarkus com essas propriedades, o JWT é gerado
+com a assinatura e criptografia. Por outro lado, o Quarkus, por meio das
+propriedades `mp.jwt.verify.publickey.location` e `mp.jwt.decrypt.key.location`,
+consegue validar e descriptografar o token.
 
 🚨 Para saber mais detalhes, sobre esse processo de assinatura e criptografia,
 por favor acesse: [https://smallrye.io/docs/smallrye-jwt/generate-jwt.html](https://smallrye.io/docs/smallrye-jwt/generate-jwt.html)
@@ -274,7 +286,13 @@ os tokens entre os serviços de maneira automática. Para fazermos isso no Quark
 inicialmente temos que adicionar a extensão `quarkus-oidc-token-propagation` no
 arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com `@AccessToken`,
 pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de
-um serviço para o outro.
+um serviço para o outro. Veja o exemplo abaixo:
+
+```java
+@RegisterRestClient(baseUri = "https://localhost:8445/payment")
+@AccessToken
+public interface IPayment {
+```
 
 # Hyper Text Transfer Protocol Secure (HTTPS)
 
@@ -295,6 +313,7 @@ Para informar o caminho do arquivo keystore.jks adicione a seguinte propriedades
 
 ```
     quarkus.http.ssl.certificate.key-store-file=keystore.jks
+    quarkus.http.ssl-port=8443 // porta padrão para HTTPS
 ```
 
 🚨 Nota, quando você estiver utilizando Rest Client se faz necessário utilizar a
@@ -316,7 +335,7 @@ o diagrama de componentes da [Figura 2](http://www.plantuml.com/plantuml/proxy?c
 
 <center>
     <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml">
-        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Back-end for Front-end (BFF)" width="40%" height="40%"/>
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml" alt="Exemplo de arquitetura de micro serviços" width="40%" height="40%"/>
     </a>
     <br/>
     Figura 2 - Exemplo de arquitetura de micro serviços.
