@@ -43,9 +43,9 @@ public class Users {
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String generate(final String fullName) {
+    public String generate(final String fullName, final String email) {
         return Jwt.issuer(ISSUER)
-                .upn("rodrigo@rpmhub.dev")
+                .upn(email)
                 .groups(new HashSet<>(Arrays.asList("User", "Admin")))
                 .claim(Claims.full_name, fullName)
                 .sign();

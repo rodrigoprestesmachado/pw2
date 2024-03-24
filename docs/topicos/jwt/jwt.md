@@ -90,6 +90,9 @@ e-mail, papel (_role_), entre outros.
 * **Assinatura**: é a concatenação de hashes gerados a partir do cabeçalho e da
 carga com o objetivo de garantir a integridade do token.
 
+Uma dica para visualizar as três partes de um JWT de forma prática é visitar o
+site [jwt.io](https://jwt.io/#debugger-io).
+
 
 ## Como implementar no Quarkus? 🤓
 
@@ -165,12 +168,12 @@ codificada que possui três: cabeçalho,  carga (_payload_) de declarações
 @PermitAll
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.TEXT_PLAIN)
-public String generate(final String fullName) {
-    return Jwt.issuer("http://localhost:8080")
-        .upn("rodrigo@rpmhub.dev")
-        .groups(new HashSet<>(Arrays.asList("User", "Admin")))
-        .claim(Claims.full_name, fullName)
-        .sign();
+public String generate(final String fullName, final String email) {
+    return Jwt.issuer(ISSUER)
+            .upn(email)
+            .groups(new HashSet<>(Arrays.asList("User", "Admin")))
+            .claim(Claims.full_name, fullName)
+            .sign();
 }
 ```
 
