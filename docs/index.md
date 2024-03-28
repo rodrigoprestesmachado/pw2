@@ -28,7 +28,9 @@ nav_order: 1
 
 * [Trace e Logging](topicos/logging/logging.md)
 
-Jakarta EE (antigo)
+Jakarta EE
+Deprecated
+{: .label .label-red }
 
 * [Configuração do ambiente](topicos/ambiente/ambiente.md)
 
@@ -44,12 +46,12 @@ Jakarta EE (antigo)
 
   * [Message Driven](topicos/mdb/mdb.md)
 
-# Comunidade da disciplina
+## Comunidade da disciplina
 
 Comunidade da disciplina no [Discord](https://discord.com/invite/C29cqvm):
 canal `#pw2`
 
-# Conteúdo de terceiros
+## Conteúdo de terceiros
 
 * Essa página reúne [conteúdos](topicos/terceiros/terceiros.md) relevantes que podem auxiliar no estudo e aprendizagem dos temas da disciplina.
 

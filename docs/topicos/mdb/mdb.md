@@ -6,6 +6,9 @@ nav_exclude: true
 
 # Message Driven Beans (MDB)
 
+Deprecated
+{: .label .label-red }
+
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/mdb/slides/index.html#/" title="Message Driven Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>

@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Hibernate
-nav_order: 7
+title: Hibernate e Panache
+nav_order: 8
 ---
 
-# Hibernate no Quarkus 💾
+# Hibernate e Panache 💾
 
 Esse tutorial tem o objetivo de demonstrar como utilizar o [Hibernate](https://hibernate.org) dentro de um contexto de um RESTFul Web Service (JAX-RS) no [Quarkus](https://quarkus.io). Assim, esse documento apresenta dicas úteis para a implementação de mapeamento objeto relacional, conversão de objetos Java para JSON e consultas por meio da API Critéria.
 

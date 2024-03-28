@@ -6,6 +6,9 @@ nav_exclude: true
 
 # Configuração do ambiente
 
+Deprecated
+{: .label .label-red }
+
 ## VSCode e Open Liberty
 
 <center>

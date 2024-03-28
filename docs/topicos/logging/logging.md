@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Trace e Log
+parent: Micro Serviços Intermediário
 nav_order: 12
 ---
 

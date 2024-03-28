@@ -6,6 +6,9 @@ nav_exclude: true
 
 # Singleton Session Beans
 
+Deprecated
+{: .label .label-red }
+
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/singleton/slides/index.html#/" title="Singleton Session Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>

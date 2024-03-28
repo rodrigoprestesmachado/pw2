@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Rest Client
-nav_order: 5
+parent: Micro Serviços Básico
+nav_order: 6
 ---
 
 # Rest Client 🌐
@@ -11,8 +12,6 @@ nav_order: 5
         title="Rest Client" width="90%" height="500" style="border:none;">
     </iframe>
 </center>
-
-# Resumo 📝
 
 O [MicroProfile Rest Client](https://github.com/eclipse/microprofile-rest-client)
 fornece uma maneira para invocarmos serviços RESTful sobre HTTP. O MicroProfile

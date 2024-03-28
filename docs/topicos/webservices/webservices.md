@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Web Services
-nav_order: 3
+parent: Micro Serviços Básico
+nav_order: 5
 ---
 
 # Web Services 🌐
@@ -11,8 +12,6 @@ nav_order: 3
         title="Web Services" width="90%" height="500" style="border:none;">
     </iframe>
 </center>
-
-## Resumo 📝
 
 Um Web Service é uma tecnologia que permite a comunicação entre diferentes
 sistemas de software pela internet, mais especificamente, pela World Wide Web.

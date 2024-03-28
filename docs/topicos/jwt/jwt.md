@@ -1,7 +1,8 @@
 ---
 layout: default
 title: JSON Web Token
-nav_order: 6
+parent: Micro Serviços Básico
+nav_order: 7
 ---
 
 # JSON Web Token 🔑

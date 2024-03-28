@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Micro serviços
-nav_order: 4
+nav_order: 3
 ---
 
 # Micro Serviços
@@ -11,8 +11,6 @@ nav_order: 4
     title="Microservices" width="90%" height="500" style="border:none;">
     </iframe>
 </center>
-
-## Resumo 📖
 
 Os micro serviços são uma maneira conceber a
 arquitetura interna de um sistema onde as funcionalidades são vistas como

@@ -6,6 +6,9 @@ nav_exclude: true
 
 # Session beans
 
+Deprecated
+{: .label .label-red }
+
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/sessionbeans/slides/index.html#/" title="Session beans" width="90%" height="500" style="border:none;"></iframe>
 </center>

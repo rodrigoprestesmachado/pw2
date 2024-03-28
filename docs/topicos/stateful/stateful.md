@@ -6,11 +6,14 @@ nav_exclude: true
 
 # Stateful Session Beans
 
+Deprecated
+{: .label .label-red }
+
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/stateful/slides/index.html#/" title="Stateful Session Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-# Referência 
+# Referência
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/)
 

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Configuration
+parent: Micro Serviços Intermediário
 nav_order: 8
 ---
 
