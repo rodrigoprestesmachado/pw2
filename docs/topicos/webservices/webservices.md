@@ -66,7 +66,7 @@ Services em Java.
 
 ---
 
-## Exercício 📝
+## Exercícios - Parte 1 📝
 
 Desenvolva um Web Service em Rest utilizando o framework Quarkus que permita
 realizar as seguintes conversões de unidades de medida:
@@ -128,6 +128,25 @@ Certifique-se de implementar corretamente os casos de teste do exercício.
     ⚠️ Caso você tenha dificuldades para implementar o exercício, consulte o
     código fonte do projeto [PW2 ConversionService](https://github.com/rpmhubdev/pw2-conversion)
     para obter um exemplo.
+
+## Exercícios - Parte 2 📝
+
+Desenvolva um microserviço para gerenciar uma lista de tarefas. A API REST do
+serviço deve oferecer as seguintes funcionalidades:
+
+1) Para adicionar uma nova tarefa, envie uma requisição POST para a rota
+/tarefas. A requisição deve conter um JSON com o título e a descrição da tarefa.
+Em resposta, o servidor retorna a tarefa criada com um ID gerado automaticamente
+no formato JSON.
+
+2) Para listar as tarefas cadastradas, envie uma requisição GET para a rota
+/tarefas. A resposta será um JSON contendo todas as tarefas armazenadas.
+
+3) Para excluir uma tarefa, use o método DELETE e inclua o ID da tarefa na rota
+/tarefas/{id}. A resposta será um JSON confirmando a exclusão da tarefa.
+
+4) Desafio Opcional: adicione suporte a filtros, por exemplo, GET
+/tarefas?concluida=true.
 
 ## RESTFul Web Services
 
