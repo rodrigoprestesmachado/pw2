@@ -97,17 +97,8 @@ site [jwt.io](https://jwt.io/#debugger-io).
 
 ## Como implementar no Quarkus? 🤓
 
-Para criar um serviço no Quarkus com suporte ao JWT necessitamos de duas
-extensões `smallrye-jwt` e `smallrye-jwt-build`, por exemplo:
-
-```sh
-mvn io.quarkus.platform:quarkus-maven-plugin:2.5.1.Final:create \
-    -DprojectGroupId=dev.rpmhub \
-    -DprojectArtifactId=jwt \
-    -DclassName="dev.rpmhub.TokenSecuredResource" \
-    -Dpath="/secured" \
-    -Dextensions="resteasy,resteasy-jackson,smallrye-jwt,smallrye-jwt-build"
-```
+Para criarmos serviços no Quarkus com suporte ao JWT necessitamos de duas
+extensões `smallrye-jwt` e `smallrye-jwt-build`.
 
 * `smallrye-jwt`: fornece suporte para a validação de tokens JWT.
 * `smallrye-jwt-build`: fornece suporte para a construção de tokens JWT.
@@ -178,11 +169,11 @@ public String generate(final String fullName, final String email) {
 }
 ```
 
-No exemplo acima o token é construído por meio do método `issuer`, o assunto ou
-usuário (`upn`), os papeis do usuário (`groups`) e um conjunto de propriedades
-específicas da aplicação (*Claim*). Note, o método `sign` é utilizado no final
-da criação do token para assinar
-e efetivamente construir o token.
+No exemplo acima os tokens são construídos por meio do método `issuer`, a
+identificação do usuário ou _User Principal Name_ (`upn`), os papeis/grupos do
+usuário (`groups`) e um conjunto de propriedades específicas da aplicação
+(*Claim*). Note, o método `sign` é utilizado no final da criação do token para
+assinar e efetivamente construir o token.
 
 🚨 Note que o método do exemplo acima utiliza a anotação `@PermitAll` para
 liberar o acesso ao método.
@@ -214,7 +205,7 @@ public Invoice buy(@FormParam("cardNumber") String cardNumber,
 No exemplo, podemos também observar que as informações contidas no token podem
 ser recuperadas por intermédio da anotação `@Claim`. Além disso, o método `buy`
 foi decorado com a anotação `@RolesAllowed({ "User" })`, assim, o método está
-estrito para requisições que encaminhem tokens que contenham o papel "User".
+estrito para requisições que encaminhem tokens que contenham o papel "_User_".
 Apesar do exemplo não mostrar, também é possível injetar o token diretamente
 por meio de um objeto da classe `org.eclipse.microprofile.jwt.JsonWebToken` que,
 por sua vez, possui métodos para você recuperar informações sobre o token,
@@ -265,7 +256,6 @@ public String generate(final String fullName) {
         .innerSign()
         .encrypt();
 }
-
 ```
 
 Para gerar um JWT com esses métodos `innerSign()` e `encrypt()` se faz
@@ -291,15 +281,26 @@ por favor acesse: [https://smallrye.io/docs/smallrye-jwt/generate-jwt.html](http
 
 Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar
 os tokens entre os serviços de maneira automática. Para fazermos isso no Quarkus
-inicialmente temos que adicionar a extensão `quarkus-oidc-token-propagation` no
-arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com `@AccessToken`,
-pois, isto irá permitir que os Rest Clients reencaminhe os tokens recebidos de
-um serviço para o outro. Veja o exemplo abaixo:
+inicialmente temos que adicionar a extensão `quarkus-rest-client-oidc-token-propagation`
+no arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com
+`@AccessToken`, pois, isto irá permitir que o Rest Client reencaminhe os
+tokens recebidos de um serviço para o outro. Veja o exemplo abaixo:
 
 ```java
 @RegisterRestClient(baseUri = "https://localhost:8445/payment")
 @AccessToken
 public interface IPayment {
+```
+
+🚨 Por padrão, a extensão quarkus-rest-client-oidc-token-propagation inicia um
+container com o Keycloak se o Docker estiver disponível, pois assume que a
+propagação de tokens ocorre via OIDC (OpenID Connect). No entanto, como não
+estamos utilizando um serviço de openId oficial, devemos desabilitar o contêiner
+do Keycloak. Para isso, basta adicionar a seguinte configuração no arquivo
+application.properties:
+
+```properties
+quarkus.keycloak.devservices.enabled=false
 ```
 
 ## Hyper Text Transfer Protocol Secure (HTTPS)
