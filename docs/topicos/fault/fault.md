@@ -2,7 +2,7 @@
 layout: default
 title: Fault Tolerance
 parent: Micro Serviços Intermediário
-nav_order: 10
+nav_order: 11
 ---
 
 # Fault Tolerance 🆘
