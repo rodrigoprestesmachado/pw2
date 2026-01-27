@@ -1,0 +1,46 @@
+@startuml
+
+title Funcionamento do JWT
+
+participant Cliente as C
+participant Servidor as S
+
+C -> S: Envia credentiais
+
+S -> S: Gera JWT
+
+note right of S
+Usando as credenciais validadas,
+o servidor gera um JWT.
+end note
+
+S --> C: JWT
+
+note left of C
+Recebe o JWT do servidor.
+end note
+
+C -> S: Requisições subsequentes com JWT
+
+note right of C
+O cliente inclui o JWT em suas
+requisições subsequentes ao servidor
+para autenticação e autorização.
+end note
+
+S --> S: Verificação do JWT
+
+note right of S
+O servidor verifica a validade
+do JWT em cada requisição.
+end note
+
+S --> C: Resposta da Requisição
+
+note left of C
+O cliente recebe a resposta
+do servidor conforme a autorização
+do JWT.
+end note
+
+@enduml

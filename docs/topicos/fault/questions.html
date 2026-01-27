@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Tolerância a falhas</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # O que a anotação @Retry faz em um método que pode falhar?
+        - [ ] Evita a execução do método.
+        - [ ] Garante que o método nunca falhe.
+        - [x] Tenta reexecutar o método um número especificado de vezes.
+        - [ ] Reduz o tempo de execução do método.
+
+        # Qual é o propósito da anotação @Fallback em um método?
+        - [ ] Substituir o método original por outro método alternativo em caso de falha.
+        - [ ] Aumentar o tempo de execução do método.
+        - [ ] Garantir que o método original seja sempre executado.
+        - [x] Executar um método alternativo quando o método original não se recupera de uma falha.
+
+        # O que a anotação @Timeout especifica?
+        - [x] O tempo máximo que um método pode levar para ser executado antes de lançar uma exceção.
+        - [ ] O tempo mínimo que um método deve levar para ser executado.
+        - [ ] O tempo que o sistema deve esperar antes de executar um método.
+        - [ ] O tempo total de execução permitido para todos os métodos na aplicação.
+
+        # Qual é a função da anotação @Bulkhead?
+        - [ ] Limitar o número de falhas permitidas antes de parar a aplicação.
+        - [x] Limitar o número de operações simultâneas permitidas em um método.
+        - [ ] Aumentar a capacidade de processamento de um método.
+        - [ ] Reduzir a carga no servidor.
+
+        # Quando a anotação @Bulkhead é usada com @Asynchronous, qual é o seu comportamento?
+        - [ ] Permite apenas um número fixo de requisições.
+        - [x] Permite configurar tanto as requisições simultâneas quanto o tamanho da fila de espera.
+        - [ ] Garante que todas as requisições sejam processadas em ordem.
+        - [ ] Desativa o isolamento de recursos.
+
+        # Qual é a principal função da anotação @CircuitBreaker?
+        - [ ] Aumentar o número de execuções de um método.
+        - [x] Evitar chamadas repetidas a um método que falhou até que ele se recupere.
+        - [ ] Substituir o método original por um método de fallback.
+        - [ ] Reduzir o tempo de execução de um método.
+
+        # O que ocorre quando o @CircuitBreaker está ativado e um método continua a falhar?
+        - [ ] O método é reexecutado indefinidamente.
+        - [ ] A aplicação é encerrada.
+        - [x] O circuito se abre e evita novas execuções do método por um tempo.
+        - [ ] O método é ignorado.
+
+        # Em que situação a anotação @Timeout lança uma exceção?
+        - [ ] Quando o método é executado com sucesso.
+        - [ ] Quando o método falha imediatamente.
+        - [x] Quando o método excede o tempo especificado para sua execução.
+        - [ ] Quando o método é chamado muitas vezes.
+
+        # O que é necessário para um método de fallback funcionar corretamente com @Fallback?
+        - [ ] Deve ter um nome diferente do método original.
+        - [ ] Deve retornar um tipo de dado diferente.
+        - [x] Deve ter a mesma assinatura que o método original.
+        - [ ] Deve ser executado antes do método original.
+
+    </div>
+</body>
+
+</html>

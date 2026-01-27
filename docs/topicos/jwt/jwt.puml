@@ -6,13 +6,14 @@ database Data {
 }
 
 [Front-end]
-sum - [First] : 8081/8444
-getSum - [Second] : 8082/8445
-jwt - [Users] : 8080/8443
+buy - [Checkout] : 8081/8444
+pay - [Payment] : 8082/8445
+getJwt - [Users] : 8080/8443
 
-[Front-end] --> jwt : (1)
-Users --> Data : (2)
-[Front-end] --> sum : (3)
-sum --> getSum : (4)
+[Front-end] --> getJwt : Credentials (1)
+Users <--> Data :  Credentials (2)
+getJwt --> [Front-end] : JWT (3)
+[Front-end] --> buy :  JWT (4)
+buy --> pay :  JWT (5)
 
 @enduml

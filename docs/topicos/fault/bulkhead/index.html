@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulador: Bulkhead (Quarkus / MP Fault Tolerance)</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, sans-serif;
+      color: #222
+    }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      padding: 16px
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 550px 1fr; /* sidebar ligeiramente maior */
+      gap: 16px;
+      margin-top: 12px
+    }
+
+    .panel {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06)
+    }
+
+    .controls label {
+      display: block;
+      margin: 8px 0 4px;
+      font-size: 13px
+    }
+
+    input[type=number] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px
+    }
+
+    /* Ajuste fino para os selects caberem melhor no menu esquerdo */
+    select {
+      width: 100%;
+      max-width: 100%;
+      padding: 4px 6px; /* reduz altura/volume */
+      font-size: 12px;  /* torna o controle mais compacto */
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px
+    }
+
+    button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 0;
+      background: #2563eb;
+      color: white;
+      cursor: pointer
+    }
+
+    button.secondary {
+      background: #64748b
+    }
+
+    .viz {
+      position: relative;
+      overflow: hidden
+    }
+
+    svg {
+      width: 100%;
+      height: 360px;
+      background: linear-gradient(180deg, #eef3ff 0%, #ffffff 60%);
+      border-radius: 6px
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px
+    }
+
+    .chip {
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      background: #f1f5f9
+    }
+
+    .metrics {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .metric {
+      background: #0f172a;
+      color: white;
+      padding: 8px;
+      border-radius: 6px;
+      min-width: 110px;
+      text-align: center
+    }
+
+    .logs {
+      height: 160px;
+      overflow: auto;
+      background: #0b1220;
+      color: #e6eef8;
+      padding: 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px
+    }
+
+    .controls .preset {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px
+    }
+
+    .speed {
+      margin-top: 8px
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img
+      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' rx='8' fill='%232563eb'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='white'>BH</text></svg>"
+      alt="logo" />
+    <div>
+      <h1>Simulador — Bulkhead (Quarkus / MicroProfile)</h1>
+      <div style="font-size:13px;color:#475569">Interativo: experimente slots, fila, async e observe falhas/throughput
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="panel controls">
+      <h3>Configurações</h3>
+      <label>Slots (value)</label>
+      <input id="inputSlots" type="number" min="1" value="3" />
+
+      <label>Fila (waitingTaskQueue)</label>
+      <input id="inputQueue" type="number" min="0" value="2" />
+
+      <label>Asynchronous</label>
+      <div class="row" style="align-items:center">
+        <label style="margin:0"><input id="toggleAsync" type="checkbox" /> Ativar</label>
+      </div>
+
+      <label id="labelPool" style="display:block;margin-top:8px">Thread pool size (quando Async ON)</label>
+      <input id="inputPool" type="number" min="1" value="10" />
+
+      <label>Arrival rate (req/s)</label>
+      <input id="inputArrival" type="number" min="0" value="5" />
+
+      <label>Service time (ms) média</label>
+      <input id="inputService" type="number" min="50" value="2000" />
+
+      <div class="preset">
+        <button class="secondary" id="presetLow">Baixa</button>
+        <button class="secondary" id="presetMed">Média</button>
+        <button class="secondary" id="presetHigh">Alta</button>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="startBtn">Start</button>
+        <button id="stopBtn" class="secondary">Stop</button>
+      </div>
+
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <button id="burstBtn" class="secondary">Single burst (6)</button>
+        <button id="stepBtn" class="secondary">Step</button>
+      </div>
+
+      <label class="speed">Velocidade (x)</label>
+      <select id="selectSpeed">
+        <option>0.5</option>
+        <option selected>1</option>
+        <option>2</option>
+      </select>
+
+      <h4 style="margin-top:12px">Medições</h4>
+      <div class="metrics">
+        <div class="metric">
+          <div id="mThrough">Throughput: 0/s</div>
+        </div>
+        <div class="metric">
+          <div id="mLatency">Latência: 0 ms</div>
+        </div>
+        <div class="metric">
+          <div id="mSuccess">Success: 0</div>
+        </div>
+        <div class="metric">
+          <div id="mFail">BulkheadEx: 0</div>
+        </div>
+      </div>
+
+      <h4 style="margin-top:12px">Logs</h4>
+      <div id="logArea" class="logs" aria-live="polite"></div>
+    </aside>
+
+    <main class="panel viz">
+      <svg id="scene" viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" role="img"
+        aria-label="Visualização do Bulkhead">
+        <!-- Entrada -->
+        <g id="entrance" transform="translate(20,20)">
+          <rect x="0" y="0" width="160" height="320" rx="8" fill="#f8fafc" stroke="#c7d2fe" />
+          <text x="80" y="18" text-anchor="middle" font-size="14">Entrada</text>
+        </g>
+
+        <!-- Slots -->
+        <g id="slots" transform="translate(200,20)">
+          <rect x="0" y="0" width="220" height="320" rx="8" fill="#f8fafc" stroke="#bfdbfe" />
+          <text x="110" y="18" text-anchor="middle" font-size="14">Bulkhead slots</text>
+        </g>
+
+        <!-- Queue -->
+        <g id="queue" transform="translate(450,20)">
+          <rect x="0" y="0" width="180" height="320" rx="8" fill="#f8fafc" stroke="#fde68a" />
+          <text x="90" y="18" text-anchor="middle" font-size="14">Fila de espera</text>
+        </g>
+
+        <!-- Thread pool -->
+        <g id="pool" transform="translate(650,20)">
+          <rect x="0" y="0" width="220" height="110" rx="8" fill="#f8fafc" stroke="#a7f3d0" />
+          <text x="110" y="18" text-anchor="middle" font-size="13">Thread pool (Async)</text>
+          <rect id="poolBox" x="10" y="30" width="200" height="66" rx="6" fill="#ffffff" stroke="#bbf7d0" />
+        </g>
+
+        <!-- Output -->
+        <g id="output" transform="translate(650,150)">
+          <rect x="0" y="0" width="220" height="190" rx="8" fill="#f8fafc" stroke="#dbeafe" />
+          <text x="110" y="18" text-anchor="middle" font-size="13">Output</text>
+        </g>
+
+        <!-- dynamic layer -->
+        <g id="dynamics"></g>
+      </svg>
+
+      <div class="legend">
+        <div class="chip">Executando: <span style="color:#0ea5e9">azul</span></div>
+        <div class="chip">Em fila: <span style="color:#f59e0b">amarelo</span></div>
+        <div class="chip">Falha: <span style="color:#ef4444">vermelho</span></div>
+        <div class="chip">Sucesso: <span style="color:#16a34a">verde</span></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Simulador: implementação funcional (MVP)
+    (() => {
+      const state = {
+        nextId: 1,
+        running: false,
+        slots: 3,
+        queueSize: 2,
+        async: false,
+        poolSize: 10,
+        arrivalRate: 5,
+        serviceMs: 2000,
+        speed: 1,
+        inSlots: [], // ids executing
+        queue: [], // queued requests
+        poolBusy: 0,
+        metrics: { success: 0, fail: 0, total: 0, latencySamples: [] },
+        dynamics: {}
+      };
+
+      // DOM refs
+      const inputSlots = document.getElementById('inputSlots');
+      const inputQueue = document.getElementById('inputQueue');
+      const toggleAsync = document.getElementById('toggleAsync');
+      const inputPool = document.getElementById('inputPool');
+      const inputArrival = document.getElementById('inputArrival');
+      const inputService = document.getElementById('inputService');
+      const startBtn = document.getElementById('startBtn');
+      const stopBtn = document.getElementById('stopBtn');
+      const burstBtn = document.getElementById('burstBtn');
+      const stepBtn = document.getElementById('stepBtn');
+      const presetLow = document.getElementById('presetLow');
+      const presetMed = document.getElementById('presetMed');
+      const presetHigh = document.getElementById('presetHigh');
+      const selectSpeed = document.getElementById('selectSpeed');
+      const logArea = document.getElementById('logArea');
+      const mThrough = document.getElementById('mThrough');
+      const mLatency = document.getElementById('mLatency');
+      const mSuccess = document.getElementById('mSuccess');
+      const mFail = document.getElementById('mFail');
+      const scene = document.getElementById('scene');
+      const dynamics = document.getElementById('dynamics');
+
+      // SVG regions coordinates (approx)
+      const coords = {
+        entrance: { x: 20, y: 20, w: 160, h: 320 },
+        slots: { x: 200, y: 20, w: 220, h: 320 },
+        queue: { x: 450, y: 20, w: 180, h: 320 },
+        pool: { x: 650, y: 20, w: 220, h: 110 },
+        out: { x: 650, y: 150, w: 220, h: 190 }
+      };
+
+      function log(msg) {
+        const t = (performance.now() / 1000).toFixed(3);
+        const line = `t=${t}s - ${msg}`;
+        const p = document.createElement('div');
+        p.textContent = line;
+        logArea.prepend(p);
+        // cap
+        while (logArea.children.length > 200) logArea.removeChild(logArea.lastChild);
+      }
+
+      function pushMetricsSuccess(latency) { state.metrics.success++; state.metrics.total++; state.metrics.latencySamples.push(latency); }
+      function pushMetricsFail() { state.metrics.fail++; state.metrics.total++; }
+
+      // create visual request node
+      function makeNode(id) {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('data-req', id);
+        const circ = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circ.setAttribute('r', 12);
+        circ.setAttribute('cx', coords.entrance.x + 40 + (Math.random() * 60));
+        circ.setAttribute('cy', coords.entrance.y + 40 + (Math.random() * 240));
+        circ.setAttribute('fill', '#60a5fa');
+        circ.setAttribute('stroke', '#1e3a8a');
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', +circ.getAttribute('cx'));
+        txt.setAttribute('y', +circ.getAttribute('cy') + 4);
+        txt.setAttribute('text-anchor', 'middle');
+        txt.setAttribute('font-size', '10');
+        txt.textContent = id;
+        g.appendChild(circ); g.appendChild(txt);
+        dynamics.appendChild(g);
+        return g;
+      }
+
+      function removeNode(id) { const n = dynamics.querySelector(`[data-req='${id}']`); if (n) n.remove(); }
+
+      // animate circle to x,y
+      function animateTo(elem, x, y, duration = 600) {
+        const circle = elem.querySelector('circle');
+        const text = elem.querySelector('text');
+        const startX = +circle.getAttribute('cx');
+        const startY = +circle.getAttribute('cy');
+        const dx = x - startX; const dy = y - startY;
+        const start = performance.now();
+        return new Promise(res => {
+          function step(now) {
+            const p = Math.min(1, (now - start) / duration);
+            const ease = p < .5 ? 2 * p * p : -1 + (4 - 2 * p) * p; // ease
+            circle.setAttribute('cx', startX + dx * ease);
+            circle.setAttribute('cy', startY + dy * ease);
+            text.setAttribute('x', startX + dx * ease);
+            text.setAttribute('y', startY + dy * ease + 4);
+            if (p < 1) requestAnimationFrame(step); else res();
+          }
+          requestAnimationFrame(step);
+        });
+      }
+
+      // core simulation: handle arrival of one request
+      function arrival(burst = false) {
+        const id = state.nextId++;
+        const node = makeNode(id);
+        const req = { id, createdAt: performance.now(), node };
+        log(`req#${id} chegou`);
+
+        // try to enter bulkhead
+        tryEnter(req);
+      }
+
+      function tryEnter(req) {
+        // if available slot
+        if (state.inSlots.length < state.slots) {
+          // occupy slot
+          state.inSlots.push(req);
+          // move to slots visual slot position (stacked)
+          const index = state.inSlots.length - 1;
+          const targetX = coords.slots.x + 40 + (index % 3) * 60;
+          const targetY = coords.slots.y + 50 + Math.floor(index / 3) * 45;
+          animateTo(req.node, targetX, targetY, 300 / state.speed).then(() => {
+            setExecuting(req);
+          });
+          log(`req#${req.id} entrou no slot (pos ${index + 1})`);
+        } else {
+          // no slot; try queue
+          if (state.queue.length < state.queueSize) {
+            state.queue.push(req);
+            const qpos = state.queue.length - 1;
+            const targetX = coords.queue.x + 40;
+            const targetY = coords.queue.y + 50 + qpos * 36;
+            req.node.querySelector('circle').setAttribute('fill', '#f59e0b');
+            animateTo(req.node, targetX, targetY, 300 / state.speed).then(() => {
+              // stuck waiting
+            });
+            log(`req#${req.id} foi para fila (pos ${qpos + 1})`);
+          } else {
+            // queue full -> fail immediately
+            req.node.querySelector('circle').setAttribute('fill', '#ef4444');
+            animateTo(req.node, coords.out.x + 110, coords.out.y + 30, 400 / state.speed).then(() => {
+              removeNode(req.id);
+            });
+            pushMetricsFail();
+            log(`req#${req.id} falhou: BulkheadException (fila cheia)`);
+          }
+        }
+        updateMetricsUI();
+      }
+
+      function setExecuting(req) {
+        // when in slot, execution depends on async flag
+        req.startedAt = performance.now();
+        req.node.querySelector('circle').setAttribute('fill', '#0ea5e9');
+        // consume pool thread if async ON
+        if (state.async) {
+          // need a free pool thread to run; if none, we simulate waiting for pool (but still occupies slot)
+          if (state.poolBusy < state.poolSize) {
+            state.poolBusy++;
+            renderPool();
+            // run
+            runExecution(req).then(() => { state.poolBusy--; renderPool(); onComplete(req); });
+          } else {
+            // simulate pool queue: wait until a thread frees
+            log(`req#${req.id} aguardando thread do pool`);
+            const waitChecker = setInterval(() => {
+              if (state.poolBusy < state.poolSize) {
+                clearInterval(waitChecker);
+                state.poolBusy++; renderPool();
+                runExecution(req).then(() => { state.poolBusy--; renderPool(); onComplete(req); });
+              }
+            }, 100);
+          }
+        } else {
+          // synchronous: the caller thread is blocked — we simulate by running and holding the slot
+          runExecution(req).then(() => onComplete(req));
+        }
+      }
+
+      function runExecution(req) {
+        // service time: gaussian-ish
+        const base = state.serviceMs;
+        const jitter = (Math.random() - 0.5) * 0.2 * base;
+        const dur = Math.max(20, base + jitter);
+        return new Promise(res => setTimeout(res, dur / state.speed));
+      }
+
+      function onComplete(req) {
+        // remove from slots
+        const idx = state.inSlots.findIndex(r => r.id === req.id);
+        if (idx > -1) state.inSlots.splice(idx, 1);
+        // move to output success
+        req.node.querySelector('circle').setAttribute('fill', '#16a34a');
+        animateTo(req.node, coords.out.x + 100, coords.out.y + 30, 400 / state.speed).then(() => {
+          const latency = Math.round(performance.now() - req.createdAt);
+          pushMetricsSuccess(latency);
+          log(`req#${req.id} concluída (lat=${latency}ms)`);
+          removeNode(req.id);
+          // if queue has waiting, promote next
+          if (state.queue.length > 0) {
+            const next = state.queue.shift();
+            // move next into slot
+            tryEnter(next);
+            // reflow queued nodes positions
+            reflowQueue();
+          }
+          updateMetricsUI();
+        });
+      }
+
+      function reflowQueue() {
+        state.queue.forEach((req, i) => {
+          const targetX = coords.queue.x + 40;
+          const targetY = coords.queue.y + 50 + i * 36;
+          animateTo(req.node, targetX, targetY, 200 / state.speed);
+        });
+      }
+
+      // UI updates
+      function updateMetricsUI() {
+        const tps = Math.round(state.metrics.total / Math.max(0.001, (performance.now() - startTime) / 1000));
+        mThrough.textContent = `Throughput: ${tps}/s`;
+        const lat = state.metrics.latencySamples.length ? Math.round(state.metrics.latencySamples.reduce((a, b) => a + b) / state.metrics.latencySamples.length) : 0;
+        mLatency.textContent = `Latência: ${lat} ms`;
+        mSuccess.textContent = `Success: ${state.metrics.success}`;
+        mFail.textContent = `BulkheadEx: ${state.metrics.fail}`;
+
+        // update slot visuals count
+        // draw slot placeholders
+        const slotsGrp = document.getElementById('slots');
+        // remove old slot indicators
+        const old = slotsGrp.querySelectorAll('.slot-ind'); old.forEach(n => n.remove());
+        for (let i = 0; i < state.slots; i++) {
+          const x = 20 + (i % 3) * 60;
+          const y = 40 + Math.floor(i / 3) * 45;
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.setAttribute('class', 'slot-ind');
+          const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', 44); r.setAttribute('height', 34); r.setAttribute('rx', 6);
+          r.setAttribute('fill', state.inSlots[i] ? '#0ea5e9' : '#e6eef8');
+          r.setAttribute('stroke', '#93c5fd');
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('x', x + 22); t.setAttribute('y', y + 20); t.setAttribute('text-anchor', 'middle'); t.setAttribute('font-size', '11');
+          t.textContent = state.inSlots[i] ? `#${state.inSlots[i].id}` : '';
+          g.appendChild(r); g.appendChild(t);
+          slotsGrp.appendChild(g);
+        }
+
+        // queue visuals: clear tails then draw
+        // handled via node positions
+        renderPool();
+      }
+
+      function renderPool() {
+        const poolBox = document.getElementById('poolBox');
+        // remove threads text
+        const poolGrp = document.getElementById('pool');
+        const old = poolGrp.querySelectorAll('.pool-ind'); old.forEach(n => n.remove());
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('class', 'pool-ind'); txt.setAttribute('x', 110); txt.setAttribute('y', 70); txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('font-size', '12');
+        txt.textContent = state.async ? `busy ${state.poolBusy}/${state.poolSize}` : 'disabled';
+        poolGrp.appendChild(txt);
+      }
+
+      // engine: arrivals
+      let arrivalTimer = null;
+      let startTime = performance.now();
+      function startEngine() {
+        if (state.running) return; state.running = true; startTime = performance.now();
+        log('Simulação iniciada');
+        arrivalTimer = setInterval(() => {
+          // Poisson arrivals: generate N per tick based on arrivalRate and tick duration
+          const perSec = state.arrivalRate;
+          if (perSec <= 0) return;
+          const ticksPerSec = 10;
+          const lambda = perSec / ticksPerSec;
+          const k = poisson(lambda);
+          for (let i = 0; i < k; i++) arrival();
+        }, 1000 / 10);
+      }
+      function stopEngine() { if (!state.running) return; state.running = false; clearInterval(arrivalTimer); log('Simulação parada'); }
+
+      function poisson(lambda) {
+        // simple Poisson sampler
+        let L = Math.exp(-lambda); let k = 0; let p = 1;
+        while (p > L) { k++; p *= Math.random(); if (k > 100) break; }
+        return k - 1;
+      }
+
+      // UI wiring
+      inputSlots.addEventListener('change', () => { state.slots = Math.max(1, parseInt(inputSlots.value) || 1); updateMetricsUI(); });
+      inputQueue.addEventListener('change', () => { state.queueSize = Math.max(0, parseInt(inputQueue.value) || 0); });
+      toggleAsync.addEventListener('change', () => { state.async = toggleAsync.checked; updateMetricsUI(); });
+      inputPool.addEventListener('change', () => { state.poolSize = Math.max(1, parseInt(inputPool.value) || 1); renderPool(); });
+      inputArrival.addEventListener('change', () => { state.arrivalRate = Math.max(0, parseFloat(inputArrival.value) || 0); });
+      inputService.addEventListener('change', () => { state.serviceMs = Math.max(10, parseInt(inputService.value) || 10); });
+      selectSpeed.addEventListener('change', () => { state.speed = parseFloat(selectSpeed.value); });
+
+      startBtn.addEventListener('click', () => { startEngine(); });
+      stopBtn.addEventListener('click', () => { stopEngine(); });
+      burstBtn.addEventListener('click', () => { for (let i = 0; i < 6; i++) arrival(); });
+      stepBtn.addEventListener('click', () => { arrival(); });
+
+      presetLow.addEventListener('click', () => { inputArrival.value = 1; inputService.value = 1000; inputSlots.value = 5; inputQueue.value = 5; inputPool.value = 10; inputArrival.dispatchEvent(new Event('change')); inputSlots.dispatchEvent(new Event('change')); inputQueue.dispatchEvent(new Event('change')); inputPool.dispatchEvent(new Event('change')); });
+      presetMed.addEventListener('click', () => { inputArrival.value = 5; inputService.value = 2000; inputSlots.value = 3; inputQueue.value = 2; inputPool.value = 10; inputArrival.dispatchEvent(new Event('change')); inputSlots.dispatchEvent(new Event('change')); inputQueue.dispatchEvent(new Event('change')); inputPool.dispatchEvent(new Event('change')); });
+      presetHigh.addEventListener('click', () => { inputArrival.value = 20; inputService.value = 3000; inputSlots.value = 2; inputQueue.value = 2; inputPool.value = 6; inputArrival.dispatchEvent(new Event('change')); inputSlots.dispatchEvent(new Event('change')); inputQueue.dispatchEvent(new Event('change')); inputPool.dispatchEvent(new Event('change')); });
+
+      // initial draw
+      updateMetricsUI(); renderPool();
+
+      // expose for debugging
+      window.SIM = { state, arrival, startEngine, stopEngine };
+    })();
+  </script>
+</body>
+
+</html>

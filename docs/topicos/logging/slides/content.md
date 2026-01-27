@@ -1,6 +1,4 @@
-<!-- .slide: data-background-opacity="0.3" data-background-image="https://res.cloudinary.com/dotcom-prod/images/c_fill,f_auto,g_faces:center,q_auto,w_1920/v1/wt-cms-assets/2020/08/emayhqxbsu48vsdeqfl0/wtheadlessmicroservices1920x1440.jpg"
-data-transition="convex"
--->
+<!-- .slide: data-background-opacity="0.3" data-background-image="https://pw2.rpmhub.dev/topicos/logging/slides/img/title.jpg" data-transition="convex" -->
 # Trace e Log
 <!-- .element: style="margin-bottom:100px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 
@@ -150,6 +148,6 @@ que compõem a aplicação.
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
 </center>
 <!-- .element: style="margin-top:100px; font-size: 15px; font-family: Bradley Hand" -->

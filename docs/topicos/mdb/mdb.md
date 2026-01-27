@@ -1,10 +1,19 @@
+---
+layout: minimal
+title: Message Driven Beans (MDB)
+nav_exclude: true
+---
+
 # Message Driven Beans (MDB)
+
+Deprecated
+{: .label .label-red }
 
 <center>
 <iframe src="https://pw2.rpmhub.dev/topicos/mdb/slides/index.html#/" title="Message Driven Beans" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-## Lives 
+## Lives
 
 * Trecho da live do dia [24/06/2021](https://youtu.be/w61SmUqoG-k) sobre Message Driven Beans
 
@@ -22,7 +31,7 @@ Para fazer um clone do resultado final apresentado no vídeo digite:
     cd `pw2`
     git checkout 77b5968549588820266e26a894998a1b296fa8db
 
-## Configuração do Open Liberty utilizada no vídeo 
+## Configuração do Open Liberty utilizada no vídeo
 
 ```xml
   <!--
@@ -63,5 +72,5 @@ Para fazer um clone do resultado final apresentado no vídeo digite:
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
 </center>

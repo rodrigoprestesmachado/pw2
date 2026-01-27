@@ -1,4 +1,11 @@
-# Metrics no Microprofile/Quarkus 📏
+---
+layout: default
+title: Metrics
+parent: Micro Serviços Intermediário
+nav_order: 10
+---
+
+# Metrics 📏
 
 <center>
     <iframe src="https://pw2.rpmhub.dev/topicos/metrics/slides/index.html#/" title="Microprofile Metrics" width="90%" height="500" style="border:none;"></iframe>
@@ -29,7 +36,8 @@ O MicroProfile Metrics possui um conjunto de anotações que podem serem usadas 
 
 * @Counted - Conta o número de invocações de um método
 * @Timed - Monitora a duração de uma invocação
-* @SimplyTimed - Monitora a duração das invocações sem considerar cálculos como média e distribuição, ou seja, trata-se de uma versão simplificada do @Timed.
+* @SimplyTimed - Monitora a duração das invocações sem considerar cálculos como
+média e distribuição, ou seja, trata-se de uma versão simplificada do @Timed.
 * @Metered - Monitora a frequência de invocações
 * @Gauge - Expõe o valor de retorno do método anotado como uma métrica
 * @ConcurrenceGauge - Conta as invocações paralelas
@@ -49,7 +57,8 @@ Primeiro, abra um terminal e crie um projeto com o seguinte comando:
 
     code metrics
 
-Como ilustração iremos utilizar um serviço que indica se um número é par ou ímpar como exemplo. Observe o trecho de código abaixo:
+Como ilustração iremos utilizar um serviço que indica se um número é par ou
+ímpar como exemplo. Observe o trecho de código abaixo:
 
 ```java
 @Path("/")
@@ -91,11 +100,20 @@ public class Checker {
 }
 ```
 
-Como pode ser observado no código, a classe acima implementa uma métrica chamada `counter` que é incrementada cada vez que o método `check` é executado. Além disso, a métrica `timer` registra o tempo em micro segundos gasto na execução do método `check`. Finalmente a métrica `highestEven` informa o maior número par que foi encontrado pelo serviço. Para visualizar as métricas, é necessário executar o método check e depois conferir os resultados no end-point `/q/metrics/application`
+Como pode ser observado no código, a classe acima implementa uma métrica 
+chamada `counter` que é incrementada cada vez que o método `check` é executado. 
+Além disso, a métrica `timer` registra o tempo em micro segundos gasto na 
+execução do método `check`. Finalmente a métrica `highestEven` informa o maior 
+número par que foi encontrado pelo serviço. Para visualizar as métricas, é 
+necessário executar o método check e depois conferir os resultados no end-point
+`/q/metrics/application`.
 
 ## Histograma
 
-Existe também uma métrica, que não possui uma anotação, chamada de Histograma. Um histograma armazena dados ao longo do tempo e, com isso, gera valores como mínimo, máximo, média, desvio padrão, entre outros. No exemplo anterior, declaramos um histograma chamado "histogram" da seguinte maneira:
+Existe também uma métrica, que não possui uma anotação, chamada de Histograma.
+Um histograma armazena dados ao longo do tempo e, com isso, gera valores como
+mínimo, máximo, média, desvio padrão, entre outros. No exemplo anterior,
+declaramos um histograma chamado "histogram" da seguinte maneira:
 
 ```java
     @Inject
@@ -103,15 +121,21 @@ Existe também uma métrica, que não possui uma anotação, chamada de Histogra
     Histogram histogram;
 ```
 
-Por sua vez, no método `check` utilizamos o código `this.histogram.update(number);` para armazenar os  valores e guardar o histórico de dados do método.
+Por sua vez, no método `check` utilizamos o código `this.histogram.update(number);`
+para armazenar os  valores e guardar o histórico de dados do método.
 
 ## Consultas 🔎
 
-Você pode obter informações de qualquer métrica consultando um endpoint específico usando o método OPTION do HTTP. Os metadados são expostos por padrão em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou application e metric-name é o nome propriamente dito da métrica (no caso de um aplicativo, aquele definido no atributo name).
+Você pode obter informações de qualquer métrica consultando um endpoint 
+específico usando o método OPTION do HTTP. Os metadados são expostos por padrão 
+em `q/metrics/escope/metric-name`, onde o `escope` pode ser: base, vendor ou 
+application e metric-name é o nome propriamente dito da métrica (no caso de um 
+aplicativo, aquele definido no atributo name).
 
 ## Prometheus
 
-Para rodar o [Prometheus](https://prometheus.io), utilize, por exemplo, o arquivo `docker-compose.yml` `abaixo:
+Para rodar o [Prometheus](https://prometheus.io), utilize, por exemplo, o
+arquivo `docker-compose.yml` `abaixo:
 
 ```yml
 version: "3.9"
@@ -128,7 +152,9 @@ services:
         - ./prometheus.yml:/etc/prometheus/prometheus.yml
 ```
 
-A última linha do arquivo `docker-compose.yml` mostra que o prometheus necessita de um arquivo de configuração chamado `prometheus.yml`. Um exemplo de arquivo `prometheus.yml` pode ser observado abaixo:
+A última linha do arquivo `docker-compose.yml` mostra que o prometheus necessita
+de um arquivo de configuração chamado `prometheus.yml`. Um exemplo de arquivo
+`prometheus.yml` pode ser observado abaixo:
 
 ```yml
 # my global config
@@ -185,6 +211,7 @@ code pw2/exemplos/metrics
 * SmallReye Metrics. Disponível em: [https://quarkus.io/guides/smallrye-metrics](https://quarkus.io/guides/smallrye-metrics)
 
 <center>
-<a href="https://rpmhub.dev" target="blanck"><img src="../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Atribuição 4.0 Internacional</a>
+    <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a>
+    <br/>
+    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0 DEED</a>
 </center>
