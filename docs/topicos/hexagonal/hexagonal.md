@@ -7,8 +7,7 @@ nav_order: 10
 ## Arquitetura Hexagonal
 
 <a href="https://pw2.rpmhub.dev/topicos/hexagonal/simulador.html" target="blanck">
-Simulador de Arquitetura Hexagonal
-{: .fs-3 }
+    Simulador de Arquitetura Hexagonal
 </a>
 
 <center>
