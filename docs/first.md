@@ -14,4 +14,3 @@ construir uma comunicação entre os Web Services de forma bastante simples. Por
 fim, o JSON Web Token é uma forma de autenticação e autorização de usuários nos
 serviços Web.
 {: .fs-3 }
-  
