@@ -11,33 +11,58 @@ nav_order: 11
     <iframe src="https://pw2.rpmhub.dev/topicos/fault/slides/index.html#/" title="Fault Tolerance" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-De forma geral, os serviços dependem da estrutura de rede para funcionarem de
-maneira adequada. Porém, a rede é um ponto crítico para o bom funcionamento de
-um serviço uma vez que podem apresentar diversos problemas, tais como: saturação,
-mudança de topologia inesperada, atualizações, falhas de hardware, entre outros.
+## Por que precisamos nos preocupar com falhas? 🤔
+
+Imagine que você está em casa esperando uma encomenda. O entregador depende de
+várias coisas para chegar até você: o caminhão precisa funcionar, o trânsito
+precisa fluir, o endereço precisa estar correto, e o porteiro precisa atender.
+Se qualquer um desses elementos falhar, a entrega não acontece.
 {: .fs-3 }
 
-Por essa razão, o [Microprofile](https://github.com/eclipse/microprofile-fault-tolerance/)
-implementou um conjunto de anotações para que você possa tentar tornar um
-serviço um pouco mais resiliente quando uma falha ocorrer. A implementação
-concreta das dessas anotações projetadas no Microprofile ficam ao encargo do
-[SmallRye Fault Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/).
+Com microsserviços, a situação é parecida. Os serviços conversam entre si pela
+rede e, **inevitavelmente**, algo vai dar errado em algum momento: a rede pode
+ficar saturada, um servidor pode reiniciar para atualização, um hardware pode
+falhar, ou a topologia da rede pode mudar inesperadamente. A pergunta não é
+*se* uma falha vai ocorrer, mas *quando*.
 {: .fs-3 }
 
-As principais anotações para aumento da resiliência do seu serviço são: `@Retry`, `@Fallback`, `@Timeout` e `@CircuitBreaker`.
+É aqui que entra o conceito de **tolerância a falhas** (*fault tolerance*):
+projetar nossos serviços para que sobrevivam — e até se recuperem — quando
+algo der errado, sem derrubar todo o sistema.
 {: .fs-3 }
 
-* `@Retry` – Tentar novamente, trata-se da forma mais simples e efetiva para que
-um serviço se recupere de um problema de rede.
-* `@Fallback` – Invoca um método quando algum erro ocorrer.
-* `@Timeout` – evita que a execução do serviço espere para sempre.
-* `@Bulkhead` - O padrão bulkhead limita as operações que podem ser executadas
-ao mesmo tempo, mantendo as novas solicitações em espera, até que as
-solicitações de execução atuais possam termina.
-* `@CircuitBreaker` - Evita realizar chamadas desnecessárias se um erro ocorrer.
+Pensando nisso, o [Microprofile](https://github.com/eclipse/microprofile-fault-tolerance/)
+criou um conjunto de anotações que tornam essa tarefa muito mais simples. Você
+não precisa escrever a lógica de recuperação manualmente: basta anotar seus
+métodos e o framework cuida do resto. A implementação concreta dessas anotações
+fica a cargo do [SmallRye Fault Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/).
 {: .fs-3 }
 
-Inicialmente, crie um projeto que tenha suporte para tolerância a falhas:
+## As cinco ferramentas do nosso "kit de sobrevivência" 🧰
+
+Vamos conhecer as anotações que estudaremos, com uma analogia para cada uma:
+{: .fs-3 }
+
+* **`@Retry`** – *"Tenta de novo!"* — Como quando o WhatsApp não envia uma
+mensagem e você toca em "tentar novamente". A maioria das falhas de rede é
+temporária, e simplesmente tentar de novo resolve o problema.
+* **`@Fallback`** – *"Plano B"* — Se mesmo tentando não der certo, executa
+uma alternativa. Como quando o cartão de crédito é recusado e você paga em
+dinheiro.
+* **`@Timeout`** – *"Não vou esperar para sempre"* — Define um tempo máximo
+de espera. Se passar disso, desistimos e seguimos em frente.
+* **`@Bulkhead`** – *"Compartimentos estanques"* — Limita quantas operações
+podem rodar simultaneamente. O nome vem dos navios, que têm divisórias para
+que, se uma parte alaga, o navio inteiro não afunda.
+* **`@CircuitBreaker`** – *"Disjuntor elétrico"* — Se um serviço está
+claramente quebrado, paramos de tentar por um tempo, evitando sobrecarregar
+ainda mais o sistema com chamadas que vão falhar de qualquer forma.
+{: .fs-3 }
+
+## Preparando o ambiente 🛠️
+
+Antes de explorar cada anotação, vamos criar um projeto com suporte para
+tolerância a falhas:
 {: .fs-3 }
 
 ```sh
@@ -51,10 +76,23 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.9.0.Final:create \
 code fault-tolerance
 ```
 
-## Retry
+Note que a extensão `quarkus-smallrye-fault-tolerance` é a peça-chave: é ela
+que disponibiliza todas as anotações que veremos a seguir.
+{: .fs-3 }
 
-Como dito anteriormente, a anotação `@Retry` irá tentar executar novamente o
-método de um serviço. Como exemplo, observe o trecho de código abaixo:
+## 1. Retry — "Se não deu certo, tenta de novo" 🔄
+
+A anotação `@Retry` é a mais simples e, surpreendentemente, uma das mais
+efetivas. A lógica é direta: se o método lançar uma exceção, o framework o
+executa novamente até atingir o número máximo de tentativas configurado.
+{: .fs-3 }
+
+**Quando usar?** Falhas transitórias de rede, picos momentâneos de carga em
+outro serviço, ou qualquer situação em que "esperar um pouco e tentar de novo"
+tenda a funcionar.
+{: .fs-3 }
+
+Observe o exemplo abaixo:
 {: .fs-3 }
 
 ```java
@@ -76,18 +114,32 @@ public String getName(@PathParam("name") String name) {
 }
 ```
 
-Se o método `getName` receber a String `error` como parâmetro de entrada, então,
-a exceção  `WebApplicationException` será lançada. Porém, a anotação `@Retry`
-irá fazer com que o método `getName` seja executado novamente por três vezes
-(*maxRetries*) num intervalo de tempo de dois segundos (*delay*).
+Vamos decifrar o que acontece passo a passo:
 {: .fs-3 }
 
-## Fallback
+1. Se o método `getName` recebe a String `error`, ele lança uma `WebApplicationException`.
+2. A anotação `@Retry` intercepta essa exceção.
+3. Em vez de propagar o erro imediatamente, ela espera 2 segundos (`delay = 2000`).
+4. Tenta executar o método novamente — e assim por diante, até **3 tentativas** (`maxRetries = 3`).
+5. Se todas falharem, **aí sim** a exceção é propagada para quem chamou o serviço.
+{: .fs-3 }
 
-Caso um método não consiga se recuperar de uma falha, podemos implementar um
-métodos que tome alguma atitude no lugar do método original. Desa forma, podemos
-adicionar um método de *fallback* por meio da anotação `@Fallback` como mostra
-o exemplo abaixo:
+⚠️ **Atenção:** `@Retry` só faz sentido para erros que podem se resolver com
+o tempo. Não adianta ficar tentando se a falha é por causa de um bug no código
+ou um dado inválido — você só vai gastar processamento e atrasar a resposta de
+erro.
+{: .fs-3 }
+
+## 2. Fallback — "Plano B quando tudo dá errado" 🅱️
+
+E se mesmo depois de tentar várias vezes o método continuar falhando? Em vez
+de simplesmente devolver um erro feio ao usuário, podemos ter uma **estratégia
+alternativa**: um método que retorna uma resposta padrão, busca dados de um
+cache, ou faz qualquer outra coisa que mantenha a aplicação útil.
+{: .fs-3 }
+
+Para isso, usamos a anotação `@Fallback` indicando qual método deve ser
+chamado quando a falha não puder ser contornada:
 {: .fs-3 }
 
 ```java
@@ -106,18 +158,32 @@ public String recover(String name) {
 }
 ```
 
-🚨 Um detalhe importante, o método de *fallback* deve ter a mesma assinatura do
-método original, ou seja, mesmo tipo de retorno, mesmo nome de método e também
-mesma lista de parâmetros. No exemplo, observe que o método `recover` possui a
-mesma assinatura do método `getName`.
+Observe a sequência de eventos:
 {: .fs-3 }
 
-## Timeout
+1. O método `getName` falha.
+2. `@Retry` tenta mais 3 vezes — e falha novamente.
+3. Agora `@Fallback` entra em ação e chama o método `recover`.
+4. O usuário recebe `FALL_BACK_MESSAGE` em vez de uma exceção.
+{: .fs-3 }
 
- Como o próprio nome já induz, a anotação `@Timeout` aguarda a execução completa
- de um método por um tempo pré-determinado. Assim, caso um método não consiga
- terminar no tempo estipulado, uma exceção será lançada.
- {: .fs-3 }
+🚨 **Regra de ouro do fallback:** o método de recuperação **deve ter a mesma
+assinatura** do método original. Isso significa: mesmo tipo de retorno, mesma
+lista de parâmetros (na mesma ordem e tipos). No exemplo, tanto `getName`
+quanto `recover` retornam `String` e recebem uma `String` como parâmetro. Se
+você quebrar essa regra, o Quarkus reclama na inicialização.
+{: .fs-3 }
+
+## 3. Timeout — "Tempo é dinheiro" ⏱️
+
+Imagine que seu serviço chama outro serviço pela rede, e esse outro serviço
+simplesmente... trava. Sem timeout, seu serviço fica esperando indefinidamente,
+consumindo memória, threads e, eventualmente, derrubando tudo.
+{: .fs-3 }
+
+A anotação `@Timeout` resolve isso definindo um tempo máximo de espera.
+Passou disso, uma exceção é lançada e o método é interrompido:
+{: .fs-3 }
 
 ```java
 @GET
@@ -131,13 +197,30 @@ public String getName(@PathParam("name") String name) {
 }
 ```
 
-## Bulkhead
+No exemplo, o método tem 7 segundos (7000 ms) para terminar sua execução.
+Note como as anotações **compõem-se naturalmente**:
+{: .fs-3 }
 
-A anotação `@Bulkhead` limita as operações que podem ser executadas ao mesmo
-tempo. O trecho de código do exemplo abaixo mostra o uso da anotação
-`@Bulkhead`, nesse caso, o método `bulkhead` irá permitir que duas requisições
-possam ser processadas simultaneamente, assim, se por um acaso chegar uma
-terceira requisição, essa será descartada.
+* `@Timeout` garante que cada tentativa não passe de 7 segundos.
+* `@Retry` cuida das tentativas adicionais se houver timeout ou outra falha.
+* `@Fallback` é acionado caso tudo dê errado.
+{: .fs-3 }
+
+Essa combinação cria uma "rede de proteção" em camadas que protege seu
+serviço de uma variedade enorme de problemas.
+{: .fs-3 }
+
+## 4. Bulkhead — "Divisórias para não afundar o navio" 🚢
+
+O nome dessa anotação vem da engenharia naval: navios são divididos em
+*compartimentos estanques* (bulkheads), de forma que, se um compartimento
+alaga, os outros ficam isolados e o navio continua flutuando.
+{: .fs-3 }
+
+No nosso caso, o "afogamento" seria seu serviço receber tantas requisições
+simultâneas que esgota memória, threads ou conexões de banco de dados,
+derrubando toda a aplicação. Com `@Bulkhead`, **limitamos quantas requisições
+podem rodar ao mesmo tempo**:
 {: .fs-3 }
 
 ```java
@@ -151,12 +234,30 @@ public String bulkhead(@PathParam("name") String name) {
 }
 ```
 
-Quando `@Bulkhead` é usado sem a anotação `@Asynchronous`, a abordagem de
-isolamento será de [`semáforo`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_semaphore_style_bulkhead), ou seja, permite apenas o número concomitante
-de requisições. Porém, quando `@Bulkhead` for usado com `@Asynchronous`, a
-abordagem de isolamento de será [`thread pool`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_thread_pool_style_bulkhead),
-permitindo configurar as solicitações simultâneas junto com um tamanho da fila
-de espera, por exemplo:
+Nesse exemplo, no máximo **2 requisições** podem ser processadas
+simultaneamente. Se chegar uma terceira enquanto as duas primeiras ainda
+estão executando, ela será **descartada** (recebe uma exceção).
+{: .fs-3 }
+
+Para visualizar melhor como o `@Bulkhead` funciona, dê uma olhada no
+seguinte link: [https://pw2.rpmhub.dev/topicos/fault/bulkhead/](https://pw2.rpmhub.dev/topicos/fault/bulkhead/)
+{: .fs-3 }
+
+### Dois modos de operação do Bulkhead
+
+O comportamento de `@Bulkhead` muda dependendo de estar ou não acompanhado de
+`@Asynchronous`:
+{: .fs-3 }
+
+**Modo Semáforo** (sem `@Asynchronous`): apenas controla quantas requisições
+rodam ao mesmo tempo. Excedentes são rejeitadas imediatamente. Veja a
+especificação: [`semáforo`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_semaphore_style_bulkhead).
+{: .fs-3 }
+
+**Modo Thread Pool** (com `@Asynchronous`): além de controlar a concorrência,
+mantém uma **fila de espera** para requisições excedentes. Veja a
+especificação: [`thread pool`](https://download.eclipse.org/microprofile/microprofile-fault-tolerance-4.0/microprofile-fault-tolerance-spec-4.0.html#_thread_pool_style_bulkhead).
+Exemplo:
 {: .fs-3 }
 
 ```java
@@ -166,9 +267,20 @@ de espera, por exemplo:
 @Bulkhead(value = 2, waitingTaskQueue = 5)
 ```
 
-Para testar a anotação `@Bulkhead` instale a ferramenta
-[k6](https://k6.io/docs/). O k6 é capaz de simular o disparo de requisições
-HTTP por clientes distintos. Observe o exemplo:
+Pense assim: o modo semáforo é uma porta com um segurança que diz "está
+cheio, volte depois". O modo thread pool é um restaurante com fila de espera
+— você pode aguardar até abrir uma mesa, mas só até certo limite.
+{: .fs-3 }
+
+### Testando com k6
+
+Para testar a anotação `@Bulkhead`, precisamos simular **múltiplos clientes
+simultâneos**. A ferramenta [k6](https://k6.io/docs/) é perfeita para isso:
+ela permite disparar requisições HTTP em paralelo, como se vários usuários
+estivessem acessando seu serviço ao mesmo tempo.
+{: .fs-3 }
+
+Observe um script de exemplo:
 {: .fs-3 }
 
 ```js
@@ -191,28 +303,64 @@ export default function () {
 }
 ```
 
-A configuração acima faz com que o k6 crie 10 unidades virtuais (vu) que irão
-disparar requisições HTTP com um intervalo de 1 segundo dentro de um tempo de
-10 segundos. 🚨 Um detalhe, o objeto `exec` pode ser utilizado para identificar
-qual vu que está realizando a requisição (`exec.vu.idInTest`).
+O que esse script faz, em palavras simples:
 {: .fs-3 }
 
-Para rodar o k6 com a configuração acima, crie um arquivo .js e depois execute
-o commando `run` do `k6`, por exemplo:
+* `vus: 10` → cria **10 usuários virtuais** (*virtual users*) rodando em paralelo.
+* `duration: '10s'` → o teste dura **10 segundos**.
+* `sleep(1)` → cada usuário espera 1 segundo entre as requisições.
+* `http_req_failed: ['rate<0.05']` → o teste passa se menos de 5% das requisições falharem.
+* `exec.vu.idInTest` → identifica qual usuário virtual está fazendo a requisição (útil para os logs).
+{: .fs-3 }
+
+Para rodar o teste, salve o arquivo (por exemplo, `k6.js`) e execute:
 {: .fs-3 }
 
     k6 run k6.js
 
-## Circuit Breaker
-
-A anotação `@CircuitBreaker` evita realizar chamadas desnecessárias se um erro
-ocorrer. O trecho de código abaixo mostra o uso da anotação `@CircuitBreaker`.
+Depois, **brinque com os números**: aumente `vus`, mude o valor do `@Bulkhead`,
+e observe como a taxa de erros varia. Essa experimentação prática é a melhor
+forma de internalizar o comportamento dessas anotações.
 {: .fs-3 }
 
-O circuito será fechado novamente após um tempo de espera (pr padrão 5 segundos).
-Caso o método anotado com o `circuitBreaker` volte a falhar, o circuito será
-aberto novamente. Observe o [exemplo](https://pt.quarkus.io/guides/smallrye-fault-tolerance#adding-resiliency-circuit-breaker)
-abaixo:
+## 5. Circuit Breaker — "Quando insistir só piora as coisas" ⚡
+
+Imagine que um serviço que você depende está **completamente fora do ar**.
+Continuar fazendo chamadas para ele é desperdício duplo: você gasta seus
+próprios recursos (threads, memória, conexões) e ainda atrasa a resposta para
+seus usuários, que esperam o timeout para receberem um erro.
+{: .fs-3 }
+
+O `@CircuitBreaker` resolve isso inspirado em um **disjuntor elétrico**:
+quando há muita corrente (muitas falhas), o disjuntor "abre" e corta o
+fluxo. Depois de um tempo, ele tenta religar para ver se o problema passou.
+{: .fs-3 }
+
+Uma visão geral do funcionamento do disjuntor pode ser vista na figura no
+link a seguir: [https://pw2.rpmhub.dev/topicos/fault/circuit/](https://pw2.rpmhub.dev/topicos/fault/circuit/).
+{: .fs-3 }
+
+### Os três estados do disjuntor
+
+Antes de ver o código, é fundamental entender que o `@CircuitBreaker` opera
+como uma **máquina de estados** com três situações distintas:
+{: .fs-3 }
+
+1. **🟢 Fechado (Closed):** estado normal. As chamadas passam livremente, mas
+o disjuntor está **monitorando** quantas falham.
+2. **🔴 Aberto (Open):** muitas falhas detectadas. As chamadas **não são
+executadas** — uma `CircuitBreakerOpenException` é lançada imediatamente,
+poupando recursos.
+3. **🟡 Meio-aberto (Half-Open):** depois de um tempo no estado aberto, o
+disjuntor permite algumas chamadas de teste. Se elas funcionam, volta para
+fechado. Se falham, volta para aberto.
+{: .fs-3 }
+
+### Vendo o circuit breaker em ação
+
+Observe o [exemplo](https://pt.quarkus.io/guides/smallrye-fault-tolerance#adding-resiliency-circuit-breaker)
+adaptado da documentação oficial. Primeiro, o serviço que **simula falhas
+intermitentes**:
 {: .fs-3 }
 
 ```java
@@ -248,6 +396,14 @@ public class CoffeeRepositoryService {
         }
     }
 ```
+
+Repare no método `maybeFail`: ele alterna entre **2 sucessos e 2 falhas**,
+simulando um serviço instável. É um cenário típico do mundo real, em que um
+serviço fica intermitente antes de cair de vez.
+{: .fs-3 }
+
+Agora, o recurso REST que consome esse serviço:
+{: .fs-3 }
 
 ```java
 @Path("/circuit")
@@ -303,34 +459,58 @@ public class CoffeeResource {
 }
 ```
 
-O disjuntor começa fechado. Nesse estado, o disjuntor mantém uma janela
-deslizante (_rolling window_) das invocações recentes. Para cada invocação, a
-janela deslizante registra se ela foi concluída com sucesso ou falhou.
+### Como o disjuntor toma decisões: a janela deslizante
+
+O conceito-chave para entender o `@CircuitBreaker` é a **janela deslizante**
+(*rolling window*). Pense nela como uma "memória curta" das últimas
+invocações: o disjuntor anota quais foram bem-sucedidas e quais falharam.
 {: .fs-3 }
 
-A janela deslizante deve estar cheia para tomar qualquer decisão de transição
-de estado. Por exemplo, se a janela deslizante tiver tamanho 10, um disjuntor
-fechado sempre permite pelo menos 10 invocações.
+**Estado fechado (operação normal):** o disjuntor mantém essa janela e, para
+cada nova invocação, atualiza o registro. Para tomar uma decisão de mudar de
+estado, a janela precisa estar **cheia**. Por padrão, ela tem tamanho 20 e a
+taxa de falha aceitável é 0,5 (50%).
 {: .fs-3 }
 
-Se a janela deslizante contiver um número de falhas maior do que a taxa
-configurada, um disjuntor fechado muda para o estado aberto. Quando o disjuntor
-estiver aberto, as invocações não são permitidas. Em vez disso, o disjuntor
-falha rapidamente e lança a exceção CircuitBreakerOpenException.
+⚠️ Isso significa que um disjuntor fechado **sempre permite pelo menos N
+invocações** (onde N é o tamanho da janela) antes de qualquer decisão.
 {: .fs-3 }
 
-Por exemplo, se a janela deslizante tiver tamanho 10 e a taxa de falha for de
-0,5, isso significa que 5 invocações das últimas 10 invocações devem falhar para
-que o disjuntor mude para o estado aberto.
+**Exemplo concreto:** se a janela tem tamanho 10 e a taxa de falha é 0,5,
+basta que 5 das últimas 10 invocações falhem para o disjuntor abrir.
 {: .fs-3 }
 
-Após algum tempo, um disjuntor aberto passa para o estado meio-aberto para
-determinar se a falha rápida ainda é apropriada. Um disjuntor meio-aberto
-permite que algumas tentativas prossigam. Se todas elas tiverem sucesso, o
-disjuntor retorna ao estado fechado e as invocações são permitidas novamente.
-Se algumas invocações de sonda falharem, o disjuntor volta ao estado aberto e
-as invocações são impedidas.
+**Estado aberto:** uma vez aberto, o disjuntor não deixa nenhuma chamada
+passar. Em vez de executar o método, ele lança `CircuitBreakerOpenException`
+imediatamente. É a "falha rápida" (*fail fast*) — em vez de gastar tempo e
+recursos, você sabe na hora que algo está errado.
 {: .fs-3 }
+
+**Estado meio-aberto:** depois de algum tempo (5 segundos por padrão), o
+disjuntor passa para meio-aberto. Nesse modo, ele deixa algumas **chamadas
+de sonda** (*probe calls*) passarem:
+{: .fs-3 }
+
+* Se todas tiverem sucesso → volta para **fechado** (problema resolvido, vida normal).
+* Se alguma falhar → volta para **aberto** (ainda está com problema, melhor esperar mais).
+{: .fs-3 }
+
+### Resumo do ciclo de vida
+
+Visualizando o fluxo completo:
+{: .fs-3 }
+
+```
+   🟢 FECHADO  ──(muitas falhas)──▶  🔴 ABERTO
+       ▲                                 │
+       │                          (passa tempo)
+   (todas sondas OK)                     │
+       │                                 ▼
+       └──────────────────────────  🟡 MEIO-ABERTO
+                  (alguma sonda falha)
+                          │
+                          └──▶ volta para 🔴 ABERTO
+```
 
 ## Código 💡
 
@@ -342,12 +522,40 @@ git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 code pw2/exemplos/fault-tolerance
 ```
 
+## Combinando as anotações: o cenário ideal 🎯
+
+Você não precisa usar apenas uma anotação por método. Na verdade, a beleza
+dessas ferramentas está em **combiná-las** para criar uma estratégia robusta
+de tolerância a falhas:
+{: .fs-3 }
+
+```java
+@Timeout(3000)                        // 1️⃣ não espera mais que 3s
+@Retry(maxRetries = 3, delay = 500)   // 2️⃣ tenta 3x se falhar
+@CircuitBreaker(requestVolumeThreshold = 4, failureRatio = 0.5)  // 3️⃣ disjuntor
+@Fallback(fallbackMethod = "respostaCache")  // 4️⃣ último recurso
+public Resposta consultarServico() { ... }
+```
+
+A sequência de defesa fica assim:
+{: .fs-3 }
+
+1. Cada chamada tem **3 segundos** para responder, ou é interrompida.
+2. Se falhar, tenta **mais 3 vezes** com intervalo de 500ms.
+3. Se houver muitas falhas seguidas, o **disjuntor abre** e poupa recursos.
+4. Em qualquer cenário de falha final, o método de **fallback** entrega uma resposta útil.
+{: .fs-3 }
+
 ## Exercício Prático 🏋️
 
-Na aplicação de [gerenciamento de livros](https://github.com/rpmhubdev/pw2-books),
-adicione as anotações `@Retry` no end-point `/users/getJwt` do serviço `users`.
-Depois, adicione a anotação `@CircuitBreaker` e `@Timeout` no end-point
-`/bookManagement/listBooks` do serviço de management.
+Hora de colocar a mão na massa! Na aplicação de [gerenciamento de livros](https://github.com/rpmhubdev/pw2-books),
+faça as seguintes modificações:
+{: .fs-3 }
+
+1. **Serviço `users`:** adicione `@Retry` no endpoint `/users/getJwt`.
+*Pergunte-se: quais valores de `maxRetries` e `delay` fazem sentido para uma operação de autenticação?*
+2. **Serviço `management`:** adicione `@CircuitBreaker` e `@Timeout` no endpoint `/bookManagement/listBooks`.
+*Pergunte-se: quanto tempo é razoável esperar para listar livros? E quantas falhas seguidas devem abrir o circuito?*
 {: .fs-3 }
 
 Para realizar o exercício prático, você pode abrir diretamente no Codespaces:
@@ -356,7 +564,12 @@ Para realizar o exercício prático, você pode abrir diretamente no Codespaces:
 [![Open in Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&repo=rpmhubdev/pw2-books)
 
 Alternativamente, você pode fazer um `fork` do projeto para a sua conta e,
-posteriormente, clonar para a sua máquina:
+posteriormente, clonar para a sua máquina.
+{: .fs-3 }
+
+💡 **Desafio extra:** depois de adicionar as anotações, use o `k6` para simular
+carga sobre os endpoints e **observe os logs** quando o circuito abrir. Nada
+ensina mais sobre tolerância a falhas do que vê-la funcionando ao vivo.
 {: .fs-3 }
 
 ## Teste seus conhecimentos 🧠
