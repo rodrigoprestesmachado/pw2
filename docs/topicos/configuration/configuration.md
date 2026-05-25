@@ -14,133 +14,256 @@ nav_order: 8
     </iframe>
 </center>
 
-O sistema de configuração de um Quarkus utiliza a especificação
-[Microprofile Config.](https://github.com/eclipse/microprofile-config)
-implementada com o
-[SmallRye Config](https://github.com/smallrye/smallrye-config). As configurações
- são provenientes de várias
- [fontes](https://quarkus.io/guides/config-reference#configuration-sources) de
- dados, como por exemplo: propriedades do sistema, arquivos `.env`, arquivos
- yaml, entre outros.
+## Objetivos
 
-## Propriedade de sistema
+Ao final deste tópico, você será capaz de:
+
+- declarar propriedades em `application.properties`
+- injetá-las no código com `@ConfigProperty`
+- usar perfis (`dev`, `test`, `prod`) e sobrescrever valores em runtime
+- migrar configuração para YAML
+
+O Quarkus utiliza a especificação
+[MicroProfile Config](https://github.com/eclipse/microprofile-config),
+implementada com o
+[SmallRye Config](https://github.com/smallrye/smallrye-config). As
+configurações podem vir de várias
+[fontes](https://quarkus.io/guides/config-reference#configuration-sources):
+arquivos de propriedades, variáveis de ambiente, parâmetros `-D`, arquivos
+`.env`, YAML, entre outros.
+
+## Onde ficam as configurações
+
+Por padrão, as propriedades ficam em `src/main/resources/application.properties`.
+Esse arquivo é a fonte mais comum no dia a dia, mas o Quarkus também aceita
+valores definidos em:
+
+- **variáveis de ambiente** — por exemplo, `PW2_MESSAGE` corresponde a
+  `pw2.message`
+- **parâmetros `-D`** na linha de comando do Maven ou da JVM
+- **arquivo `.env`** na raiz do projeto
+- **arquivo YAML** (`application.yaml` ou `application.yml`), com extensão
+  adicional (veja mais adiante)
+
+## Injetando configurações com `@ConfigProperty`
 
 Imagine a declaração de duas propriedades no arquivo `application.properties`:
 
-```yaml
-    pw2.message=hello
-    pw2.name=world
+```properties
+pw2.message=hello
+pw2.name=world
 ```
 
-Para injetar no serviço o valor da propriedade `pw2.message` utilizamos a
-anotação `@ConfigProperty`:
+Para injetar esses valores em um bean CDI, utilize a anotação `@ConfigProperty`:
 
 ```java
-@ConfigProperty(name = "pw2.message",  defaultValue="" )
-String message;
+@Path("/hello")
+@RequestScoped
+public class HelloResource {
 
-@ConfigProperty(name = "pw2.name")
-Optional<String> name;
-```
+    @Inject
+    @ConfigProperty(name = "pw2.message", defaultValue = "")
+    String message;
 
-Se você não fornecer um valor para um propriedade, a inicialização do serviço
-lançará uma exceção: `javax.enterprise.inject.spi.DeploymentException`. Nesse
-caso, é possível codificar um valor padrão para a variável `message`
-(uma String vazia). O exemplo também mostra que uma classe Optional vazio
-também é injetado se a configuração não fornecer um valor para a variável
-`name`. Veja um exemplo de utilização de inicialização do atributo `name`.
+    @Inject
+    @ConfigProperty(name = "pw2.name")
+    Optional<String> name;
 
-```java
-@GET
-@Produces(MediaType.TEXT_PLAIN)
-public String hello() {
-    return message + " " + name.orElse("world");
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return message + " " + name.orElse("world");
+    }
 }
 ```
 
-O Microprofile Config. também permite acessar valores de configuração de maneira
- programática. No exemplo abaixo, a classe `ConfigProvider` permite que você
- acesse, o valor da chave `database.name`.
+Os imports necessários incluem `javax.inject.Inject`,
+`org.eclipse.microprofile.config.inject.ConfigProperty`, anotações JAX-RS e
+`java.util.Optional`.
+
+### Quando a propriedade não existe
+
+| Situação | Comportamento |
+|---|---|
+| `@ConfigProperty` sem valor e sem `defaultValue` | falha na inicialização (`DeploymentException`) |
+| com `defaultValue = "..."` | usa o padrão informado |
+| tipo `Optional<T>` | injeta `Optional.empty()` se ausente |
+
+No exemplo acima, `message` recebe uma string vazia quando `pw2.message` não
+está definida. Já `name` aceita a ausência da propriedade e o método `hello()`
+usa `"world"` como fallback com `orElse`.
+
+### Acesso programático
+
+O MicroProfile Config também permite ler valores fora da injeção CDI. Use
+`ConfigProvider` quando o código não é um bean gerenciado ou quando a chave é
+obtida de forma dinâmica:
 
 ```java
-    String databaseName = ConfigProvider.getConfig().getValue("database.name", String.class);
-    Optional<String> maybeDatabaseName = ConfigProvider.getConfig().getOptionalValue("database.name", String.class);
+String databaseName = ConfigProvider.getConfig()
+    .getValue("database.name", String.class);
+Optional<String> maybeDatabaseName = ConfigProvider.getConfig()
+    .getOptionalValue("database.name", String.class);
 ```
 
-As propriedades de sistemas não necessariamente necessitam serem passadas para
-a aplicação por meio de arquivos `application.properties`, você pode atribuir
-valores para propriedade no momento da execução do serviço, por meio do
-parâmetro `-D`, observe exemplo abaixo:
+## Sobrescrevendo em runtime
 
-    ./mvnw compile quarkus:dev -Dpw2.message=hello
+As propriedades não precisam estar apenas em `application.properties`. Você
+pode atribuir valores na execução do serviço com o parâmetro `-D`:
 
+```shell
+./mvnw compile quarkus:dev -Dpw2.message=hello
+```
 
-🚨 O próprio Quarkus é configurado por meio do mesmo mecanismo do ser serviço.
-Quarkus reserva o  namespace `quarkus.` para sua própria configuração.
-Por exemplo, para configurar a porta do servidor HTTP, você pode definir
-`quarkus.http.port` no arquivo application.properties. Assim, nunca utilize o
-prefixo `quarkus.`como prefixo das suas variáveis.
+Variáveis de ambiente seguem a mesma lógica: `PW2_MESSAGE=hello` sobrescreve
+`pw2.message` em runtime.
+
+## Namespace `quarkus.` e configurações de build
+
+🚨 O próprio Quarkus é configurado pelo mesmo mecanismo do seu serviço. O
+framework reserva o namespace `quarkus.` para sua própria configuração. Por
+exemplo, para definir a porta HTTP, use `quarkus.http.port` no
+`application.properties`. Nunca utilize o prefixo `quarkus.` nas suas
+variáveis de aplicação.
 
 Algumas configurações do Quarkus só têm efeito durante o tempo de construção
 (*build*), o que significa que não é possível alterá-las no tempo de execução.
-Essas configurações ainda estarão disponíveis em tempo de execução, mas, para
-somente leitura. As configurações de tempo de construção são marcadas com um
-ícone de cadeado (🔒) na [lista](https://quarkus.io/guides/all-config) de todas
-as opções de configuração. Uma mudança em qualquer uma dessas configurações de
-construção requer uma reconstrução do seu serviço (*rebuild*).
+Essas configurações ainda estarão disponíveis em runtime, mas somente leitura.
+As opções de build são marcadas com um ícone de cadeado (🔒) na
+[lista](https://quarkus.io/guides/all-config) de todas as configurações. Uma
+mudança em qualquer uma delas exige reconstruir o serviço (*rebuild*).
 
-### Perfis
+## Perfis
 
-Podemos criar [perfils](https://quarkus.io/guides/config-reference#profiles) de
-configurações específicas para cada tempo do desenvolvimento de um serviço. Por
-padrão, o Quarkus possui suporte para três perfis: `dev`, `test` e `prod`, ou
-seja, podemos ter configurações para o tempo de desenvolvimento, teste e
-produção. No Arquivo `application.properties`, conseguimos separar as
-configurações de cada perfil por meio do seletor `%`, veja um exemplo:
+Podemos criar [perfis](https://quarkus.io/guides/config-reference#profiles) de
+configuração específicos para cada fase do desenvolvimento de um serviço. Por
+padrão, o Quarkus oferece três perfis: `dev`, `test` e `prod`. No arquivo
+`application.properties`, separamos as configurações de cada perfil com o
+seletor `%`:
 
-```yaml
-    pw2.jdbc=jdbc:mysql://localhost:3306/pw2
-    %prod.pw2.jdbc=jdbc:mysql://rpmhub.dev:3307/pw2
+```properties
+pw2.jdbc=jdbc:mysql://localhost:3306/pw2
+%prod.pw2.jdbc=jdbc:mysql://rpmhub.dev:3307/pw2
 ```
 
-O exemplo acima ilustra uma situação bastante comum no desenvolvimento de
-sistemas, termos endereços distintos para o tempo de desenvolvendo e produção.
-Note que não foi necessário utilizar o `%dev` ou `%test` na primeira linha para
-indicar que se trata de uma configuração utilizada no desenvolvimento e teste.
+Propriedades sem prefixo `%` valem para todos os perfis, exceto quando um perfil
+define um override — como `%prod.pw2.jdbc` acima.
 
-Se o serviço possuir um conjunto grande de configurações, você poderá dividir os
-perfis em arquivos distintos (`application-{nome do perfil}.properties`), nesse
-caso, sem a necessidade da utilização do prefixo `%` dentro do arquivo
-específico. Um exemplo, se você desejar ter um perfil apenas para teste,
-você poderá criar um arquivo de configuração com o nome
+O exemplo ilustra uma situação comum: endereços distintos para desenvolvimento
+e produção. Note que não foi necessário usar `%dev` ou `%test` na primeira
+linha; ela vale para desenvolvimento e teste por padrão.
+
+Se o serviço tiver muitas configurações, você pode dividir os perfis em
+arquivos distintos (`application-{nome do perfil}.properties`), sem o prefixo
+`%` dentro do arquivo específico. Por exemplo, para um perfil de teste, crie
 `application-test.properties`.
 
-Caso você deseje, você também poderá criar seus
-[próprios perfis](https://quarkus.io/guides/config-reference#custom-profiles) de
-configuração por meio de um prefixo. Por exemplo, imagine que você deseja criar
-um perfil chamado "build", como exemplo, observe o arquivo
-`application.properties`:
+Também é possível criar
+[perfis customizados](https://quarkus.io/guides/config-reference#custom-profiles).
+Imagine um perfil chamado `build`:
 
-```yaml
-    quarkus.http.port=9090
-    %build.quarkus.http.port=9999
+```properties
+quarkus.http.port=9090
+%build.quarkus.http.port=9999
 ```
 
-Para executar um serviço com um determinado perfil, você deve utilizar a
-propriedade `quarkus.profile`, por exemplo:
+Para ativar um perfil customizado:
 
-    ./mvnw compile quarkus:dev -Dquarkus.profile=build
+1. Defina as propriedades com o prefixo `%nome-do-perfil` no
+   `application.properties` (ou em `application-{nome-do-perfil}.properties`).
+2. Execute o serviço informando `quarkus.profile`:
 
-## Arquivos .env e YAML
+```shell
+./mvnw compile quarkus:dev -Dquarkus.profile=build
+```
 
-O Quarkus pode trabalhar com arquivos
-[.env](https://quarkus.io/guides/config-reference#env-file) e [YAML](https://quarkus.io/guides/config-yaml). Os arquivos `.env` devem ser localizados na raiz de um projeto
-Quarkus e possuem o seguinte formato:
+## Arquivos `.env`
 
-    QUARKUS_DATASOURCE_PASSWORD=youshallnotpass
+O arquivo [`.env`](https://quarkus.io/guides/config-reference#env-file) é útil para
+guardar **segredos e ajustes locais** (senhas, tokens, URLs de máquina de
+desenvolvimento) sem versioná-los no Git. O Quarkus carrega esse arquivo
+automaticamente em `quarkus:dev`; em runtime, os valores do `.env` têm
+**prioridade** sobre o `application.properties` — ou seja, sobrescrevem
+propriedade a propriedade.
 
-Já no caso de arquivos YAML é necessário instalar uma dependência
-`quarkus-config-yaml` no seu `pom.xml`:
+### Onde colocar o `.env`
+
+Diferente do `application.properties`, o `.env` fica na **raiz do projeto**
+(mesmo nível do `pom.xml`), não em `src/main/resources`:
+
+```text
+meu-projeto/
+├── .env                          ← aqui
+├── pom.xml
+└── src/main/resources/
+    └── application.properties    ← configuração versionada
+```
+
+Adicione `.env` ao `.gitignore` para evitar commit acidental de credenciais.
+
+### Formato e correspondência com `application.properties`
+
+Cada linha do `.env` usa `CHAVE=valor`. A chave segue a mesma convenção das
+**variáveis de ambiente**: pontos viram underscores e tudo fica em maiúsculas.
+Assim, a propriedade `pw2.message` do `application.properties` corresponde a
+`PW2_MESSAGE` no `.env`; `quarkus.http.port` corresponde a `QUARKUS_HTTP_PORT`.
+
+Veja o mesmo serviço configurado nos dois arquivos:
+
+`src/main/resources/application.properties` — valores padrão, versionados:
+
+```properties
+pw2.message=hello
+pw2.name=world
+pw2.jdbc.url=jdbc:mysql://localhost:3306/pw2
+pw2.jdbc.password=${DB_PASSWORD:changeme}
+quarkus.http.port=8080
+```
+
+`.env` na raiz do projeto — sobrescreve ou complementa em desenvolvimento local:
+
+```properties
+PW2_MESSAGE=hello from .env
+PW2_JDBC_URL=jdbc:mysql://localhost:3307/pw2
+DB_PASSWORD=secret
+QUARKUS_HTTP_PORT=9090
+```
+
+Com essa combinação:
+
+| Propriedade | Valor efetivo | Origem |
+|---|---|---|
+| `pw2.message` | `hello from .env` | `.env` (`PW2_MESSAGE`) |
+| `pw2.name` | `world` | `application.properties` (sem entrada no `.env`) |
+| `pw2.jdbc.url` | `jdbc:mysql://localhost:3307/pw2` | `.env` (`PW2_JDBC_URL`) |
+| `pw2.jdbc.password` | `secret` | `.env` via expressão `${DB_PASSWORD:...}` |
+| `quarkus.http.port` | `9090` | `.env` (`QUARKUS_HTTP_PORT`) |
+
+A linha `pw2.jdbc.password=${DB_PASSWORD:changeme}` no `application.properties`
+usa uma **expressão de propriedade**: o Quarkus lê a variável `DB_PASSWORD`
+(definida no `.env` ou no sistema operacional) e, se ela não existir, usa
+`changeme` como fallback. Esse padrão é comum para senhas: o arquivo
+versionado declara *de onde* vem o valor, e o `.env` local traz o segredo.
+
+### Referenciando variáveis de ambiente no `application.properties`
+
+Além do `.env`, você pode referenciar variáveis do sistema operacional
+diretamente no `application.properties`:
+
+```properties
+pw2.jdbc.url=${PW2_JDBC_URL:jdbc:mysql://localhost:3306/pw2}
+application.host=${HOST:localhost}
+```
+
+A sintaxe `${NOME:valor-padrao}` expande `NOME` na inicialização. Se a variável
+não estiver definida (nem no `.env`, nem no ambiente), o valor após `:` é
+utilizado.
+
+## Arquivos YAML
+
+O Quarkus também pode trabalhar com arquivos
+[YAML](https://quarkus.io/guides/config-yaml). Para isso, instale a dependência
+`quarkus-config-yaml` no `pom.xml`:
 
 ```xml
 <dependency>
@@ -149,35 +272,77 @@ Já no caso de arquivos YAML é necessário instalar uma dependência
 </dependency>
 ```
 
-Depois disso o Quarkus se comporta de uma maneira similar aos arquivos
-`application.properties`. Por exemplo, observe o arquivo
-`application.properties` abaixo:
+Depois disso, crie `application.yaml` ou `application.yml` em
+`src/main/resources`. O comportamento é equivalente ao de
+`application.properties`. Compare os dois formatos:
 
-```yaml
+```properties
 pw2.message=hello
 pw2.name=world
 ```
 
-Agora, verifique as mesmas propriedades escritas no formato YAML:
-
 ```yaml
 pw2:
-    message: hello
-    name: world
+  message: hello
+  name: world
 ```
 
 ## Exercício 🏋️
 
-Transforme a configuração do serviço `user` do projeto Books em um arquivo
-YAML. Crie um arquivo `application.yml` e mova as configurações do arquivo
-`application.properties` para o arquivo YAML. Não se esqueça de instalar a
-dependência `quarkus-config-yaml` no `pom.xml`.
+Transforme a configuração do serviço `users` do projeto Books em YAML.
 
 Projeto Books:
 
 ```shell
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 code pw2/exemplos/books/users
+```
+
+O arquivo atual em `src/main/resources/application.properties` contém:
+
+```properties
+#HTTP
+quarkus.http.port=8080
+
+# HTTPS
+quarkus.http.ssl-port=8443
+quarkus.http.ssl.certificate.key-store-file=keystore.jks
+quarkus.http.ssl.certificate.key-store-password=password
+quarkus.tls.trust-all=true
+
+# JWT Sign Key Location
+smallrye.jwt.sign.key.location=privateKey.pem
+```
+
+Siga os passos:
+
+1. Abra o projeto `exemplos/books/users`.
+2. Adicione a dependência `quarkus-config-yaml` no `pom.xml`.
+3. Crie `src/main/resources/application.yml` com as propriedades equivalentes
+   ao trecho acima.
+4. Remova ou esvazie `application.properties` (mantenha apenas um formato
+   ativo).
+5. Valide com `./mvnw quarkus:dev`.
+
+Gabarito esperado para o `application.yml`:
+
+```yaml
+quarkus:
+  http:
+    port: 8080
+    ssl-port: 8443
+    ssl:
+      certificate:
+        key-store-file: keystore.jks
+        key-store-password: password
+  tls:
+    trust-all: true
+
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: privateKey.pem
 ```
 
 ## Referências 📚
