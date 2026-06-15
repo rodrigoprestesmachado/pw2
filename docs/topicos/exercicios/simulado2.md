@@ -199,19 +199,13 @@ eventos importantes.
 * C) Para fazer backup automático do banco de dados.
 * D) Para gerenciar usuários e permissões.
 
-14. O que é programação reativa no Quarkus?
-* A) Um estilo de programação que reage a eventos de forma assíncrona e não bloqueante, melhorando o desempenho da aplicação.
-* B) Um modelo de programação que executa as tarefas de forma sequencial e bloqueante.
-* C) Uma biblioteca usada apenas para criar interfaces gráficas.
-* D) Um modo de executar consultas SQL de maneira síncrona.
-
-15. Para que servem os health checks em uma aplicação Quarkus?
+1.  Para que servem os health checks em uma aplicação Quarkus?
 * A) Para verificar se o banco de dados está vazio.
 * B) Para compilar automaticamente o código quando há erros.
 * C) Para aumentar a performance da aplicação.
 * D) Para monitorar se a aplicação e seus componentes estão funcionando corretamente.
 
-16. Em uma aplicação Quarkus, o desenvolvedor configurou um método com @CircuitBreaker da seguinte forma:
+1.  Em uma aplicação Quarkus, o desenvolvedor configurou um método com @CircuitBreaker da seguinte forma:
 
 ```java
 @CircuitBreaker(requestVolumeThreshold = 6, failureRatio = 0.5, delay = 3000)
