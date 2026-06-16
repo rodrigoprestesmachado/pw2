@@ -9,111 +9,184 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white" -->
 
 
-
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Jaeger
+## Por que observar?
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Jaeger
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* O Jaeger é uma ferramenta para a realização de *trace* distribuído.
-<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
-
-* O *trace* é o registo dos requests de ponta a ponta em um sistema distribuído.
-<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
-
-* Fornece visibilidade do fluxo de trabalho de um serviço, permitindo
-que os desenvolvedores vejam o desempenho e o comportamento do sistema.
-<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
-
-* Jaeger rastreia as requisições dos serviços e registra as
-informações de cada _request_ à medida que passa pelos diferentes serviços 
-que compõem a aplicação.
-<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Jaeger
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* Principais funcionalidades do Jaeger:
+* Uma requisição pode passar por **vários serviços**: API, pedidos, pagamento...
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * Rastreamento das solicitações (_requests_) distribuidas
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+* Quando algo falha ou fica lento, surgem duas perguntas:
+<!-- .element: style="margin-bottom:30px; font-size: 28px; color:white" -->
 
-  * Visualização do fluxo de trabalho
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+  * **Onde** está o gargalo? → *Trace* (Jaeger)
+  <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-  * Alertas e notificações
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+  * **O que** aconteceu? → *Log* (Graylog)
+  <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-  * Armazenamento
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
-  * Análise de desempenho
-  <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Trace vs Log
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* **Trace** — caminho completo da requisição e tempo de cada etapa
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* **Span** — cada etapa dentro de um trace
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* **Log** — mensagem textual: erro, aviso, evento de negócio
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* **traceId** — liga o log ao trace no Jaeger
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Jaeger
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Algumas desvantagens do Jaeger:
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+* Ferramenta de **trace distribuído** (Uber, OpenTelemetry)
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * Impacto no desempenho do sistema (_overhead_) e custo
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+* Rastreia requisições entre serviços
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * Conhecimento especializado
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+* Visualiza fluxo, tempos e gargalos
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * A integração com algumas ferramentas pode ser um desafio
-  <!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## GrayLog
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+* UI: `http://localhost:16686`
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## GrayLog
+## Jaeger — pontos de atenção
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* O GrayLog é uma ferramenta de gerenciamento e análise de logs que permite coletar, processar e analisar registros de várias fontes
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* **Overhead** — coletar spans consome recursos
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-* Oferece uma interface da Web que permite pesquisar e analisar os logs
- <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* **Armazenamento** — traces acumulam ao longo do tempo
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-* Também oferece ferramentas de alerta para notificar equipes quando ocorrem eventos importantes
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* **Curva de aprendizado** — interpretar traces exige prática
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-* Possui recursos de análise de log como gráficos e métricas
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* Em produção: usar **sampling** (amostragem)
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## GrayLog
+## Jaeger no Quarkus
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Algumas desvantagens:
-<!-- .element: style="margin-bottom:40px; font-size: 30px; color:white" -->
+* Extensão: `quarkus-opentelemetry`
+<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
 
-  * Configuração complexa
-  <!-- .element: style="margin-bottom:50px; font-size: 30px; color:white" -->
+```bash
+./mvnw quarkus:add-extension -Dextensions='opentelemetry'
+```
+<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-  * Requer habilidades técnicas
-   <!-- .element: style="margin-bottom:50px; font-size: 30px; color:white" -->
+```properties
+quarkus.otel.service.name=myservice
+quarkus.otel.exporter.otlp.traces.endpoint=http://localhost:4317
+```
+<!-- .element: style="margin-bottom:30px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-  * Alto consumo de recursos e custo de manutenção
-  <!-- .element: style="margin-bottom:50px; font-size: 30px; color:white" -->
+* Porta OTLP: **4317** | UI: **16686**
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Graylog
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Centraliza **logs** de várias fontes
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* Interface web para busca, alertas e dashboards
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* Recebe logs no formato **GELF** (*Graylog Extended Log Format*)
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* UI: `http://localhost:9000` (admin / admin)
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Graylog — pontos de atenção
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Configuração inicial mais complexa (Elasticsearch + MongoDB)
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* Alto consumo de memória
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+* Filtros, pipelines e alertas exigem prática
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Graylog no Quarkus
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Extensão: `quarkus-logging-gelf`
+<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
+
+```bash
+./mvnw quarkus:add-extension -Dextensions='logging-gelf'
+```
+<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+```properties
+quarkus.log.handler.gelf.enabled=true
+quarkus.log.handler.gelf.host=localhost
+quarkus.log.handler.gelf.port=12201
+```
+<!-- .element: style="margin-bottom:30px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* Criar **input** GELF UDP na porta **12201**
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Correlacionar logs e traces
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+```properties
+quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId} [%c{2.}] %s%e%n
+```
+<!-- .element: style="margin-bottom:30px; font-size: 15px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* Fluxo de depuração:
+<!-- .element: style="margin-bottom:20px; font-size: 28px; color:white" -->
+
+  1. Buscar erro no **Graylog**
+  <!-- .element: style="margin-bottom:20px; font-size: 23px; color:white" -->
+
+  2. Copiar o **traceId**
+  <!-- .element: style="margin-bottom:20px; font-size: 23px; color:white" -->
+
+  3. Colar no **Jaeger** → ver qual span demorou
+  <!-- .element: style="margin-bottom:20px; font-size: 23px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Checklist rápido
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* **Jaeger** — extensão `opentelemetry`, porta **4317**, UI **:16686**
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* **Graylog** — extensão `logging-gelf`, porta **12201**, UI **:9000**
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* Tutorial completo: documento **Trace e Log** no site
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#D6B2FF" data-transition="convex" -->
@@ -134,7 +207,7 @@ que compõem a aplicação.
 # Referências 📚
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Using Opentracing. Disponível em: [https://quarkus.io/guides/opentracing](https://quarkus.io/guides/opentracing)
+* Using OpenTelemetry. Disponível em: [https://quarkus.io/guides/opentelemetry](https://quarkus.io/guides/opentelemetry)
 <!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
 * Centralized Log Management. Disponível em: [https://quarkus.io/guides/centralized-log-management](https://quarkus.io/guides/centralized-log-management)
@@ -143,7 +216,7 @@ que compõem a aplicação.
 * Jaeger. Disponível em: [https://www.jaegertracing.io](https://www.jaegertracing.io)
 <!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
-* GrayLog. Disponível em: [https://www.graylog.org](https://www.graylog.org)
+* Graylog. Disponível em: [https://www.graylog.org](https://www.graylog.org)
 <!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
 <center>
