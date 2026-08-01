@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Segunda Avaliação
-nav_order: 11
+parent: Simulados
+nav_order: 2
 ---
 
 # Simulado: Segunda Avaliação

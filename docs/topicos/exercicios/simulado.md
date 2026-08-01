@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Primeira Avaliação
-nav_order: 10
+parent: Simulados
+nav_order: 1
 ---
 
 # Simulado: Primeira Avaliação

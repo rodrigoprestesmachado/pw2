@@ -3,8 +3,6 @@ remote_theme: pmarsceill/just-the-docs
 favicon_ico: "/imgs/favicon.png"
 
 aux_links:
-  "Moodle":
-    - "https://moodle.poa.ifrs.edu.br/course/view.php?id=11271"
   "Github":
     - "https://github.com/rodrigoprestesmachado/pw2"
 
