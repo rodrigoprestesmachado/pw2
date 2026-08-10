@@ -26,7 +26,7 @@ Pressione 'F' para tela cheia
 * Um Web Service também permite que aplicações com operações complexas obtenham um baixo acoplamento
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
-* Assim, os Web Services permitem a construção de serviços podem interagir uns com os outros a fim de oferecer um valor agregado sofisticado
+* Assim, os Web Services permitem a construção de serviços que podem interagir uns com os outros a fim de oferecer um valor agregado sofisticado
 <!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
 
 
@@ -40,20 +40,20 @@ Pressione 'F' para tela cheia
 * Assim, mensagens são trocadas entre os clientes e o serviço para obter informações sobre as invocações de requisições e respostas
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
 
-* No nível técnico, um Web Service pode ser implementado de duas maneiras no Jakarta EE:
+* No nível técnico, um Web Service pode ser implementado de duas maneiras:
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white; font-family: arial;" -->
 
-    * RESTful Web Services
+    * RESTful Web Services — foco desta disciplina
     <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white; font-family: fantasy;" -->
 
-    * Web Services baseados em XML (_Extensible Markup Language_)
+    * Web Services baseados em XML (SOAP/WSDL)
     <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white; font-family: fantasy;" -->
 
 
 
 # RESTful Web Services 🕸️
 
-[Building RESTful Web Services with Jakarta REST](https://eclipse-ee4j.github.io/jakartaee-tutorial/#building-restful-web-services-with-jakarta-rest)
+[Jakarta RESTful Web Services](https://jakarta.ee/specifications/restful-ws/)
 <!-- .element: style="margin-bottom:40px; font-size: 10px; color:white; font-family: arial;" -->
 
 
@@ -61,14 +61,17 @@ Pressione 'F' para tela cheia
 ## RESTful Web Services
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* No Jakarta EE, o JAX-RS provê a funcionalidade para Web Services baseados REST (_Representational State Transfer_)
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
+* No Jakarta EE, o JAX-RS (hoje *Jakarta RESTful Web Services*) provê a funcionalidade para Web Services baseados em REST
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
 
-* Os RESTful Web Services utilizam normas bastante consolidadas como: HTTP, URI (_Uniform Resource Identifier_), MIME (_Multipurpose Internet Mail Extensions_)
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
+* O Quarkus implementa essa especificação com a extensão `resteasy-reactive`
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Os RESTful Web Services utilizam normas consolidadas: HTTP, URI e MIME
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
 
 * Assim, eles permitem que os serviços sejam construídos com uma barreira muito baixa para adoção
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white; font-family: arial;" -->
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#222c44" data-transition="zoom" -->
@@ -87,310 +90,237 @@ Pressione 'F' para tela cheia
     * A largura de banda for limitada
     <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white; font-family: arial;" -->
 
-    * O serviço deve ser agregado a um site existente
+    * O serviço pode ser agregado a um site existente
     <!-- .element: style="margin-bottom:20px; font-size: 20px; color:white; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## RESTful Web Services
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* JAX-RS é a API projetada para tonar fácil o desenvolvimento de aplicações que utilizem a arquitetura REST
-<!-- .element: style="margin-bottom:60px; font-size: 23px; color:white; font-family: arial;" -->
+## Jakarta REST no Quarkus
+<!-- .element: style="margin-bottom:50px; font-size: 45px; color:white; font-family: Marker Felt;" -->
 
 * JAX-RS utiliza anotações para simplificar o desenvolvimento de RESTful Web Services
-<!-- .element: style="margin-bottom:60px; font-size: 23px; color:white; font-family: arial;" -->
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
 
-* Assim, é possível decorar uma classe Java para definir recursos e ações que podem ser executadas sobre estes recursos
-<!-- .element: style="margin-bottom:60px; font-size: 23px; color:white; font-family: arial;" -->
+* É possível decorar uma classe Java para definir recursos e ações sobre estes recursos
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
 
-* As anotações Java irão gerar os artefatos para construir o serviço
-<!-- .element: style="margin-bottom:60px; font-size: 23px; color:white; font-family: arial;" -->
+* Extensões: `resteasy-reactive` (API REST) e `resteasy-reactive-jackson` (JSON)
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Pacote das anotações: `jakarta.ws.rs`
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## RESTful Web Services
+## Sem `@ApplicationPath`
+<!-- .element: style="margin-bottom:50px; font-size: 45px; color:white; font-family: Marker Felt;" -->
+
+* No Jakarta EE tradicional, era comum estender `Application` com `@ApplicationPath`
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* No Quarkus, essa classe **não é necessária**
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Basta anotar uma classe com `@Path`: o *framework* descobre e registra o recurso automaticamente
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* A URI fica disponível em `http://localhost:8080` + o valor de `@Path`
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
+## Anotações principais
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* `@ApplicationPath` - define a URI base de todo o serviço
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+* `@Path` — URI do recurso (*endpoint*); aceita *templates*, por exemplo `/produtos/{id}`
+<!-- .element: style="margin-bottom:35px; font-size: 22px; color:white; font-family: arial;" -->
 
-* `@Path` – URI que indica o _endpoint_  do serviço. Você também pode inserir variáveis na URI para construir um template, por exemplo, `/resource/{username}`
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+* `@GET`, `@POST`, `@PUT`, `@DELETE` — associam o método a um verbo HTTP
+<!-- .element: style="margin-bottom:35px; font-size: 22px; color:white; font-family: arial;" -->
 
-* `@GET`, `@POST`, `@PUT`, `@DELETE`, `@HEAD` – são anotações utilizadas em métodos Java que correspondem as requisições HTTP
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+* `@PathParam` / `@QueryParam` — injetam valores da URI ou da *query string*
+<!-- .element: style="margin-bottom:35px; font-size: 22px; color:white; font-family: arial;" -->
 
-* `@Consumes` - usado para especificar os tipos [MIME](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) que foram enviados pelo cliente
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+* `@Consumes` — tipo MIME que o método **recebe** do cliente
+<!-- .element: style="margin-bottom:35px; font-size: 22px; color:white; font-family: arial;" -->
 
-* `@Produces` – utilizado para especificar os tipos [MIME](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) que um recurso pode produzir e enviar para o cliente
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+* `@Produces` — tipo MIME que o método **envia** ao cliente
+<!-- .element: style="margin-bottom:35px; font-size: 22px; color:white; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-* No Jakarta EE tradicional, é necessário registrar os recursos numa classe que estenda `Application`
-<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
+## Recurso REST básico
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
 
 ```java
-@ApplicationPath("/data")
-public class DemoRestApplication extends Application {
-    
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> classes = new HashSet<>();
-        // Adiciona as que formam o serviço
-        classes.add(ServiceController.class);
-        return classes;
+@Path("/produtos")
+public class ProdutoResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String ola() {
+        return "Bem-vindo ao catálogo de produtos!";
     }
 }
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 20px; font-family: Courier New;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: Courier New;" -->
 
-🚨 No Quarkus, essa classe é **opcional**: qualquer classe anotada com `@Path` já é descoberta e registrada automaticamente pelo *framework*
-<!-- .element: style="margin-bottom:50px; font-size: 18px; color:#900; font-family: arial;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-```java
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.Path;
-
-@Path("/exemplo")
-public class Exemplo {
-    
-    @GET
-    @Produces("text/plain")
-    public String getUser() {
-        return "Rodrigo Prestes Machado";
-    }
-
-}      
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
+Acesso: `http://localhost:8080/produtos`
+<!-- .element: style="margin-bottom:30px; font-size: 20px; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
+## `@PathParam`
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
+
+* URI: `/produtos/1` — o `{id}` é uma variável de *template*
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
 
 ```java
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-
-@Path("/exemplo/{username}")
-public class Exemplo {
-    
-    @GET
-    public String getUser(@PathParam("username") String userName) {
-        return userName;
-    }
-
-} 
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-```java
-@Path("/exemplo/{username}/{age}")
-public class Exemplo {
-    
-    @GET
-    public String getUser(@PathParam("username") String userName, 
-        @PathParam("age") String age ) {
-        return userName + ":" + age;
-    }
-    
-}    
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-```java
-@Path("/exemplo")
-public class Exemplo {
-    
-    @POST
-    @Consumes("application/x-www-form-urlencoded")
-    public void getUser(@FormParam("userName") String userName) {
-        return userName;
-    }
-
-}      
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-* Para um único parâmetro de consulta (*query string*), a forma mais simples é `@QueryParam`:
-<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
-
-```java
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
-
-@Path("/exemplo")
-public class Exemplo {
-    
-    @GET
-    public String getUser(@QueryParam("userName") String userName) {
-        return userName;
-    }
-
+@GET
+@Path("/{id}")
+@Produces(MediaType.APPLICATION_JSON)
+public Produto buscarPorId(@PathParam("id") Long id) {
+    return catalogo.get(id);
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: Courier New;" -->
+
+```java
+public record Produto(Long id, String nome,
+        String categoria, double preco) {}
+```
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: Courier New;" -->
 
 
 <!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
+## `@QueryParam`
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
 
-* Quando é necessário acessar **todos** os parâmetros de consulta de uma vez, é possível utilizar `@Context UriInfo`:
-<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
-
-```java
-@Path("/exemplo")
-public class Exemplo {
-    
-    @GET
-    public String getUser(@Context UriInfo ui) {
-        MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
-        return queryParams.getFirst("userName");
-    }   
-}    
-```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: Courier New;" -->
+* URI: `/produtos?categoria=eletronicos` — parâmetro **opcional**
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
 
 ```java
-@Path("/exemplo")
-public class Exemplo {
-    
-    @POST
-    @Consumes("application/x-www-form-urlencoded")
-    public void getUser(MultivaluedMap<String, String> formParams) {
-        return formParams.getFirst("userName");
-    } 
-
-} 
-```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-* Para obter os cookies e o cabeçalho do HTTP:
-
-```java
-@Path("/exemplo")
-public class Exemplo {
-    
-    @GET
-    public String get(@Context HttpHeaders hh) {
-        MultivaluedMap<String, String> headerParams = hh.getRequestHeaders();
-        Map<String, Cookie> pathParams = hh.getCookies();
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+public List<Produto> listar(
+        @QueryParam("categoria") String categoria) {
+    if (categoria == null) {
+        return catalogo.values().stream().toList();
     }
-} 
-```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-* Implementação de um cliente REST escrito com jax-rs (API de baixo nível, disponível em qualquer servidor Jakarta EE):
-<!-- .element: style="margin-bottom:50px; font-size: 23px; font-family: arial;" -->
-
-🚨 No Quarkus, prefira o MicroProfile Rest Client (`@RegisterRestClient`), visto no tópico [Rest Client](../../rest-client/rest-client.html)
-<!-- .element: style="margin-bottom:30px; font-size: 18px; color:#900; font-family: arial;" -->
-
-```java
-@WebServlet("/go")
-public class UI extends HttpServlet {
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Client client = ClientBuilder.newClient();
-        WebTarget myResource = client.target("http://localhost:9081/data/client/service/Rodrigo");
-        String response = myResource.request(MediaType.APPLICATION_JSON).get(String.class);
-        System.out.println(response);
-    }
+    return catalogo.values().stream()
+        .filter(p -> p.categoria()
+            .equalsIgnoreCase(categoria))
+        .toList();
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px; font-family: Courier New;" -->
+<!-- .element: style="margin-bottom:25px; font-size: 16px; font-family: Courier New;" -->
 
 
 <!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## RESTful Web Services: exemplo
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
+## Corpo simples (`@Consumes`)
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
 
-* Conversão de JSON para objeto Java num cliente REST escrito com jax-rs:
-<!-- .element: style="margin-bottom:50px; font-size: 23px; font-family: arial;" -->
+* Corpo com um valor simples (texto/número), sem JSON estruturado
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
 
 ```java
-@WebServlet("/go")
-public class UI extends HttpServlet {
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Client client = ClientBuilder.newClient();
-        WebTarget myResource = client.target("http://localhost:9081/data/client/service/Rodrigo");
-        User user = myResource.request(MediaType.APPLICATION_JSON).get(User.class);
-        System.out.println(user.getName());
-    }
+@POST
+@Path("/desconto")
+@Consumes(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_PLAIN)
+public String aplicarDesconto(double preco) {
+    double comDesconto = preco * 0.9;
+    return Double.toString(comDesconto);
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 16px; font-family: Courier New;" -->
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: Courier New;" -->
+
+Mesmo padrão do exercício de conversão km/h → mi/h
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: arial;" -->
+
+
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
+## Corpo JSON
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
+
+* Sem anotação no parâmetro → o JAX-RS preenche a partir do *body*
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
+
+```java
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public Response criar(Produto produto) {
+    catalogo.put(produto.id(), produto);
+    return Response.status(Response.Status.CREATED)
+        .entity(produto).build();
+}
+```
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: Courier New;" -->
+
+🚨 `@Consumes` = o que o servidor **aceita**; `@Produces` = o que **envia**
+<!-- .element: style="margin-bottom:25px; font-size: 18px; color:#900; font-family: arial;" -->
+
+
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
+## `Response` e status HTTP
+<!-- .element: style="margin-bottom:40px; font-size: 40px; font-family: Marker Felt;" -->
+
+```java
+@DELETE
+@Path("/{id}")
+public Response remover(@PathParam("id") Long id) {
+    if (catalogo.remove(id) == null) {
+        return Response.status(
+            Response.Status.NOT_FOUND).build();
+    }
+    return Response.noContent().build(); // 204
+}
+```
+<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: Courier New;" -->
+
+* `CREATED` → 201 · `ok()` → 200 · `noContent()` → 204 · `NOT_FOUND` → 404
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
+
+
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
+## Cliente REST
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Para **consumir** um serviço REST no Quarkus, use o MicroProfile Rest Client
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Anotações como `@RegisterRestClient`, `@Path`, `@GET` na interface do cliente
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Detalhes no tópico [Rest Client](../../rest-client/rest-client.html)
+<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
 
 
 
 # Web Services baseados em XML 🕸️
 
-[Building Web Services with Jakarta XML Web Services](https://eclipse-ee4j.github.io/jakartaee-tutorial/#building-web-services-with-jakarta-xml-web-services)
-<!-- .element: style="margin-bottom:40px; font-size: 10px; color:white; font-family: arial;" -->
+
+<!-- .slide: data-background="#222c44" data-transition="zoom" -->
+## XML / SOAP (visão geral)
+<!-- .element: style="margin-bottom:40px; font-size: 45px; color:white; font-family: Marker Felt;" -->
+
+* Outro estilo de Web Service usa SOAP e WSDL (mensagens e contratos em XML)
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* SOAP (_Simple Object Access Protocol_) — padrão XML para troca de mensagens
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* WSDL (_Web Services Description Language_) — descreve operações e acesso ao serviço
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
+
+* Mais complexos e pesados; o **foco desta disciplina é REST** com Quarkus
+<!-- .element: style="margin-bottom:45px; font-size: 23px; color:white; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## Web Services baseados em XML
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* No Jakarta EE, o JAX-WS provê a funcionalidade para Web Services baseados em XML
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white; font-family: arial;" -->
-
-* Nesta especificação, existem padrões importantes para comunicação entre clientes e os serviços: SOAP e WSDL
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white; font-family: arial;" -->
-
-* O SOAP (_Simple Object Access Protocol_) é um padrão em XML para a troca de mensagens
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white; font-family: arial;" -->
-
-* WSDL (_Web Services Description Language_) descreve as operações e a forma de acesso de um serviço
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white; font-family: arial;" -->
-
-
-<!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## Web Services baseados em XML
+## XML / SOAP
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 <center>
@@ -398,82 +328,16 @@ public class UI extends HttpServlet {
 </center>
 
 
-<!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## Web Services baseados em XML
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* Para implementar um serviço, é necessário criar um contrato formal que descreve a interface que o serviço oferece
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-* Neste caso, o WSDL pode ser utilizado para descrever os detalhes deste contrato
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-* A implementação de um Web Service pode abordar requisitos não-funcionais, por exemplo, transações, segurança, coordenação, etc.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-* Além disso, pode ser necessário a implementação de operações assíncronas. Nesse caso, utiliza-se a infra-estrutura fornecida pelo padrão WSRM (Web Services Reliable Messaging) e a API JAX-WS
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## Web Services baseados em XML
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-```java
-@WebService
-public class Math {
-    
-    @WebMethod
-    public int sum(int x, int y){
-        return x+y;
-    }
-    
-}
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
-
-
-<!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## Web Services baseados em XML
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* Para criar um Web Service, basta decorar uma classe Java com a anotação `@WebService` e, indicar qual método faz parte da interface por meio da anotação `@WebMethod`
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-* Para visualizar o WSDL da aplicação, utilize a URL:
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white; font-family: arial;" -->
-
-    * `http://host:porta/aplicação/NomeDaClasse + Service?wsdl`
-     <!-- .element: style="margin-bottom:30px; font-size: 23px; color:white; font-family: fantasy;" -->
-
-    * Exemplo: `http://localhost:8080/Web/MathService?wsdl`
-     <!-- .element: style="margin-bottom:30px; font-size: 23px; color:white; font-family: fantasy;" -->
-
-
-<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
-## Web Services baseados em XML
-<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
-
-* Podemos utilizar a anotação `@WebServiceRef` para criarmos um cliente do serviço, por exemplo:
-<!-- .element: style="margin-bottom:50px; font-size: 25px; font-family: arial;" -->
-
-```java
-@WebServiceRef
-MathService service;
-    
-// Retorna a porta (interface) do serviço
-edu.ifrs.ws.Math port = service.getMathPort();
-
-// Invoca o serviço
-port.sum(2, 2);        
-```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
-
-
 
 <!-- .slide: data-background="#222c44" data-transition="zoom" -->
 # Referência
 <!-- .element: style="margin-bottom:60px; font-size: 60px; color:white; font-family: Marker Felt;" -->
+
+[Jakarta RESTful Web Services](https://jakarta.ee/specifications/restful-ws/)
+<!-- .element: style="margin-bottom:30px; font-size: 20px;" -->
+
+[Writing JSON REST services — Quarkus](https://quarkus.io/guides/rest-json)
+<!-- .element: style="margin-bottom:30px; font-size: 20px;" -->
 
 [The Jakarta® EE Tutorial](https://eclipse-ee4j.github.io/jakartaee-tutorial/#web-services)
 <!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
