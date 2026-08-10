@@ -132,6 +132,9 @@ Pressione 'F' para tela cheia
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
+* No Jakarta EE tradicional, é necessário registrar os recursos numa classe que estenda `Application`
+<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
+
 ```java
 @ApplicationPath("/data")
 public class DemoRestApplication extends Application {
@@ -144,7 +147,10 @@ public class DemoRestApplication extends Application {
     }
 }
 ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 20px; font-family: Courier New;" -->
+
+🚨 No Quarkus, essa classe é **opcional**: qualquer classe anotada com `@Path` já é descoberta e registrada automaticamente pelo *framework*
+<!-- .element: style="margin-bottom:50px; font-size: 18px; color:#900; font-family: arial;" -->
 
 
 <!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
@@ -152,9 +158,9 @@ public class DemoRestApplication extends Application {
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
 ```java
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Path;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.Path;
 
 @Path("/exemplo")
 public class Exemplo {
@@ -175,9 +181,9 @@ public class Exemplo {
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
 ```java
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 
 @Path("/exemplo/{username}")
 public class Exemplo {
@@ -234,6 +240,34 @@ public class Exemplo {
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
+* Para um único parâmetro de consulta (*query string*), a forma mais simples é `@QueryParam`:
+<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
+
+```java
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+
+@Path("/exemplo")
+public class Exemplo {
+    
+    @GET
+    public String getUser(@QueryParam("userName") String userName) {
+        return userName;
+    }
+
+}
+```
+<!-- .element: style="margin-bottom:50px; font-size: 20px; font-family: Courier New;" -->
+
+
+<!-- .slide: data-background="#F5F5F5" data-transition="zoom" -->
+## RESTful Web Services: exemplo
+<!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
+
+* Quando é necessário acessar **todos** os parâmetros de consulta de uma vez, é possível utilizar `@Context UriInfo`:
+<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial;" -->
+
 ```java
 @Path("/exemplo")
 public class Exemplo {
@@ -286,8 +320,11 @@ public class Exemplo {
 ## RESTful Web Services: exemplo
 <!-- .element: style="margin-bottom:60px; font-size: 40px; font-family: Marker Felt;" -->
 
-* Implementação de um cliente REST escrito com jax-rs:
+* Implementação de um cliente REST escrito com jax-rs (API de baixo nível, disponível em qualquer servidor Jakarta EE):
 <!-- .element: style="margin-bottom:50px; font-size: 23px; font-family: arial;" -->
+
+🚨 No Quarkus, prefira o MicroProfile Rest Client (`@RegisterRestClient`), visto no tópico [Rest Client](../../rest-client/rest-client.html)
+<!-- .element: style="margin-bottom:30px; font-size: 18px; color:#900; font-family: arial;" -->
 
 ```java
 @WebServlet("/go")

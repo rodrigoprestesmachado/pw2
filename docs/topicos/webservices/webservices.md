@@ -139,7 +139,9 @@ public Produto buscarPorId(@PathParam("id") Long id) {
 O trecho `{id}` no `@Path` funciona como uma variável de *template*: o valor
 informado na URI é injetado no parâmetro do método por meio de
 `@PathParam("id")`. Para representar o produto, podemos usar um `record`
-Java, que já gera automaticamente construtor, *getters* e o JSON de resposta:
+Java: ele já gera automaticamente construtor e métodos de acesso aos campos.
+A conversão desse objeto para JSON na resposta é feita pela extensão
+`resteasy-reactive-jackson`, adicionada no Passo 1:
 
 ```java
 public record Produto(Long id, String nome, String categoria, double preco) {}
@@ -167,12 +169,41 @@ public List<Produto> listar(@QueryParam("categoria") String categoria) {
 Note que, diferente do `@PathParam`, o parâmetro de consulta é **opcional**:
 se o cliente não informar `categoria` na URL, o valor injetado será `null`.
 
-### Passo 5: Recebendo dados com POST
+### Passo 5: Recebendo dados simples no corpo da requisição
 
-Para criar um novo produto, o cliente envia os dados no **corpo** da
-requisição HTTP, geralmente em JSON. No JAX-RS, basta declarar um parâmetro
-com o tipo do objeto esperado: a conversão de JSON para objeto Java (e
-vice-versa) é feita automaticamente pela extensão `resteasy-reactive-jackson`:
+Nem toda requisição POST envia um objeto estruturado. Quando o corpo contém
+apenas um valor simples (um número ou um texto, por exemplo), basta declarar
+o parâmetro do método com o tipo primitivo esperado, sem nenhuma classe
+auxiliar:
+
+```java
+@POST
+@Path("/desconto")
+@Consumes(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_PLAIN)
+public String aplicarDesconto(double preco) {
+    double comDesconto = preco * 0.9;
+    return Double.toString(comDesconto);
+}
+```
+
+* `@POST`: indica que o método responde a requisições HTTP do tipo POST.
+* `@Consumes`: define o tipo MIME que o método espera **receber** do cliente.
+  Nesse caso, `TEXT_PLAIN` informa que o corpo da requisição é apenas texto
+  puro, e não um objeto JSON.
+
+Esse é exatamente o padrão utilizado no exercício de conversão de quilômetros
+por hora para milhas por hora (veja os [Exercícios - Parte 1](#exercícios---parte-1-)
+abaixo): o corpo da requisição contém somente o número a ser convertido, sem
+nenhuma estrutura JSON.
+
+### Passo 6: Recebendo dados estruturados em JSON
+
+Quando o corpo da requisição representa um objeto com vários campos, o mais
+comum é enviá-lo em JSON. No JAX-RS, basta declarar um parâmetro com o tipo
+do objeto esperado: a conversão de JSON para objeto Java (e vice-versa) é
+feita automaticamente pela extensão `resteasy-reactive-jackson`, adicionada
+no Passo 1:
 
 ```java
 @POST
@@ -184,14 +215,15 @@ public Response criar(Produto produto) {
 }
 ```
 
-* `@POST`: indica que o método responde a requisições HTTP do tipo POST.
-* `@Consumes`: define o tipo MIME que o método espera **receber** do cliente.
+Note que o parâmetro `produto` não possui nenhuma anotação: quando um método
+recebe um objeto sem `@PathParam`, `@QueryParam` ou similares, o JAX-RS
+entende que ele deve ser preenchido a partir do corpo (*body*) da requisição.
 
 🚨 Uma dúvida comum é a diferença entre `@Consumes` e `@Produces`:
 `@Consumes` descreve o que o servidor **aceita receber**, enquanto `@Produces`
 descreve o que o servidor **envia de volta**.
 
-### Passo 6: Controlando a resposta HTTP
+### Passo 7: Controlando a resposta HTTP
 
 Até aqui, os métodos retornaram diretamente um objeto (`Produto`, `List<Produto>`).
 Isso funciona bem quando a resposta é sempre "200 OK". Porém, muitas vezes
@@ -229,35 +261,6 @@ public Response remover(@PathParam("id") Long id) {
 | `@Consumes` | Método | Define o tipo MIME que o método recebe do cliente |
 | `@Produces` | Método | Define o tipo MIME que o método envia ao cliente |
 
-### Testando com RestAssured
-
-Repare que os testes do [Exercícios - Parte 1](#exercícios---parte-1-) usam a
-biblioteca [REST Assured](https://rest-assured.io) para simular chamadas HTTP
-sem a necessidade de um cliente externo. A estrutura sempre segue o mesmo
-padrão:
-
-```java
-given()
-    // O que a requisição envia (cabeçalhos, corpo)
-    .contentType(ContentType.JSON)
-.when()
-    // Qual operação e endpoint são chamados
-    .get("/produtos/1")
-.then()
-    // O que se espera da resposta
-    .statusCode(200)
-    .body("nome", is("Notebook"));
-```
-
-* `given()`: descreve o contexto da requisição (tipo de conteúdo, corpo,
-  parâmetros).
-* `when()`: executa a chamada HTTP (`get`, `post`, `put`, `delete`).
-* `then()`: verifica a resposta (código de status, corpo, cabeçalhos).
-
-Esse é exatamente o mesmo padrão utilizado nos testes dos exercícios abaixo.
-
----
-
 ## Exercícios - Parte 1 📝
 
 Desenvolva um Web Service em Rest utilizando o framework Quarkus que permita
@@ -275,8 +278,9 @@ realizar as seguintes conversões de unidades de medida:
    - A fórmula de conversão a ser aplicada é: 1 nó equivale a 1.852 quilômetros
    por hora.
 
-💡 Reveja os passos 2 (recurso básico), 3 (`@PathParam`) e 6 (`Response`) da
-seção anterior para lembrar como declarar métodos GET/POST e retornar JSON.
+💡 Reveja os passos 2 (recurso básico), 3 (`@PathParam`), 5 (corpo em texto
+simples) e 7 (`Response`) da seção anterior para lembrar como declarar
+métodos GET/POST e retornar JSON.
 
 Certifique-se de implementar corretamente os casos de teste do exercício.
 
@@ -344,9 +348,9 @@ no formato JSON.
 /tarefas?concluida=true.
 
 💡 Este exercício é uma boa oportunidade para reaproveitar o exemplo do
-catálogo de produtos: a criação de tarefas (POST) segue o mesmo padrão do
-passo 5, a listagem/filtro (GET com `@QueryParam`) segue o passo 4, e a
-exclusão (DELETE) segue o passo 6.
+catálogo de produtos: a criação de tarefas (POST em JSON) segue o mesmo
+padrão do passo 6, a listagem/filtro (GET com `@QueryParam`) segue o passo 4,
+e a exclusão (DELETE) segue o passo 7.
 
 ## Material complementar (legado) 📼
 
