@@ -284,20 +284,6 @@ public Response remover(@PathParam("id") Long id) {
 <!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial;" -->
 
 
-<!-- .slide: data-background="#222c44" data-transition="zoom" -->
-## Cliente REST
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* Para **consumir** um serviço REST no Quarkus, use o MicroProfile Rest Client
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
-
-* Anotações como `@RegisterRestClient`, `@Path`, `@GET` na interface do cliente
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
-
-* Detalhes no tópico [Rest Client](../../rest-client/rest-client.html)
-<!-- .element: style="margin-bottom:50px; font-size: 23px; color:white; font-family: arial;" -->
-
-
 
 # Web Services baseados em XML 🕸️
 

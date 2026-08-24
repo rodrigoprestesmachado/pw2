@@ -10,6 +10,25 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Servidor x Cliente 🔄
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+- Até agora criamos Web Services REST: aplicações que **oferecem** recursos
+<!-- .element: style="margin-bottom:45px; font-size: 27px; color:white" -->
+
+- Em micro serviços, um serviço muitas vezes também precisa **consumir**
+outro serviço (ex.: carrinho de compras → serviço de pagamento)
+<!-- .element: style="margin-bottom:45px; font-size: 27px; color:white" -->
+
+- Fazer isso "na mão" (montar requisição HTTP, cabeçalhos, JSON) gera
+código repetitivo (*boilerplate*)
+<!-- .element: style="margin-bottom:45px; font-size: 27px; color:white" -->
+
+- O **MicroProfile Rest Client** resolve esse problema
+<!-- .element: style="margin-bottom:45px; font-size: 27px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Introdução ao MicroProfile Rest Client 📏
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -19,6 +38,10 @@ para micro serviços em Java.
 
 - O MicroProfile Rest Client é uma das especificações do MicroProfile, projetado
 para simplificar a comunicação com serviços RESTful em aplicações Java.
+<!-- .element: style="margin-bottom:50px; font-size: 27px; color:white" -->
+
+- Reutiliza as **mesmas anotações do JAX-RS** (`@Path`, `@GET`, `@POST`...)
+já usadas para criar recursos REST, reduzindo a curva de aprendizado
 <!-- .element: style="margin-bottom:50px; font-size: 27px; color:white" -->
 
 - Ele oferece uma maneira elegante de consumir APIs REST, reduzindo a quantidade
@@ -58,21 +81,29 @@ de código boilerplate e facilitando a integração de serviços externos.
   `@GET`, `@POST`, etc.
 <!-- .element: style="margin-bottom:50px; font-size: 27px; color:white" -->
 
-- Configure propriedades específicas do cliente REST
+- Configure propriedades específicas do cliente REST em arquivos de
   configuração, como baseUri, timeouts, headers, etc.
 <!-- .element: style="margin-bottom:50px; font-size: 27px; color:white" -->
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## Exemplo
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:black; font-family: Marker Felt;" -->
+## Cenário: carrinho de compras → pagamento
+<!-- .element: style="margin-bottom:40px; font-size: 40px; color:black; font-family: Marker Felt;" -->
 
-- Definição de interface para um serviço RESTful:
-<!-- .element: style="margin-bottom:50px; font-size: 27px; color:black" -->
+- O serviço de **checkout** (cliente) precisa confirmar um pagamento no
+serviço de **payment** (servidor)
+<!-- .element: style="margin-bottom:30px; font-size: 24px; color:black" -->
+
+- Para isso, criamos uma interface Java que descreve a operação remota
+<!-- .element: style="margin-bottom:30px; font-size: 24px; color:black" -->
+
+
+<!-- .slide: data-background="white" data-transition="convex" -->
+## Passo 1: declarar a interface
+<!-- .element: style="margin-bottom:40px; font-size: 40px; color:black; font-family: Marker Felt;" -->
 
   ```java
 @RegisterRestClient(baseUri = "https://localhost:8444/")
-@AccessToken
 public interface IPayment {
 
     @POST
@@ -82,22 +113,35 @@ public interface IPayment {
     Invoice confirmPayment(
         @FormParam("cardNumber") String cardNumber,
         @FormParam("value") String value);
-  }
+}
   ```
-<!-- .element: style="margin-bottom:50px; font-size: 18px; background-color: white; " -->
+<!-- .element: style="margin-bottom:30px; font-size: 18px; background-color: white; " -->
+
+`@RegisterRestClient` registra o cliente no CDI · as demais anotações são
+as mesmas do JAX-RS, só que descrevem uma requisição **enviada**
+<!-- .element: style="margin-bottom:30px; font-size: 20px; color:black" -->
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## Exemplo
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:black; font-family: Marker Felt;" -->
+## Passo 2: configurar a URL (alternativa)
+<!-- .element: style="margin-bottom:40px; font-size: 40px; color:black; font-family: Marker Felt;" -->
 
-Configuração do cliente REST no arquivo `application.properties`:
-<!-- .element: style="margin-bottom:50px; font-size: 27px;" -->
+Em vez de fixar `baseUri` na anotação, configure no
+`application.properties`:
+<!-- .element: style="margin-bottom:30px; font-size: 24px;" -->
 
 ```properties
 {nome da classe com o pacote}/mp-rest/url={url base}
 ```
 <!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
+
+Útil quando a URL do serviço varia entre ambientes (dev, teste, produção)
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:black" -->
+
+
+<!-- .slide: data-background="white" data-transition="convex" -->
+## Passo 3: injetar e usar
+<!-- .element: style="margin-bottom:40px; font-size: 40px; color:black; font-family: Marker Felt;" -->
 
 Injeção do cliente REST em uma classe de serviço:
 <!-- .element: style="margin-bottom:20px; font-size: 27px;" -->
@@ -107,7 +151,10 @@ Injeção do cliente REST em uma classe de serviço:
   @RestClient
   IPayment paymentService;
   ```
-<!-- .element: style="margin-bottom:50px; font-size: 20px;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 20px;" -->
+
+`paymentService.confirmPayment(...)` já monta e envia o `POST /payment`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:black" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
@@ -140,6 +187,23 @@ Injeção do cliente REST em uma classe de serviço:
 - Ele também suporta a especificação MicroProfile Rest Client JWT, que permite
   a configuração de propriedades de clientes REST usando tokens JWT.
 <!-- .element: style="margin-bottom:50px; font-size: 27px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Resumo em 4 passos 🧭
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+1. Adicionar as extensões `rest-client` e `rest-client-jackson`
+<!-- .element: style="margin-bottom:40px; font-size: 27px; color:white" -->
+
+2. Declarar uma interface anotada com `@RegisterRestClient`
+<!-- .element: style="margin-bottom:40px; font-size: 27px; color:white" -->
+
+3. Injetar a interface com `@Inject` + `@RestClient`
+<!-- .element: style="margin-bottom:40px; font-size: 27px; color:white" -->
+
+4. Chamar os métodos da interface como se fossem locais 🎉
+<!-- .element: style="margin-bottom:40px; font-size: 27px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
