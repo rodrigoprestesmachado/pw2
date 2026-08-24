@@ -172,41 +172,6 @@ code pw2/exemplos/store/payment
 
 ## Exercício de Fixação 📝
 
-Antes de avançar para o exercício prático completo, vamos consolidar o que
-foi aprendido com um exercício simples e rápido.
-{: .fs-3 }
-
-Retome o serviço `ProdutoResource` criado na página anterior sobre
-[Web Services](../webservices/webservices.md), que expõe o recurso
-`/produtos` (veja o método `listar`, que responde a `GET /produtos` e
-retorna uma lista de `Produto` em JSON).
-{: .fs-3 }
-
-Crie um **novo projeto Quarkus** com suporte a Rest Client e implemente uma
-interface `IProdutoClient` capaz de consumir esse serviço remotamente. Para
-isso:
-{: .fs-3 }
-
-1. Adicione as extensões `rest-client` e `rest-client-jackson` ao novo
-   projeto.
-2. Declare a interface `IProdutoClient`, anotada com `@RegisterRestClient`,
-   com um método que realize uma requisição `GET` para `/produtos` e
-   retorne `List<Produto>`.
-3. Injete a interface em um recurso REST do novo projeto (por exemplo,
-   `/catalogo-remoto`), usando `@Inject` e `@RestClient`.
-4. Ao acessar `/catalogo-remoto`, o serviço deve retornar a lista de
-   produtos obtida do serviço original, comprovando que a comunicação entre
-   os dois serviços está funcionando.
-{: .fs-3 }
-
-💡 Reveja os Passos 2 e 3 desta página para lembrar como declarar a
-interface do cliente e como injetá-la, e os Passos 2 e 4 da página de
-[Web Services](../webservices/webservices.md) para lembrar o formato do
-recurso `/produtos` e do `record Produto`.
-{: .fs-3 }
-
-## Exercício Prático 🏋️
-
 O exercício trata-se de uma rede social para troca de livros, onde
 os usuários podem listar os livros que estão dispostos a emprestar e também
 solicitar empréstimos de outros usuários. O sistema é composto por dois serviços
