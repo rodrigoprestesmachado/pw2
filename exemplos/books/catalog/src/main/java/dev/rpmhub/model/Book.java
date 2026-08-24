@@ -8,11 +8,21 @@
 */
 package dev.rpmhub.model;
 
+/**
+ * Represents a book in the catalog.
+ */
 public class Book {
 
+    /** The title of the book. */
     private String title;
+
+    /** The author of the book. */
     private String author;
+
+    /** The ISBN of the book. */
     private String isbn;
+
+    /** Indicates whether the book is available. */
     private boolean available;
 
     public String getTitle() {

@@ -23,9 +23,13 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
+/**
+ * Web service responsible for managing books.
+ */
 @Path("/bookManagement")
 public class ManagementWS {
 
+    /** REST client used to communicate with the catalog service. */
     @RestClient
     @Inject
     CatalogRC catalog;

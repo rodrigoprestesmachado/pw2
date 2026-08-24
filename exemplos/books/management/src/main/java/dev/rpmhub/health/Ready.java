@@ -17,6 +17,9 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import dev.rpmhub.client.PingRC;
 import jakarta.inject.Inject;
 
+/**
+ * Readiness health check for the application.
+ */
 @Readiness
 public class Ready implements HealthCheck {
 
