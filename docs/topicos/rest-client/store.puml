@@ -1,14 +1,9 @@
 @startuml
-    actor User
-    participant "Checkout" as Checkout
-    participant "Payment" as Payment
+    participant "Checkout\n(Rest Client)" as Checkout
+    participant "Payment\n(Rest Service)" as Payment
 
-    User -> Checkout: Seleciona produtos e finaliza compra
-    activate Checkout
-    Checkout -> Payment: Solicitação (cardNumber e value)
+    Checkout -> Payment: POST /payment (cardNumber, value)
     activate Payment
-    Payment --> Checkout: Confirmação - Invoice
+    Payment --> Checkout: Invoice(valid = true)
     deactivate Payment
-    Checkout --> User: Confirmação de compra
-    deactivate Checkout
 @enduml

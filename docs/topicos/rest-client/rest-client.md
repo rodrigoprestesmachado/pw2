@@ -65,7 +65,10 @@ assim como vimos com `resteasy-reactive-jackson` na criação de recursos REST.
 Imagine que precisamos comunicar um RESTful Web Service de um carrinho de
 compras (*checkout*) com um serviço de pagamento (*payment*), como ilustrado
 na Figura 1: o serviço de *checkout* é o **cliente**, e o serviço de
-*payment* é o **servidor** que ele deseja consumir.
+*payment* é o **servidor** que ele deseja consumir. Nesse cenário, o
+*checkout* envia o número do cartão (`cardNumber`) e o valor (`value`) para
+o *payment*, que valida o pagamento e retorna um `Invoice` confirmando a
+validação (`valid = true`).
 {: .fs-3 }
 
 <center>
@@ -96,6 +99,15 @@ public interface IPayment {
         @FormParam("cardNumber") String cardNumber,
         @FormParam("value") String value);
 }
+```
+{: .fs-3 }
+
+Do lado do serviço de pagamento, o método correspondente valida os dados
+recebidos e retorna um `Invoice` informando se o pagamento é válido:
+{: .fs-3 }
+
+```java
+public record Invoice(boolean valid) {}
 ```
 {: .fs-3 }
 
@@ -142,7 +154,9 @@ IPayment paymentService;
 A partir daí, chamar `paymentService.confirmPayment(cardNumber, value)` é o
 suficiente: o *framework* monta a requisição HTTP `POST /payment`, envia os
 parâmetros no formato configurado (`application/x-www-form-urlencoded`) e
-converte a resposta JSON automaticamente em um objeto `Invoice`.
+converte a resposta JSON automaticamente em um objeto `Invoice`. Se o
+pagamento for validado com sucesso, `invoice.valid()` retorna `true`,
+exatamente como ilustrado na Figura 1.
 {: .fs-3 }
 
 ### Resumo do processo
