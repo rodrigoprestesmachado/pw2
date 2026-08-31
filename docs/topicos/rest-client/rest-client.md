@@ -313,7 +313,7 @@ anterior): ela reúne as operações usadas nos dois diagramas acima.
 {: .fs-3 }
 
 ```java
-@RegisterRestClient(baseUri = "http://localhost:8080/books")
+@RegisterRestClient(baseUri = "http://localhost:9080/books")
 public interface IBookCatalog {
 
     @GET
@@ -337,7 +337,7 @@ public interface IBookCatalog {
 
 Para começar, faça o clone do monorepo da disciplina e abra os dois
 projetos-base (um para cada serviço), já configurados com as dependências
-Quarkus corretas e nas portas `8080` (catálogo) e `8081` (empréstimos):
+Quarkus corretas e nas portas `9080` (catálogo) e `9081` (empréstimos):
 {: .fs-3 }
 
 ```sh
@@ -351,14 +351,17 @@ code pw2/exemplos/library/loans
 
 ### Testes e Integração
 
-Cada um dos dois projetos-base já contém, em
-`src/test/java/dev/rpmhub/IntegrationTest.java`, os testes de integração
-que sua implementação precisa fazer passar — **não altere esse arquivo**.
-Juntos, os métodos dessa classe cobrem **todos os *endpoints*** descritos
-nas tabelas dos dois serviços: o fluxo completo ilustrado nas Figuras 2 e 3
-(cadastro de um livro, consulta dos livros disponíveis, solicitação de
-empréstimo e confirmação de que o catálogo foi atualizado), além dos casos
-de listagem (`GET /books`), consulta/alteração de um livro inexistente
+Cada um dos dois projetos-base já contém um teste de integração que sua
+implementação precisa fazer passar — **não altere esse arquivo**: no
+serviço de catálogo, em `src/test/java/dev/ifrs/CatalogTest.java`; no
+serviço de empréstimos, em `src/test/java/dev/ifrs/LoansTest.java`. Ambos
+os arquivos têm conteúdo idêntico (apenas o nome da classe muda), já que os
+testes dependem da comunicação real entre os dois serviços. Juntos, os
+métodos dessa classe cobrem **todos os *endpoints*** descritos nas tabelas
+dos dois serviços: o fluxo completo ilustrado nas Figuras 2 e 3 (cadastro
+de um livro, consulta dos livros disponíveis, solicitação de empréstimo e
+confirmação de que o catálogo foi atualizado), além dos casos de listagem
+(`GET /books`), consulta/alteração de um livro inexistente
 (`404 Not Found`) e das operações de emprestar/devolver um livro
 diretamente no catálogo (`PUT /books/{id}/loan` e `PUT /books/{id}/return`).
 {: .fs-3 }
@@ -375,12 +378,13 @@ esta ordem:
    Client (`IBookCatalog`) que consome o catálogo.
 
 3. Com os dois serviços em execução (cada um em seu próprio terminal),
-   execute `IntegrationTest` — pela sua IDE ou com
-   `./mvnw test -Dtest=IntegrationTest` — a partir de qualquer um dos dois
-   projetos.
+   execute o teste de integração — pela sua IDE ou com
+   `./mvnw test -Dtest=CatalogTest` (no projeto `catalog`) ou
+   `./mvnw test -Dtest=LoansTest` (no projeto `loans`) — a partir de
+   qualquer um dos dois projetos.
 {: .fs-3 }
 
-🚨 O `IntegrationTest` só passa quando os **dois serviços estão de fato
+🚨 Esse teste só passa quando os **dois serviços estão de fato
 integrados**: ele depende da comunicação real via Rest Client entre o
 serviço de empréstimos e o serviço de catálogo, e não de *mocks*.
 {: .fs-3 }

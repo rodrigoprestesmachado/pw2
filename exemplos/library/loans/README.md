@@ -1,48 +1,62 @@
 # loans
 
-Projeto-base do exercício de **MicroProfile Rest Client** (rede social de
-troca de livros). Este projeto usa Quarkus, o Supersonic Subatomic Java
-Framework.
+This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
-Consulte a seção "Exercício de Fixação" da página
-[Rest Client](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html)
-para a descrição completa dos *endpoints*, tipos de dados e diagramas de
-sequência que este serviço (Gerenciamento de Empréstimos) deve implementar.
-Este serviço deve utilizar um Rest Client (`@RegisterRestClient`) para se
-comunicar com o serviço `catalog`.
+If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
 
-O projeto já contém, em `src/test/java/dev/rpmhub/IntegrationTest.java`, o
-teste de integração que sua implementação precisa fazer passar. **Não
-altere esse arquivo de teste**: implemente as classes em `src/main/java`
-necessárias para que ele passe.
+## Running the application in dev mode
 
-## Rodando em modo de desenvolvimento
+You can run your application in dev mode that enables live coding using:
 
 ```shell script
 ./mvnw quarkus:dev
 ```
 
-Este serviço sobe na porta `8081` (veja `src/main/resources/application.properties`),
-para não conflitar com o serviço `catalog`, que roda na porta `8080`.
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
-## Executando o teste de integração
+## Packaging and running the application
 
-1. Em um terminal, inicie o serviço `catalog`:
+The application can be packaged using:
 
-   ```shell script
-   cd ../catalog
-   ./mvnw quarkus:dev
-   ```
+```shell script
+./mvnw package
+```
 
-2. Em outro terminal, inicie este serviço (`loans`):
+It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
+Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
-   ```shell script
-   ./mvnw quarkus:dev
-   ```
+The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
-3. Com os dois serviços rodando, execute o teste de integração pela sua IDE
-   ou com:
+If you want to build an _über-jar_, execute the following command:
 
-   ```shell script
-   ./mvnw test -Dtest=IntegrationTest
-   ```
+```shell script
+./mvnw package -Dquarkus.package.jar.type=uber-jar
+```
+
+The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+
+## Creating a native executable
+
+You can create a native executable using:
+
+```shell script
+./mvnw package -Dnative
+```
+
+Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+
+```shell script
+./mvnw package -Dnative -Dquarkus.native.container-build=true
+```
+
+You can then execute your native executable with: `./target/loans-0.0.1-runner`
+
+If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+
+## Provided Code
+
+### REST
+
+Easily start your REST Web Services
+
+[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)

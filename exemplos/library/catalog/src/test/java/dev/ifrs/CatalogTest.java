@@ -1,4 +1,4 @@
-package dev.rpmhub;
+package dev.ifrs;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,11 +18,11 @@ import io.restassured.http.ContentType;
  * separados:
  *
  * <pre>
- * # Terminal 1 - Serviço de Catálogo de Livros (porta 8080)
+ * # Terminal 1 - Serviço de Catálogo de Livros (porta 9080)
  * cd catalog
  * ./mvnw quarkus:dev
  *
- * # Terminal 2 - Serviço de Gerenciamento de Empréstimos (porta 8081)
+ * # Terminal 2 - Serviço de Gerenciamento de Empréstimos (porta 9081)
  * cd loans
  * ./mvnw quarkus:dev
  * </pre>
@@ -42,10 +42,10 @@ import io.restassured.http.ContentType;
  * <li>Empréstimos: {@code POST /loans}, {@code GET /loans/books}</li>
  * </ul>
  */
-public class IntegrationTest {
+class CatalogTest {
 
-    static final String CATALOG_URL = "http://localhost:8080";
-    static final String LOAN_URL = "http://localhost:8081";
+    static final String CATALOG_URL = "http://localhost:9080";
+    static final String LOAN_URL = "http://localhost:9081";
 
     /**
      * Cadastra um livro diretamente no serviço de catálogo e retorna o
