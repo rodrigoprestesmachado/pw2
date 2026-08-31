@@ -229,6 +229,34 @@ public record LoanRequest(
 ```
 {: .fs-3 }
 
+💡 O campo `borrower` representa **quem está solicitando o empréstimo** (o
+"tomador" do livro), e não quem o disponibilizou no catálogo — o exercício
+não modela um cadastro de usuários, então esse campo é apenas uma `String`
+livre com o nome (ou identificador) da pessoa. Por exemplo, ao solicitar o
+empréstimo do livro de `id = 3` para a Ana, o corpo da requisição
+`POST /loans` seria:
+{: .fs-3 }
+
+```json
+{
+  "bookId": 3,
+  "borrower": "Ana"
+}
+```
+{: .fs-3 }
+
+E a resposta (`Loan` criado, status `201`) incluiria esse mesmo valor:
+{: .fs-3 }
+
+```json
+{
+  "id": 1,
+  "bookId": 3,
+  "borrower": "Ana"
+}
+```
+{: .fs-3 }
+
 ### Serviço 1: Catálogo de Livros
 
 O objetivo é criar um serviço que gerencie o catálogo de livros que os usuários
