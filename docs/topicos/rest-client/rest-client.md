@@ -230,9 +230,9 @@ public record LoanRequest(
 {: .fs-3 }
 
 💡 O campo `borrower` representa **quem está solicitando o empréstimo** (o
-"tomador" do livro), e não quem o disponibilizou no catálogo — o exercício
-não modela um cadastro de usuários, então esse campo é apenas uma `String`
-livre com o nome (ou identificador) da pessoa. Por exemplo, ao solicitar o
+"tomador" do livro), e não quem o disponibilizou no catálogo. Como o
+exercício não modela um cadastro de usuários, esse campo é apenas uma
+`String` livre com o nome (ou identificador) da pessoa. Por exemplo, ao solicitar o
 empréstimo do livro de `id = 3` para a Ana, o corpo da requisição
 `POST /loans` seria:
 {: .fs-3 }
@@ -267,10 +267,10 @@ todos com o prefixo de rota `/books`:
 | Operação | Método | URL | Corpo da requisição | Corpo da resposta |
 |----------|--------|-----|----------------------|--------------------|
 | Adicionar um livro ao catálogo | `POST` | `/books` | `Book` (JSON, sem `id`) | `Book` criado (JSON), status `201` |
-| Consultar o catálogo de livros disponíveis | `GET` | `/books` | — | `List<Book>` (JSON), status `200` |
-| Consultar um livro específico | `GET` | `/books/{id}` | — | `Book` (JSON), status `200`, ou `404` se não existir |
-| Marcar um livro como emprestado | `PUT` | `/books/{id}/loan` | — | `Book` atualizado (JSON), status `200`, ou `404`/`409` se o livro não existir/já estiver emprestado |
-| Marcar um livro como devolvido | `PUT` | `/books/{id}/return` | — | `Book` atualizado (JSON), status `200`, ou `404` se não existir |
+| Consultar o catálogo de livros disponíveis | `GET` | `/books` | - | `List<Book>` (JSON), status `200` |
+| Consultar um livro específico | `GET` | `/books/{id}` | - | `Book` (JSON), status `200`, ou `404` se não existir |
+| Marcar um livro como emprestado | `PUT` | `/books/{id}/loan` | - | `Book` atualizado (JSON), status `200`, ou `404`/`409` se o livro não existir/já estiver emprestado |
+| Marcar um livro como devolvido | `PUT` | `/books/{id}/return` | - | `Book` atualizado (JSON), status `200`, ou `404` se não existir |
 {: .fs-3 }
 
 💡 O `@PathParam("id")` é utilizado para identificar o livro na URL, e o
@@ -289,7 +289,7 @@ usuários. O serviço deve expor os seguintes *endpoints*, com o prefixo de rota
 | Operação | Método | URL | Corpo da requisição | Corpo da resposta |
 |----------|--------|-----|----------------------|--------------------|
 | Registrar um novo empréstimo | `POST` | `/loans` | `LoanRequest` (JSON) | `Loan` criado (JSON), status `201`, ou `409 Conflict` se o livro não estiver disponível |
-| Listar os livros que podem ser emprestados | `GET` | `/loans/books` | — | `List<Book>` (JSON), status `200` |
+| Listar os livros que podem ser emprestados | `GET` | `/loans/books` | - | `List<Book>` (JSON), status `200` |
 {: .fs-3 }
 
 Quando um usuário solicita um empréstimo (`POST /loans`), o serviço de
@@ -380,7 +380,7 @@ code pw2/exemplos/library/loans
 ### Testes e Integração
 
 Cada um dos dois projetos-base já contém um teste de integração que sua
-implementação precisa fazer passar — **não altere esse arquivo**: no
+implementação precisa fazer passar (**não altere esse arquivo**): no
 serviço de catálogo, em `src/test/java/dev/ifrs/CatalogTest.java`; no
 serviço de empréstimos, em `src/test/java/dev/ifrs/LoansTest.java`. Ambos
 os arquivos têm conteúdo idêntico (apenas o nome da classe muda), já que os
@@ -406,9 +406,9 @@ esta ordem:
    Client (`IBookCatalog`) que consome o catálogo.
 
 3. Com os dois serviços em execução (cada um em seu próprio terminal),
-   execute o teste de integração — pela sua IDE ou com
+   execute o teste de integração, pela sua IDE ou com
    `./mvnw test -Dtest=CatalogTest` (no projeto `catalog`) ou
-   `./mvnw test -Dtest=LoansTest` (no projeto `loans`) — a partir de
+   `./mvnw test -Dtest=LoansTest` (no projeto `loans`), a partir de
    qualquer um dos dois projetos.
 {: .fs-3 }
 
