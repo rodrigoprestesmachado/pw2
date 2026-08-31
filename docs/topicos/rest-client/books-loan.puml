@@ -1,0 +1,23 @@
+@startuml
+actor User
+participant "Serviço de Gerenciamento\nde Empréstimos" as LoanManagement
+participant "Serviço de Catálogo\nde Livros" as Catalog
+
+User -> LoanManagement: POST /loans\n{bookId, borrower}
+activate LoanManagement
+LoanManagement -> Catalog: GET /books/{id}
+activate Catalog
+Catalog --> LoanManagement: 200 OK\nBook (loaned=false)
+deactivate Catalog
+
+alt livro disponível
+    LoanManagement -> Catalog: PUT /books/{id}/loan
+    activate Catalog
+    Catalog --> LoanManagement: 200 OK\nBook (loaned=true)
+    deactivate Catalog
+    LoanManagement --> User: 201 Created\nLoan
+else livro já emprestado
+    LoanManagement --> User: 409 Conflict
+end
+deactivate LoanManagement
+@enduml

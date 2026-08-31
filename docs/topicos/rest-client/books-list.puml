@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant "Serviço de Gerenciamento\nde Empréstimos" as LoanManagement
+participant "Serviço de Catálogo\nde Livros" as Catalog
+
+User -> LoanManagement: GET /loans/books
+activate LoanManagement
+LoanManagement -> Catalog: GET /books
+activate Catalog
+Catalog --> LoanManagement: 200 OK\nList<Book>
+deactivate Catalog
+LoanManagement --> User: 200 OK\nList<Book>
+deactivate LoanManagement
+@enduml

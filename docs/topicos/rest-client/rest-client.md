@@ -195,57 +195,194 @@ objetivo é configurar a comunicação entre esses dois serviços usando
 MicroProfile Rest Client.
 {: .fs-3 }
 
+### Tipos de Dados
+
+Antes de detalhar os *endpoints*, defina os seguintes tipos (podem ser
+implementados como `record` Java, como vimos anteriormente, ou como uma
+classe Java tradicional, com atributos, construtor e métodos de acesso):
+{: .fs-3 }
+
+```java
+// Representa um livro no catálogo
+public record Book(
+    Long id,
+    String title,
+    String author,
+    boolean loaned) {}
+```
+{: .fs-3 }
+
+```java
+// Representa um empréstimo registrado pelo serviço de gerenciamento
+public record Loan(
+    Long id,
+    Long bookId,
+    String borrower) {}
+```
+{: .fs-3 }
+
+```java
+// Corpo enviado para solicitar um novo empréstimo
+public record LoanRequest(
+    Long bookId,
+    String borrower) {}
+```
+{: .fs-3 }
+
 ### Serviço 1: Catálogo de Livros
 
 O objetivo é criar um serviço que gerencie o catálogo de livros que os usuários
-disponibilizam para empréstimo. O serviço deve ter operações para:
+disponibilizam para empréstimo. O serviço deve expor os seguintes *endpoints*,
+todos com o prefixo de rota `/books`:
 {: .fs-3 }
 
-- Adicionar um livro ao catálogo
+| Operação | Método | URL | Corpo da requisição | Corpo da resposta |
+|----------|--------|-----|----------------------|--------------------|
+| Adicionar um livro ao catálogo | `POST` | `/books` | `Book` (JSON, sem `id`) | `Book` criado (JSON), status `201` |
+| Consultar o catálogo de livros disponíveis | `GET` | `/books` | — | `List<Book>` (JSON), status `200` |
+| Consultar um livro específico | `GET` | `/books/{id}` | — | `Book` (JSON), status `200`, ou `404` se não existir |
+| Marcar um livro como emprestado | `PUT` | `/books/{id}/loan` | — | `Book` atualizado (JSON), status `200`, ou `404`/`409` se o livro não existir/já estiver emprestado |
+| Marcar um livro como devolvido | `PUT` | `/books/{id}/return` | — | `Book` atualizado (JSON), status `200`, ou `404` se não existir |
+{: .fs-3 }
 
-- Consultar o catálogo de livros disponíveis
-
-- Marcar um livro como emprestado e devolvido
+💡 O `@PathParam("id")` é utilizado para identificar o livro na URL, e o
+`Response` (visto no [Passo 7](../webservices/webservices.md)) é útil para
+retornar os diferentes códigos de status HTTP descritos acima, por exemplo,
+`404 Not Found` quando o `id` informado não existe no catálogo.
 {: .fs-3 }
 
 ### Serviço 2: Serviço de Gerenciamento de Empréstimos
 
 O objetivo é criar um serviço que gerencie os empréstimos de livros entre os
-usuários. O serviço deve ter operações para:
+usuários. O serviço deve expor os seguintes *endpoints*, com o prefixo de rota
+`/loans`:
 {: .fs-3 }
 
-- Registrar um novo empréstimo
-
-- Listar os livros que podem ser emprestados
+| Operação | Método | URL | Corpo da requisição | Corpo da resposta |
+|----------|--------|-----|----------------------|--------------------|
+| Registrar um novo empréstimo | `POST` | `/loans` | `LoanRequest` (JSON) | `Loan` criado (JSON), status `201`, ou `409 Conflict` se o livro não estiver disponível |
+| Listar os livros que podem ser emprestados | `GET` | `/loans/books` | — | `List<Book>` (JSON), status `200` |
 {: .fs-3 }
 
-Quando um usuário solicita um empréstimo, o serviço de gerenciamento de
-empréstimos deve verificar se o livro está disponível no catálogo de livros e
-marcá-lo como emprestado. Neste sentido, um Rest Client deve ser utilizado para
-comunicar com o serviço de catálogo de livros.
+Quando um usuário solicita um empréstimo (`POST /loans`), o serviço de
+gerenciamento de empréstimos deve utilizar um **Rest Client** para se
+comunicar com o serviço de catálogo de livros e:
+{: .fs-3 }
+
+1. Verificar se o livro (`bookId`) existe e está disponível (`GET /books/{id}`
+   no serviço de catálogo);
+2. Caso esteja disponível, marcá-lo como emprestado (`PUT /books/{id}/loan`
+   no serviço de catálogo) e então registrar o `Loan` localmente;
+3. Caso não esteja disponível (ou não exista), retornar `409 Conflict` (ou
+   `404 Not Found`, respectivamente) sem registrar o empréstimo.
 {: .fs-3 }
 
 A Figura 2 apresenta um diagrama de sequência que ilustra a comunicação entre
-os serviços.
+os dois serviços durante a solicitação de um novo empréstimo (`POST /loans`).
 {: .fs-3 }
 
 <center>
-    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" target="blanck">
-        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books.puml" alt="Biblio" width="50%" height="50%"/>
+    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books-loan.puml" target="blanck">
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books-loan.puml" alt="Registrar empréstimo" width="50%" height="50%"/>
     </a>
     <br/>
-    Figura 2 - Diagrama de sequência do exercício.
+    Figura 2 - Diagrama de sequência para registrar um novo empréstimo.
 </center>
 
+Da mesma forma, a operação `GET /loans/books` não deve manter uma cópia local
+dos livros: ela deve delegar a consulta ao serviço de catálogo por meio do
+Rest Client (`GET /books` no serviço de catálogo) e simplesmente repassar o
+resultado ao cliente que fez a requisição.
+{: .fs-3 }
+
+A Figura 3 apresenta o diagrama de sequência correspondente à listagem dos
+livros disponíveis para empréstimo (`GET /loans/books`).
+{: .fs-3 }
+
+<center>
+    <a href="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books-list.puml" target="blanck">
+        <img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/rest-client/books-list.puml" alt="Listar livros disponíveis" width="50%" height="50%"/>
+    </a>
+    <br/>
+    Figura 3 - Diagrama de sequência para listar os livros disponíveis para empréstimo.
+</center>
+
+A interface do Rest Client no serviço de gerenciamento de empréstimos deve se
+parecer com o exemplo abaixo (compare com a interface `IPayment` do exemplo
+anterior): ela reúne as operações usadas nos dois diagramas acima.
+{: .fs-3 }
+
+```java
+@RegisterRestClient(baseUri = "http://localhost:8080/books")
+public interface IBookCatalog {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    List<Book> listBooks();
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    Book getBook(@PathParam("id") Long id);
+
+    @PUT
+    @Path("/{id}/loan")
+    @Produces(MediaType.APPLICATION_JSON)
+    Book markAsLoaned(@PathParam("id") Long id);
+}
+```
+{: .fs-3 }
+
+### Projetos-Base
+
+Para começar, faça o clone do monorepo da disciplina e abra os dois
+projetos-base (um para cada serviço), já configurados com as dependências
+Quarkus corretas e nas portas `8080` (catálogo) e `8081` (empréstimos):
+{: .fs-3 }
+
+```sh
+git clone -b dev https://github.com/rodrigoprestesmachado/pw2
+# Serviço de catálogo de livros
+code pw2/exemplos/library/catalog
+# Serviço de gerenciamento de empréstimos
+code pw2/exemplos/library/loans
+```
+{: .fs-3 }
 
 ### Testes e Integração
 
-- Teste individualmente cada serviço para garantir que as operações de
-  empréstimo e consulta de livros estão funcionando corretamente.
+Cada um dos dois projetos-base já contém, em
+`src/test/java/dev/rpmhub/IntegrationTest.java`, os testes de integração
+que sua implementação precisa fazer passar — **não altere esse arquivo**.
+Juntos, os métodos dessa classe cobrem **todos os *endpoints*** descritos
+nas tabelas dos dois serviços: o fluxo completo ilustrado nas Figuras 2 e 3
+(cadastro de um livro, consulta dos livros disponíveis, solicitação de
+empréstimo e confirmação de que o catálogo foi atualizado), além dos casos
+de listagem (`GET /books`), consulta/alteração de um livro inexistente
+(`404 Not Found`) e das operações de emprestar/devolver um livro
+diretamente no catálogo (`PUT /books/{id}/loan` e `PUT /books/{id}/return`).
+{: .fs-3 }
 
-- Após testar individualmente, integre os serviços e verifique se a comunicação
-  entre eles está funcionando adequadamente para realizar operações de
-  empréstimo e consulta de livros.
+Como o teste depende dos **dois serviços rodando ao mesmo tempo**, siga
+esta ordem:
+{: .fs-3 }
+
+1. Implemente primeiro o Serviço 1 (Catálogo de Livros) e valide-o
+   isoladamente, iniciando-o com `./mvnw quarkus:dev` e testando os
+   *endpoints* manualmente (por exemplo, com o cURL ou o Dev UI do Quarkus).
+
+2. Implemente o Serviço 2 (Gerenciamento de Empréstimos), incluindo o Rest
+   Client (`IBookCatalog`) que consome o catálogo.
+
+3. Com os dois serviços em execução (cada um em seu próprio terminal),
+   execute `IntegrationTest` — pela sua IDE ou com
+   `./mvnw test -Dtest=IntegrationTest` — a partir de qualquer um dos dois
+   projetos.
+{: .fs-3 }
+
+🚨 O `IntegrationTest` só passa quando os **dois serviços estão de fato
+integrados**: ele depende da comunicação real via Rest Client entre o
+serviço de empréstimos e o serviço de catálogo, e não de *mocks*.
 {: .fs-3 }
 
 ## Referências 📚
