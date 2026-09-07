@@ -22,16 +22,30 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
+/**
+ * REST client used to communicate with the catalog service.
+ */
 @RegisterRestClient(baseUri = "https://localhost:8445/catalog")
 @AccessToken
 public interface CatalogRC {
 
+    /**
+     * Retrieves a list of available books.
+     *
+     * @return a list of available books
+     */
     @GET
     @Path("/listBooksAvailable")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("User")
     List<Book> listBooksAvailable();
 
+    /**
+     * Marks a book as not available based on the provided ISBN.
+     *
+     * @param json the ISBN of the book to mark as not available
+     * @return the updated list of books
+     */
     @POST
     @Path("/markNotAvailable")
     @Consumes(MediaType.APPLICATION_JSON)

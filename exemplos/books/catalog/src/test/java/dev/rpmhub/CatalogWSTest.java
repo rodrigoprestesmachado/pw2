@@ -11,10 +11,10 @@ class CatalogWSTest {
     @Test
     void testHelloEndpoint() {
         given()
-          .when().get("/hello")
+          .when().get("/catalog/ping")
           .then()
              .statusCode(200)
-             .body(is("Hello from Quarkus REST"));
+             .body(is("Pong"));
     }
 
 }

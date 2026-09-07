@@ -11,10 +11,10 @@ class ManagementWSTest {
     @Test
     void testHelloEndpoint() {
         given()
-          .when().get("/hello")
+          .when().get("/q/health/live")
           .then()
              .statusCode(200)
-             .body(is("Hello from Quarkus REST"));
+             .body("status",is("UP"));
     }
 
 }

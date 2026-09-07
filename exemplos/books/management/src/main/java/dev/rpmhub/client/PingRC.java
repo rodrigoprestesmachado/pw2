@@ -15,9 +15,17 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
+/**
+ * REST client used to check the catalog service availability.
+ */
 @RegisterRestClient(baseUri = "https://localhost:8445/catalog")
 public interface PingRC {
 
+    /**
+     * Pings the catalog service.
+     *
+     * @return the service response
+     */
     @GET
     @Path("/ping")
     @Produces(MediaType.TEXT_PLAIN)

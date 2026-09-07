@@ -13,6 +13,9 @@ import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
 import org.eclipse.microprofile.health.Startup;
 
+/**
+ * Liveness health check for the application.
+ */
 @Liveness
 @Startup
 public class Live implements HealthCheck {

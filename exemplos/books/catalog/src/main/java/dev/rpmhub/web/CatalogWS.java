@@ -27,8 +27,10 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/catalog")
 public class CatalogWS {
 
+    /** The books managed by the catalog. */
     private ArrayList<Book> books = new ArrayList<>();
 
+    /** Creates the catalog and loads its initial books. */
     public CatalogWS() {
         loadBooks();
     }
