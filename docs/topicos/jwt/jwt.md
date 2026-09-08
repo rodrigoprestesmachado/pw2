@@ -39,6 +39,15 @@ segundo [vídeo](https://www.youtube.com/watch?v=soGRyl9ztjI) que compara, por
 meio de analogias, os métodos de autenticação por sessão e token (se necessitar,
  coloque as legendas em português e assista aos vídeos pausadamente).
 
+🎫 **Uma analogia simples**: pense no JWT como a pulseira de identificação de
+um festival de música. Na entrada, você mostra seu ingresso (as credenciais,
+usuário e senha) e recebe uma pulseira (o token). A partir daí, você não
+precisa mostrar o ingresso novamente: basta exibir a pulseira em cada área do
+festival (cada requisição). Os seguranças (o servidor) não guardam quem é
+você, eles apenas verificam se a pulseira é autêntica (a assinatura) e o que
+ela permite acessar (as *claims*, por exemplo, área VIP ou pista comum).
+{: .fs-3 }
+
 ## Como funciona? 🤔
 
 A [Figura 1](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/funcionamento.puml) ilustra o funcionamento básico de um JWT. Inicialmente, o
@@ -54,6 +63,23 @@ autorizar as solicitações.
     <br/>
     Figura 1 - Funcionamento básico de um JWT.
 </center>
+
+Em resumo, o fluxo pode ser dividido em 4 passos simples:
+{: .fs-3 }
+
+1. **Login**: o cliente envia usuário e senha para um serviço de autenticação.
+2. **Emissão**: o servidor valida as credenciais e gera (assina) um JWT.
+3. **Uso**: o cliente guarda o token e o envia no *header* `Authorization` de
+   cada requisição seguinte (`Authorization: Bearer <token>`).
+4. **Verificação**: cada serviço que recebe a requisição valida a assinatura
+   do token (sem precisar consultar um banco de dados ou "telefonar" para o
+   serviço de autenticação) e decide se autoriza ou não o acesso.
+{: .fs-3 }
+
+💡 É justamente por não precisar consultar nada externo para validar o token
+(basta verificar a assinatura com a chave pública) que o JWT é considerado
+leve e escalável: qualquer serviço pode validar o token de forma independente.
+{: .fs-3 }
 
 ## Por que utilizar JWT? 🤔
 
@@ -214,6 +240,18 @@ como por exemplo, o nome de um usuário: `token.getName()`.
 💡 Para saber mais sobre recuperação de informações de um JWT acesse:
 [Using the JsonWebToken and Claim Injection](https://quarkus.io/guides/security-jwt#using-the-jsonwebtoken-and-claim-injection)
 
+Para fixar as ideias, veja um resumo das principais anotações usadas para
+proteger e ler informações de um método:
+{: .fs-3 }
+
+| Anotação | Onde é usada | Função |
+|----------|--------------|--------|
+| `@PermitAll` | Método | Libera o acesso a qualquer requisição, sem exigir token |
+| `@RolesAllowed({"User"})` | Método | Restringe o acesso apenas a tokens que possuam o(s) papel(is)/grupo(s) informado(s) |
+| `@Inject JsonWebToken token` | Atributo da classe | Injeta o token recebido para leitura de informações, por exemplo, `token.getName()` |
+| `@Claim("full_name")` | Atributo/parâmetro | Injeta diretamente o valor de uma *claim* específica do token |
+{: .fs-3 }
+
 ## Validando um JWT
 
 Quando um serviço deseja validar um token, ele deve saber quem é o emissor
@@ -373,12 +411,60 @@ git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 cd pw2/exemplos/store
 ```
 
-## Exercício Prático 🏋️
+## Exercício de Fixação Prático 🏋️
 
-Com base no exercício [anterior](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html#exercício-prático-%EF%B8%8F), sobre da arquitetura de micro serviços para
+Antes de partir para o exercício principal, resolva os três exercícios
+simples abaixo. Eles são propositalmente pequenos e diretos, o objetivo é
+ganhar confiança com a geração, proteção e leitura de um JWT antes de
+combinar tudo em uma arquitetura maior.
+{: .fs-3 }
+
+**1) Gerando seu primeiro token.** Crie um endpoint `POST /token` que recebe
+um nome de usuário (`String`, em texto simples) e retorna um JWT assinado
+contendo esse nome como *claim* `upn`. Não é necessário validar nada ainda,
+apenas gerar e retornar o token (use `@PermitAll`, como no exemplo da seção
+[Gerando um JSON Web Token](#gerando-um-json-web-token-jwt-🏭)). Para testar,
+copie o token gerado e cole em [jwt.io](https://jwt.io/#debugger-io) para
+visualizar as três partes (cabeçalho, *payload* e assinatura).
+{: .fs-3 }
+
+**2) Protegendo um endpoint.** Crie um endpoint `GET /hello` que só pode ser
+acessado por quem enviar um token válido com o papel (*role*) `"User"`. Use
+a anotação `@RolesAllowed("User")` (veja a seção [Restringindo o Acesso](#restringindo-o-acesso-🚪)).
+Teste duas vezes: uma sem enviar o token (deve falhar) e outra enviando, no
+*header* `Authorization`, o token gerado no exercício anterior no formato
+`Bearer <token>` (deve funcionar, desde que o token contenha o *role*
+`"User"`).
+{: .fs-3 }
+
+**3) Lendo dados do token.** Modifique o endpoint `/hello` do exercício
+anterior para retornar uma saudação personalizada, por exemplo
+`"Olá, <nome>!"`, onde `<nome>` é obtido diretamente do token recebido. Para
+isso, injete o token com `@Inject JsonWebToken token` e utilize
+`token.getName()` (ou `@Claim` para uma *claim* específica) para recuperar a
+informação, em vez de recebê-la novamente como parâmetro.
+{: .fs-3 }
+
+💡 Se os três exercícios acima funcionaram, você já domina o essencial de
+JWT no Quarkus: gerar, proteger e ler um token. O exercício abaixo apenas
+aplica essas mesmas ideias em uma arquitetura com múltiplos serviços.
+{: .fs-3 }
+
+---
+
+Com base no exercício [anterior](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html#exercício-de-fixação-📝), sobre da arquitetura de micro serviços para
 uma rede social de empréstimo de livros, adicione a segurança por meio de JWT.
 Para isso, crie um serviço "_Users_" que seja responsável por gerar um tokens
 JWT.
+
+## Teste seus conhecimentos 🧠
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/jwt/questions.html"
+        title="JSON Web Token" width="90%" height="500"
+        style="border:none;background-color:white;">
+    </iframe>
+</center>
 
 ## Referências 📚
 

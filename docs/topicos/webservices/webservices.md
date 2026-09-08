@@ -367,7 +367,7 @@ Certifique-se de implementar corretamente os casos de teste do exercício.
     para obter um exemplo.
 {: .fs-3 }
 
-## Exercícios - Parte 2 📝
+## Exercícios de Fixação Práticos 📝
 
 Desenvolva um microserviço para gerenciar uma lista de tarefas. A API REST do
 serviço deve oferecer as seguintes funcionalidades:
@@ -393,6 +393,15 @@ catálogo de produtos: a criação de tarefas (POST em JSON) segue o mesmo
 padrão do passo 6, a listagem/filtro (GET com `@QueryParam`) segue o passo 4,
 e a exclusão (DELETE) segue o passo 7.
 {: .fs-3 }
+
+## Teste seus conhecimentos 🧠
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/webservices/questions.html"
+        title="Web Services" width="90%" height="500"
+        style="border:none;background-color:white;">
+    </iframe>
+</center>
 
 ## Material complementar (legado) 📼
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>JSON Web Token</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Quantas partes compõem um JWT e como elas são separadas?
+        - [ ] Duas partes, separadas por vírgula.
+        - [x] Três partes (cabeçalho, payload e assinatura), separadas por pontos.
+        - [ ] Quatro partes, separadas por barra.
+        - [ ] Uma única parte codificada em Base64.
+
+        # O que a parte de "payload" (claims) de um JWT contém?
+        - [ ] O algoritmo de criptografia utilizado.
+        - [ ] A chave pública do emissor.
+        - [x] Informações específicas da aplicação, como usuário, e-mail e papéis.
+        - [ ] Apenas a assinatura do token.
+
+        # Qual é a finalidade da assinatura de um JWT?
+        - [ ] Armazenar dados sensíveis de forma criptografada.
+        - [x] Garantir a integridade do token, permitindo detectar alterações.
+        - [ ] Definir o tipo MIME da resposta.
+        - [ ] Indicar o tempo de expiração do token.
+
+        # No cenário de assinatura assimétrica (RSA), qual chave é utilizada para assinar (gerar) o token?
+        - [ ] A chave pública.
+        - [x] A chave privada.
+        - [ ] Ambas simultaneamente.
+        - [ ] Nenhuma, a assinatura é automática.
+
+        # Qual extensão Quarkus fornece suporte para a construção (geração) de tokens JWT?
+        - [ ] `smallrye-jwt`
+        - [x] `smallrye-jwt-build`
+        - [ ] `quarkus-rest-client`
+        - [ ] `quarkus-security-oauth2`
+
+        # Qual anotação é utilizada para restringir o acesso a um método apenas a usuários com determinado papel (role)?
+        - [ ] `@PermitAll`
+        - [ ] `@DenyAll`
+        - [x] `@RolesAllowed`
+        - [ ] `@RegisterRestClient`
+
+        # Como um método pode recuperar informações do token JWT recebido em uma requisição?
+        - [ ] Não é possível, o token é opaco ao servidor.
+        - [x] Injetando um objeto `JsonWebToken` com `@Inject` (ou usando `@Claim`).
+        - [ ] Lendo diretamente o corpo da requisição HTTP.
+        - [ ] Somente por meio de um banco de dados compartilhado.
+
+        # Quais propriedades são necessárias para que um serviço valide um JWT recebido?
+        - [ ] `mp.jwt.sign.key.location` apenas.
+        - [x] `mp.jwt.verify.issuer` e `mp.jwt.verify.publickey.location`.
+        - [ ] `quarkus.http.ssl-port` apenas.
+        - [ ] Nenhuma, a validação é automática.
+
+        # Qual é a diferença entre assinar (`sign`/`innerSign`) e criptografar (`encrypt`) um JWT?
+        - [ ] São sinônimos, ambos garantem apenas a integridade.
+        - [x] Assinar garante integridade (detecta alterações); criptografar garante confidencialidade (esconde o conteúdo).
+        - [ ] Assinar esconde o conteúdo; criptografar garante integridade.
+        - [ ] Apenas um dos dois pode ser aplicado por vez, nunca os dois juntos.
+
+        # Por que é recomendado utilizar HTTPS ao trabalhar com JWT?
+        - [ ] Porque o JWT só funciona sobre conexões seguras.
+        - [x] Porque, sem criptografia na conexão, um token capturado poderia ser reutilizado por terceiros.
+        - [ ] Porque o HTTPS reduz o tamanho do token.
+        - [ ] Porque o HTTP não permite enviar headers customizados.
+
+        # Em uma arquitetura de micro serviços, o que permite que um token recebido por um serviço seja automaticamente reenviado a outro serviço por meio de um Rest Client?
+        - [ ] A anotação `@RolesAllowed`.
+        - [x] A extensão `quarkus-rest-client-oidc-token-propagation` com a anotação `@AccessToken`.
+        - [ ] A anotação `@PermitAll`.
+        - [ ] A configuração `quarkus.tls.trust-all`.
+
+    </div>
+</body>
+
+</html>

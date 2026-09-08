@@ -14,29 +14,38 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import dev.rpmhub.model.Book;
 import io.quarkus.oidc.token.propagation.AccessToken;
-import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.Consumes;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@RegisterRestClient(baseUri = "https://localhost:8445/catalog")
+/**
+ * Rest Client used to consume the book catalog service.
+ *
+ * <p>Declared as {@code @ApplicationScoped} (instead of the default
+ * {@code @Dependent} scope) so it can be mocked in tests with
+ * {@code @InjectMock}.</p>
+ */
+@RegisterRestClient(baseUri = "https://localhost:8445/books")
+@ApplicationScoped
 @AccessToken
-public interface CatalogRC {
+public interface IBookCatalog {
 
     @GET
-    @Path("/listBooksAvailable")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("User")
-    List<Book> listBooksAvailable();
+    List<Book> listBooks();
 
-    @POST
-    @Path("/markNotAvailable")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("User")
-    List<Book> markNotAvailable(String json);
+    Book getBook(@PathParam("id") Long id);
+
+    @PUT
+    @Path("/{id}/loan")
+    @Produces(MediaType.APPLICATION_JSON)
+    Book markAsLoaned(@PathParam("id") Long id);
 
 }

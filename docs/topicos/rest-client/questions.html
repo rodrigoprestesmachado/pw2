@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Rest Client</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Qual problema o MicroProfile Rest Client resolve?
+        - [ ] A necessidade de usar JSON em vez de XML.
+        - [x] A repetição de código (boilerplate) ao consumir manualmente serviços HTTP.
+        - [ ] A ausência de um servidor de aplicação.
+        - [ ] A falta de suporte a HTTPS.
+
+        # Como se declara um Rest Client no MicroProfile?
+        - [ ] Estendendo uma classe abstrata `RestClient`.
+        - [x] Criando uma interface Java anotada com `@RegisterRestClient`.
+        - [ ] Implementando a interface `HttpClient`.
+        - [ ] Criando um arquivo XML de configuração.
+
+        # Qual atributo da anotação `@RegisterRestClient` define a URL base do serviço remoto?
+        - [ ] `path`
+        - [x] `baseUri`
+        - [ ] `url`
+        - [ ] `endpoint`
+
+        # Como injetar um Rest Client em um bean gerenciado pelo CDI?
+        - [ ] Apenas com `@Inject`.
+        - [ ] Apenas com `@RestClient`.
+        - [x] Combinando `@Inject` e `@RestClient`.
+        - [ ] Instanciando a interface diretamente com `new`.
+
+        # Além de fixar a URL na anotação, como é possível configurar a URL base de um Rest Client externamente?
+        - [ ] Não é possível, a URL deve estar sempre fixa no código.
+        - [x] Por meio de uma propriedade no `application.properties`, no formato `{pacote.Classe}/mp-rest/url`.
+        - [ ] Somente via variável de ambiente do sistema operacional.
+        - [ ] Editando o arquivo `pom.xml`.
+
+        # As anotações usadas na interface de um Rest Client (`@Path`, `@GET`, `@POST` etc.) são as mesmas usadas para:
+        - [ ] Configurar o banco de dados.
+        - [x] Criar recursos REST no lado do servidor (JAX-RS).
+        - [ ] Definir testes unitários.
+        - [ ] Configurar o servidor de aplicação.
+
+        # Em uma arquitetura de dois microserviços (catálogo e empréstimos), qual componente é responsável por permitir que o serviço de empréstimos consulte o catálogo de livros?
+        - [ ] Um banco de dados compartilhado.
+        - [x] Um Rest Client configurado no serviço de empréstimos, apontando para o serviço de catálogo.
+        - [ ] Uma fila de mensagens.
+        - [ ] Um arquivo compartilhado em disco.
+
+        # O que ocorre quando `paymentService.confirmPayment(cardNumber, value)` é chamado, sendo `paymentService` um Rest Client injetado?
+        - [ ] Nada, é necessário implementar manualmente a chamada HTTP.
+        - [x] O framework monta e envia a requisição HTTP correspondente, convertendo a resposta em um objeto Java.
+        - [ ] O método lança sempre uma exceção, pois é apenas uma assinatura.
+        - [ ] A chamada é executada localmente, sem tráfego de rede.
+
+        # Extensões Maven necessárias para usar o MicroProfile Rest Client em um projeto Quarkus:
+        - [ ] `resteasy-reactive` apenas.
+        - [x] `rest-client` e `rest-client-jackson`.
+        - [ ] `quarkus-jdbc-postgresql`.
+        - [ ] `quarkus-security-jwt`.
+
+    </div>
+</body>
+
+</html>

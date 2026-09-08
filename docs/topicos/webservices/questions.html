@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Web Services</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Qual é a principal função da anotação `@Path`?
+        - [ ] Definir o tipo MIME retornado pelo método.
+        - [ ] Definir o verbo HTTP utilizado pelo método.
+        - [x] Definir a URI do recurso ou endpoint.
+        - [ ] Injetar um valor da query string.
+
+        # No Quarkus, qual extensão é responsável por converter automaticamente objetos Java em JSON e vice-versa?
+        - [ ] resteasy-reactive
+        - [x] resteasy-reactive-jackson
+        - [ ] quarkus-jackson-core
+        - [ ] quarkus-rest-client
+
+        # Como um método REST pode receber o valor `1` a partir da URI `/produtos/1`?
+        - [ ] Utilizando `@QueryParam("id")`.
+        - [x] Utilizando `@PathParam("id")`, com `{id}` declarado no `@Path`.
+        - [ ] Utilizando `@Consumes("id")`.
+        - [ ] Declarando o parâmetro sem nenhuma anotação.
+
+        # Qual anotação é utilizada para ler um parâmetro opcional a partir da query string, por exemplo `/produtos?categoria=eletronicos`?
+        - [ ] `@PathParam`
+        - [x] `@QueryParam`
+        - [ ] `@FormParam`
+        - [ ] `@HeaderParam`
+
+        # Qual é a diferença entre `@Consumes` e `@Produces`?
+        - [ ] Não há diferença, são sinônimos.
+        - [x] `@Consumes` define o que o servidor aceita receber; `@Produces` define o que o servidor envia de volta.
+        - [ ] `@Consumes` define o verbo HTTP; `@Produces` define a URI.
+        - [ ] `@Consumes` é usado apenas em métodos GET.
+
+        # Quando um parâmetro de método não possui nenhuma anotação como `@PathParam` ou `@QueryParam`, de onde o JAX-RS espera obter seu valor?
+        - [ ] Da URI do recurso.
+        - [ ] Dos headers HTTP.
+        - [x] Do corpo (body) da requisição.
+        - [ ] De uma variável de ambiente.
+
+        # Qual código de status HTTP é comumente retornado ao criar um novo recurso com sucesso?
+        - [ ] 200
+        - [x] 201
+        - [ ] 204
+        - [ ] 404
+
+        # O que representa o código de status HTTP 204?
+        - [ ] Recurso criado com sucesso.
+        - [ ] Recurso não encontrado.
+        - [x] Sucesso na operação, porém sem conteúdo de retorno.
+        - [ ] Erro interno no servidor.
+
+        # Como retornar um status HTTP 404 quando um recurso não é encontrado, utilizando a classe `Response`?
+        - [ ] `Response.ok().build();`
+        - [ ] `Response.noContent().build();`
+        - [x] `Response.status(Response.Status.NOT_FOUND).build();`
+        - [ ] `Response.status(Response.Status.CREATED).build();`
+
+        # Qual é o estilo arquitetural que utiliza diretamente os métodos HTTP (GET, POST, PUT, DELETE) para operar sobre recursos?
+        - [ ] SOAP
+        - [ ] WSDL
+        - [x] REST
+        - [ ] RPC
+
+    </div>
+</body>
+
+</html>

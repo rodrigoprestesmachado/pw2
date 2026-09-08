@@ -417,6 +417,15 @@ integrados**: ele depende da comunicação real via Rest Client entre o
 serviço de empréstimos e o serviço de catálogo, e não de *mocks*.
 {: .fs-3 }
 
+## Teste seus conhecimentos 🧠
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/rest-client/questions.html"
+        title="Rest Client" width="90%" height="500"
+        style="border:none;background-color:white;">
+    </iframe>
+</center>
+
 ## Referências 📚
 
 * Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.

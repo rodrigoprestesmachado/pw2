@@ -8,42 +8,12 @@
 */
 package dev.rpmhub.model;
 
-public class Book {
-
-    private String title;
-    private String author;
-    private String isbn;
-    private boolean available;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-}
+/**
+ * Represents a book, as exposed by the catalog service.
+ *
+ * @param id the book identifier
+ * @param title the book title
+ * @param author the book author
+ * @param loaned whether the book is currently loaned
+ */
+public record Book(Long id, String title, String author, boolean loaned) {}
