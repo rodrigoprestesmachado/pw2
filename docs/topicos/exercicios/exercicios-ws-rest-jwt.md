@@ -15,21 +15,21 @@ diretamente para a seção correspondente na página do tópico.
 
 ## Web Services 🌐
 
-* [Exercícios - Parte 1](../webservices/webservices.html#exercícios---parte-1-📝) — conversão de unidades (km/h para milhas, nós para km/h).
-* [Exercícios de Fixação Práticos](../webservices/webservices.html#exercícios-de-fixação-práticos-📝) — microserviço de gerenciamento de tarefas.
-* [Teste seus conhecimentos (quiz teórico)](../webservices/webservices.html#teste-seus-conhecimentos-🧠) — anotações JAX-RS, verbos HTTP e códigos de status.
+* [Exercícios - Parte 1](../webservices/webservices.html#exercícios---parte-1-) — conversão de unidades (km/h para milhas, nós para km/h).
+* [Exercícios de Fixação Práticos](../webservices/webservices.html#exercícios-de-fixação-práticos-) — microserviço de gerenciamento de tarefas.
+* [Teste seus conhecimentos (quiz teórico)](../webservices/webservices.html#teste-seus-conhecimentos-) — anotações JAX-RS, verbos HTTP e códigos de status.
 {: .fs-3 }
 
 ## Rest Client 🌐
 
-* [Exercício de Fixação](../rest-client/rest-client.html#exercício-de-fixação-📝) — rede social de empréstimo de livros com dois microserviços (catálogo e empréstimos).
-* [Teste seus conhecimentos (quiz teórico)](../rest-client/rest-client.html#teste-seus-conhecimentos-🧠) — MicroProfile Rest Client, `@RegisterRestClient` e injeção de dependência.
+* [Exercício de Fixação](../rest-client/rest-client.html#exercício-de-fixação-) — rede social de empréstimo de livros com dois microserviços (catálogo e empréstimos).
+* [Teste seus conhecimentos (quiz teórico)](../rest-client/rest-client.html#teste-seus-conhecimentos-) — MicroProfile Rest Client, `@RegisterRestClient` e injeção de dependência.
 {: .fs-3 }
 
 ## JSON Web Token (JWT) 🔑
 
-* [Exercício de Fixação Prático](../jwt/jwt.html#exercício-de-fixação-prático-🏋️) — 3 exercícios simples (gerar, proteger e ler um token) seguidos do exercício principal (serviço "Users" com JWT sobre a arquitetura de empréstimo de livros).
-* [Teste seus conhecimentos (quiz teórico)](../jwt/jwt.html#teste-seus-conhecimentos-🧠) — estrutura do JWT, chaves pública/privada, `@RolesAllowed`, sign e encrypt.
+* [Exercício de Fixação Prático](../jwt/jwt.html#exercício-de-fixação-prático-%EF%B8%8F) — 3 exercícios simples (gerar, proteger e ler um token) seguidos do exercício principal (serviço "Users" com JWT sobre a arquitetura de empréstimo de livros).
+* [Teste seus conhecimentos (quiz teórico)](../jwt/jwt.html#teste-seus-conhecimentos-) — estrutura do JWT, chaves pública/privada, `@RolesAllowed`, sign e encrypt.
 {: .fs-3 }
 
 <center>
