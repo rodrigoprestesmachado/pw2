@@ -273,12 +273,25 @@ pública, veja o exemplo abaixo:
 
 ## Sign e Encrypt
 
+Até aqui, vimos apenas a **assinatura** (`sign()`) do JWT, que garante que o
+token não foi alterado, mas não impede que qualquer pessoa leia o conteúdo do
+*payload* (basta decodificar o token em Base64, como no [jwt.io](https://jwt.io/#debugger-io)).
+Isso é aceitável na maioria dos casos, já que o *payload* normalmente contém
+apenas informações não sensíveis, como nome de usuário e papéis.
+{: .fs-3 }
+
+💡 Pense assim: **assinar** é como lacrar um envelope transparente com um
+selo. Qualquer um consegue ler o conteúdo, mas ninguém consegue alterá-lo sem
+quebrar o selo. **Criptografar** é usar um envelope opaco: além de lacrado,
+ninguém consegue ler o conteúdo sem a chave correta.
+{: .fs-3 }
+
 Quando o _payload_ (_claims_) possuir dados sensíveis, como por exemplo, um
-número de cartão de crédito, é recomendável criptografar o JWT. Neste caso, o
-JWT pode assinado e criptografado, o que garante a integridade e a
-confidencialidade, por meio dos métodos `innerSign()` e `encrypt()`. O método
-`innerSign()` é utilizado para assinar o token e o método `encrypt()` é
-usado para criptografar o token. Observem o exemplo abaixo:
+número de cartão de crédito, é recomendável também **criptografar** o JWT
+(além de assinar), o que garante tanto a integridade quanto a
+confidencialidade do conteúdo. Para isso, utilizamos os métodos
+`innerSign()` (assina o token) e `encrypt()` (criptografa o token
+já assinado), em sequência. Observe o exemplo abaixo:
 
 ```java
 @POST
@@ -317,12 +330,22 @@ por favor acesse: [https://smallrye.io/docs/smallrye-jwt/generate-jwt.html](http
 
 ## Propagação de JWT 🔌
 
-Em uma arquitetura de micro serviços, é bastante comum que necessitemos propagar
-os tokens entre os serviços de maneira automática. Para fazermos isso no Quarkus
-inicialmente temos que adicionar a extensão `quarkus-rest-client-oidc-token-propagation`
-no arquivo `pom.xml`. Em seguida, devemos anotar o Rest Client com
-`@AccessToken`, pois, isto irá permitir que o Rest Client reencaminhe os
-tokens recebidos de um serviço para o outro. Veja o exemplo abaixo:
+Imagine o cenário: um serviço "_Checkout_" recebe uma requisição já
+autenticada (com um JWT válido no *header*) e, para completar a operação,
+precisa chamar um serviço "_Payment_" usando um Rest Client (visto na
+página anterior sobre [Rest Client](../rest-client/rest-client.html)). Nesse
+caso, o serviço "_Payment_" também exige um token válido, então precisamos
+**reencaminhar** o mesmo JWT recebido pelo "_Checkout_" na chamada feita ao
+"_Payment_". É isso que chamamos de **propagação de JWT**.
+{: .fs-3 }
+
+Fazer isso manualmente (extrair o token da requisição recebida e adicioná-lo
+manualmente no *header* da chamada ao Rest Client) seria repetitivo. Por
+isso, no Quarkus, basta: (1) adicionar a extensão
+`quarkus-rest-client-oidc-token-propagation` no arquivo `pom.xml` e (2)
+anotar a interface do Rest Client com `@AccessToken`. Com isso, o próprio
+*framework* reencaminha automaticamente o token recebido para o serviço
+seguinte. Veja o exemplo abaixo:
 
 ```java
 @RegisterRestClient(baseUri = "https://localhost:8445/payment")
@@ -343,10 +366,20 @@ quarkus.keycloak.devservices.enabled=false
 
 ## Hyper Text Transfer Protocol Secure (HTTPS)
 
-Um dos problemas do JWT é que o token pode ser capturado, nesse caso, se faz
-necessário utilizar _Hyper Text Transfer Protocol Secure_ (HTTPS) para fazer
-com que o JWT trafegue sempre numa conexão criptografada. Assim, pare gerar uma
-chave privada e um certificado utilize o comando:
+Vimos na seção anterior que é possível criptografar o *payload* do JWT. Mas
+existe um problema que a criptografia do token, por si só, não resolve: se a
+conexão entre cliente e servidor não for segura, alguém "no meio do caminho"
+(um ataque conhecido como *man in the middle*) pode **capturar** o token
+inteiro (criptografado ou não) enquanto ele trafega pela rede e reutilizá-lo
+para se passar pelo usuário original, sem nem precisar saber o que há
+dentro do token.
+{: .fs-3 }
+
+Por isso, é fundamental utilizar _Hyper Text Transfer Protocol Secure_
+(HTTPS) para que o JWT trafegue sempre numa conexão criptografada de
+ponta a ponta, dificultando essa captura. Para gerar uma chave privada e um
+certificado autoassinado (suficiente para desenvolvimento/estudo), utilize o
+comando:
 
 ```sh
     keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 365 -keysize 2048
@@ -423,14 +456,14 @@ combinar tudo em uma arquitetura maior.
 um nome de usuário (`String`, em texto simples) e retorna um JWT assinado
 contendo esse nome como *claim* `upn`. Não é necessário validar nada ainda,
 apenas gerar e retornar o token (use `@PermitAll`, como no exemplo da seção
-[Gerando um JSON Web Token](#gerando-um-json-web-token-jwt-🏭)). Para testar,
+[Gerando um JSON Web Token](#gerando-um-json-web-token-jwt-)). Para testar,
 copie o token gerado e cole em [jwt.io](https://jwt.io/#debugger-io) para
 visualizar as três partes (cabeçalho, *payload* e assinatura).
 {: .fs-3 }
 
 **2) Protegendo um endpoint.** Crie um endpoint `GET /hello` que só pode ser
 acessado por quem enviar um token válido com o papel (*role*) `"User"`. Use
-a anotação `@RolesAllowed("User")` (veja a seção [Restringindo o Acesso](#restringindo-o-acesso-🚪)).
+a anotação `@RolesAllowed("User")` (veja a seção [Restringindo o Acesso](#restringindo-o-acesso-)).
 Teste duas vezes: uma sem enviar o token (deve falhar) e outra enviando, no
 *header* `Authorization`, o token gerado no exercício anterior no formato
 `Bearer <token>` (deve funcionar, desde que o token contenha o *role*
@@ -452,7 +485,7 @@ aplica essas mesmas ideias em uma arquitetura com múltiplos serviços.
 
 ---
 
-Com base no exercício [anterior](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html#exercício-de-fixação-📝), sobre da arquitetura de micro serviços para
+Com base no exercício [anterior](https://pw2.rpmhub.dev/topicos/rest-client/rest-client.html#exercício-de-fixação-), sobre da arquitetura de micro serviços para
 uma rede social de empréstimo de livros, adicione a segurança por meio de JWT.
 Para isso, crie um serviço "_Users_" que seja responsável por gerar um tokens
 JWT.
