@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Exercícios de Web Services, Rest Client e JWT
+title: Exercícios (1 Avaliação)
 parent: Primeira Avaliação
 nav_order: 1
 ---
 
-# Exercícios de Web Services, Rest Client e JWT 📚
+# Índice dos Exercícios (1 Avaliação) 📚
 
 Esta página reúne, em um só lugar, os links para todos os exercícios práticos
 e teóricos de Web Services, Rest Client e JWT, conteúdos avaliados na
