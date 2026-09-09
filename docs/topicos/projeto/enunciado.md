@@ -76,6 +76,12 @@ em **PDF** descrevendo a proposta do projeto, contendo pelo menos:
   checks, entre outros).
 {: .fs-3 }
 
+## Rubrica de Avaliação
+
+Os critérios utilizados para a correção do trabalho final estão descritos
+na [Rubrica de Avaliação](rubrica.md).
+{: .fs-3 }
+
 ## Referências
 
 * [Quarkus - Supersonic Subatomic Java](https://quarkus.io)
