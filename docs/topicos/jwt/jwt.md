@@ -210,6 +210,16 @@ Para restringir o acesso a um método devemos utilizar a anotação
 `@RolesAllowed`. Logo, temos que informar quais são as *roles* que poderão
 acessar aquele método, observe o exemplo abaixo:
 
+💡 O exemplo a seguir (e os das próximas seções) faz parte de um cenário
+maior de comércio eletrônico com três serviços: "_Users_" (gera o JWT),
+"_Checkout_" (recebe o pedido de compra) e "_Payment_" (processa o
+pagamento). O `IPayment` abaixo é o **Rest Client** que o serviço
+"_Checkout_" usa para consumir o serviço "_Payment_" (o mesmo padrão visto
+na página [Rest Client](../rest-client/rest-client.html)). Esse cenário
+completo, com o diagrama de componentes, é detalhado mais adiante na seção
+[Exemplo de código](#exemplo-de-código-).
+{: .fs-3 }
+
 ```java
 @Inject
 @RestClient
@@ -423,7 +433,7 @@ no arquivo de properties do serviço que utiliza um Rest Client:
 O código do exemplo abaixo, ilustra um trecho de uma arquitetura de micro
 serviços para um sistema de comércio eletrônico. Nesse caso, temos um serviço
 de "_Users_", que é responsável por gerar um token JWT, e dois serviços,
-"_Chekout_" e "_Payment_", que são protegidos por esse token. Como exemplo,
+"_Checkout_" e "_Payment_", que são protegidos por esse token. Como exemplo,
 o diagrama de componentes da [Figura 2](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/rodrigoprestesmachado/pw2/dev/docs/topicos/jwt/jwt.puml) ilustra os serviços e suas relações.
 
 <center>
