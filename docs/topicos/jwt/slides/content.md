@@ -40,19 +40,16 @@ Pressione 'F' para tela cheia
 ## Funcionamento do JWT
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-1. O cliente envia credenciais ao servidor para autenticação.
+1. **Login**: o cliente envia usuário e senha para um serviço de autenticação.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-2. O servidor verifica as credenciais e gera um JWT.
+2. **Emissão**: o servidor valida as credenciais e gera (assina) um JWT.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-3. O JWT é enviado de volta ao cliente.
+3. **Uso**: o cliente guarda o token e o envia em cada requisição seguinte.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-4. O cliente envia o JWT em cada requisição subsequente.
-<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
-
-5. O servidor verifica a assinatura do JWT para autorizar as solicitações.
+4. **Verificação**: o servidor valida a assinatura do JWT para autorizar a solicitação.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
 
@@ -69,17 +66,23 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Vantagens do JWT
+## Por que utilizar JWT?
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-- **Compacto**: devido à sua estrutura compacta em formato JSON.
+- **Segurança**: padrão seguro e amplamente utilizado para autenticação e
+autorização de usuários.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-- **Autônomo**: o JWT contém todas as informações necessárias para validar e
-autorizar uma solicitação.
+- **Escalabilidade**: padrão leve e eficiente, fácil de integrar em qualquer
+aplicação.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
-- **Seguro**: a assinatura do JWT garante a integridade dos dados.
+- **Interoperabilidade**: padrão aberto e amplamente suportado por diversas
+linguagens e *frameworks*.
+<!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
+
+- **Flexibilidade**: permite incluir informações adicionais no token, como
+nome do usuário e papéis.
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
 
@@ -87,16 +90,10 @@ autorizar uma solicitação.
 # Referências 📚
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Using Opentracing. Disponível em: [https://quarkus.io/guides/opentracing](https://quarkus.io/guides/opentracing)
+* Usando JWT RBAC. Disponível em: [https://quarkus.io/guides/security-jwt](https://quarkus.io/guides/security-jwt)
 <!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
-* Centralized Log Management. Disponível em: [https://quarkus.io/guides/centralized-log-management](https://quarkus.io/guides/centralized-log-management)
-<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
-
-* Jaeger. Disponível em: [https://www.jaegertracing.io](https://www.jaegertracing.io)
-<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
-
-* GrayLog. Disponível em: [https://www.graylog.org](https://www.graylog.org)
+* Alex Soto Bueno; Jason Porter; Quarkus Cookbook: Kubernetes-Optimized Java Solutions. Editora: O'Reilly Media, 2020.
 <!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
 
 <center>
