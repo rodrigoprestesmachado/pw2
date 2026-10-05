@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="multichoice">
+    <name>
+      <text>Questão 1</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Sobre RESTful Web Services, assinale a alternativa correta.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Um RESTful Web Service identifica recursos por URI e opera esses recursos com os verbos HTTP (GET, POST, PUT, DELETE), usando HTTP, URI e MIME. O material aponta que esse estilo é apropriado quando o serviço pode ser stateless, então a alternativa A descreve o oposto. A interoperabilidade acontece pelo protocolo HTTP: cliente e servidor não precisam ser o mesmo projeto Java. O caminho do recurso vem de <code>@Path</code>; o verbo vem de <code>@GET</code>, <code>@POST</code>, <code>@PUT</code> ou <code>@DELETE</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>O servidor precisa guardar o estado da conversa de cada cliente entre uma requisição e a seguinte.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Cliente e servidor só interoperam se compartilharem o mesmo código Java, compilado no mesmo projeto.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Um recurso é identificado por uma URI e as operações sobre ele usam os verbos HTTP, apoiadas em HTTP, URI e MIME.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>O verbo da operação é escolhido pelo valor de <code>@Path</code>, e não por anotações como <code>@GET</code> ou <code>@POST</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 2</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Qual é a função da anotação <code>@Path</code> em um recurso Jakarta REST no Quarkus?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>@Path</code> define a URI do recurso. Na classe, <code>@Path("/produtos")</code> fixa o caminho base. No método, outro <code>@Path</code> completa esse caminho e pode declarar um template, como <code>/{id}</code>. O tipo MIME de saída é responsabilidade de <code>@Produces</code>. O verbo HTTP vem de <code>@GET</code>, <code>@POST</code>, <code>@PUT</code> ou <code>@DELETE</code>. O valor da query string é injetado com <code>@QueryParam</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Define a URI do recurso (o endpoint). Pode ser usada na classe e também em métodos, inclusive com template, como <code>/{id}</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Define o tipo MIME que o método devolve ao cliente.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Associa o método a um verbo HTTP, como GET ou POST.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Injeta um valor vindo da query string, como em <code>?categoria=eletronicos</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 3</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>O que o MicroProfile Rest Client resolve quando um serviço precisa consumir outro em uma arquitetura de microsserviços?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Consumir outro serviço montando a requisição HTTP na mão gera código repetitivo: cabeçalhos, serialização e leitura da resposta. O MicroProfile Rest Client evita esse código repetitivo. O serviço remoto é descrito por uma interface com as mesmas anotações do Jakarta REST (<code>@Path</code>, <code>@GET</code>, <code>@POST</code> e outras), e o framework faz a chamada. Ele não substitui a criação de recursos no servidor, não persiste a resposta em banco e não pede que a aplicação escreva a implementação HTTP. A interface não tem implementação feita pelo desenvolvedor.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Substitui o JAX-RS na exposição dos endpoints do próprio serviço.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Grava as respostas HTTP em banco de dados e dispensa a conversão de JSON para objeto Java.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Exige que cada chamada HTTP seja montada manualmente, com cabeçalhos e serialização escritos pela aplicação.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Permite descrever o serviço remoto com uma interface Java anotada. O framework monta a requisição HTTP, envia e converte a resposta em objeto Java.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 4</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Qual das opções representa um recurso REST no Quarkus que responde a <code>GET /produtos</code> devolvendo texto simples?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>No Quarkus, o recurso usa anotações de <code>jakarta.ws.rs</code>. <code>@Path("/produtos")</code> publica o endpoint e <code>@GET</code> faz o método responder a GET. <code>@Produces(MediaType.TEXT_PLAIN)</code> informa que a resposta é texto simples. Ao acessar <code>http://localhost:8080/produtos</code>, o retorno é a mensagem do método. <code>@RestController</code>, <code>@RequestMapping</code>, <code>@GetMapping</code> e <code>@Controller</code> não pertencem a esse modelo. A opção C usa <code>@POST</code>: um GET em <code>/produtos</code> não aciona esse método.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>@RestController
+@RequestMapping("/produtos")
+public class ProdutoResource {
+    @GetMapping
+    public String ola() {
+        return "Bem-vindo ao catálogo de produtos!";
+    }
+}</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String ola() {
+        return "Bem-vindo ao catálogo de produtos!";
+    }
+}</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String ola() {
+        return "Bem-vindo ao catálogo de produtos!";
+    }
+}</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>@Controller
+public class ProdutoResource {
+
+    @RequestMapping("/produtos")
+    public String ola() {
+        return "Bem-vindo ao catálogo de produtos!";
+    }
+}</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 5</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Considere o recurso abaixo. Qual requisição aciona <code>buscarPorId</code> com o parâmetro <code>id</code> igual a 10?</p>
+<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produto buscarPorId(@PathParam("id") Long id) {
+        return catalogo.get(id);
+    }
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>O <code>@Path</code> da classe (<code>/produtos</code>) se junta ao <code>@Path</code> do método (<code>/{id}</code>). O trecho <code>{id}</code> é um template: o valor que aparece na URI é injetado por <code>@PathParam("id")</code>. <code>GET /produtos/10</code> chama o método com <code>id</code> igual a 10. <code>?id=10</code> é query string e exigiria <code>@QueryParam</code>, não <code>@PathParam</code>. <code>POST</code> não corresponde a <code>@GET</code>. <code>GET /10</code> deixa de fora o caminho declarado na classe.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>GET /produtos/10</code></p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>GET /produtos?id=10</code></p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>POST /produtos/10</code></p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>GET /10</code></p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 6</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>O método abaixo lista produtos. O que acontece em <code>GET /produtos</code>, sem o parâmetro <code>categoria</code> na URL?</p>
+<pre><code>@GET
+@Produces(MediaType.APPLICATION_JSON)
+public List&lt;Produto&gt; listar(@QueryParam("categoria") String categoria) {
+    if (categoria == null) {
+        return catalogo.values().stream().toList();
+    }
+    return catalogo.values().stream()
+            .filter(p -&gt; p.categoria().equalsIgnoreCase(categoria))
+            .toList();
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>@QueryParam</code> lê um valor da query string, como em <code>/produtos?categoria=eletronicos</code>. Diferente do <code>@PathParam</code>, esse parâmetro é opcional: se o cliente não envia <code>categoria</code>, o valor injetado é <code>null</code>. No <code>if</code>, <code>categoria == null</code> faz o método devolver <code>catalogo.values()</code>, isto é, a lista completa. O corpo da requisição só entraria em um parâmetro sem anotação de path, query ou formulário. String vazia e falha da requisição não são o comportamento desse código.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>A requisição falha, porque <code>@QueryParam</code> é obrigatório e a ausência de <code>categoria</code> impede a chamada do método.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>categoria</code> chega como string vazia, o filtro não encontra produto e a resposta é uma lista vazia.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>categoria</code> chega <code>null</code> e o método devolve todos os produtos do catálogo.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>O JAX-RS preenche <code>categoria</code> com o corpo da requisição.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 7</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>A interface <code>IPayment</code> está anotada com <code>@RegisterRestClient</code>. Qual trecho a injeta corretamente em um bean CDI para chamar o serviço remoto?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>@RegisterRestClient</code> registra a interface no CDI, mas a injeção do client pede as duas anotações juntas: <code>@Inject</code> e <code>@RestClient</code>. Só <code>@Inject</code> não seleciona o Rest Client. Só <code>@RestClient</code> não realiza a injeção. <code>new IPayment()</code> também não serve: a aplicação não escreve uma classe que implemente a interface. O framework gera o cliente e o entrega pela injeção.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>@Inject
+IPayment paymentService;</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<pre><code>@Inject
+@RestClient
+IPayment paymentService;</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>@RestClient
+IPayment paymentService;</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<pre><code>IPayment paymentService = new IPayment();</code></pre>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 8</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>O cliente envia <code>POST /produtos/desconto</code> com o corpo de texto <code>200</code>. O que este método faz?</p>
+<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @POST
+    @Path("/desconto")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String aplicarDesconto(double preco) {
+        double comDesconto = preco * 0.9;
+        return Double.toString(comDesconto);
+    }
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>@POST</code> e o caminho da classe junto com <code>@Path("/desconto")</code> atendem <code>POST /produtos/desconto</code>. <code>@Consumes(MediaType.TEXT_PLAIN)</code> indica que o corpo é texto puro, não JSON. O parâmetro <code>preco</code> não tem anotação: nesse caso o JAX-RS o preenche com o corpo, então <code>200</code> vira o <code>double</code> recebido. O método aplica 10% de desconto (<code>preco * 0.9</code>) e <code>@Produces(MediaType.TEXT_PLAIN)</code> devolve esse número como texto. Não é query string, não é um <code>{id}</code> na URI e a falta de <code>@PathParam</code> ou <code>@QueryParam</code> não rejeita a requisição.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Lê <code>200</code> da query string <code>?preco=200</code> e responde em JSON.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Rejeita a chamada, porque o parâmetro <code>preco</code> não tem <code>@PathParam</code> nem <code>@QueryParam</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Trata <code>200</code> como identificador do caminho <code>/produtos/200</code> e responde que o produto não existe.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Lê <code>200</code> do corpo em texto puro, calcula 90% desse valor e devolve o resultado também em texto puro.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 9</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Sobre o recebimento e o envio de dados em um recurso Jakarta REST no Quarkus, assinale a alternativa correta.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>@Consumes</code> descreve o que o servidor aceita receber. <code>@Produces</code> descreve o que ele envia de volta. No POST de um produto, o parâmetro <code>Produto produto</code> não leva anotação: o JAX-RS entende que o valor vem do corpo. Com <code>@Consumes(MediaType.APPLICATION_JSON)</code> e a extensão <code>resteasy-reactive-jackson</code>, o JSON é convertido no objeto. A alternativa B troca os papéis das duas anotações. Query string exige <code>@QueryParam</code>. As anotações não são sinônimos e não estão restritas a GET. O mesmo critério vale para um corpo simples, como um <code>double</code> com <code>@Consumes(MediaType.TEXT_PLAIN)</code>: sem anotação no parâmetro, o valor sai do corpo.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>@Consumes</code> define o tipo MIME que o servidor aceita receber. <code>@Produces</code> define o tipo MIME que ele envia. Um parâmetro sem <code>@PathParam</code>, <code>@QueryParam</code> ou anotação semelhante é preenchido com o corpo da requisição.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@Consumes</code> define o que o servidor envia de volta e <code>@Produces</code> define o que ele aceita receber. O corpo da requisição só é lido se o parâmetro tiver <code>@PathParam</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Um parâmetro de método sem anotação é sempre lido da query string. <code>@Consumes</code> e <code>@Produces</code> não interferem nisso.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@Consumes</code> e <code>@Produces</code> são sinônimos e só podem ser usados em métodos anotados com <code>@GET</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 10</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Sobre a interface de um Rest Client no MicroProfile, assinale a alternativa correta.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>No recurso do servidor, <code>@Path</code>, <code>@POST</code> e <code>@Consumes</code> descrevem uma requisição que será recebida. Na interface do Rest Client, as mesmas anotações descrevem uma requisição que será enviada. A assinatura do método, como <code>confirmPayment(cardNumber, value)</code>, é o que o framework usa para montar essa chamada. <code>@RegisterRestClient(baseUri = "...")</code> define a URL base do serviço remoto, e o <code>@Path</code> do método completa esse endereço. O desenvolvedor não implementa a interface, e a chamada não fica presa a <code>localhost:8080</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@Path</code>, <code>@POST</code> e <code>@Consumes</code> na interface criam um endpoint neste serviço, para receber requisições de outros sistemas.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>O atributo <code>baseUri</code> só documenta a URL. A chamada do client sai sempre de <code>http://localhost:8080</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>As anotações Jakarta REST na interface descrevem a requisição que o client enviará. A URL base do serviço remoto é o <code>baseUri</code> de <code>@RegisterRestClient</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>A interface precisa ser escrita como classe concreta, com o código HTTP implementado pelo desenvolvedor.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 11</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>O recurso abaixo tem dois métodos <code>GET</code>. Chega a requisição <code>GET /produtos/10?categoria=eletronicos</code>. Qual método é executado?</p>
+<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Produto&gt; listar(@QueryParam("categoria") String categoria) {
+        if (categoria == null) {
+            return catalogo.values().stream().toList();
+        }
+        return catalogo.values().stream()
+                .filter(p -&gt; p.categoria().equalsIgnoreCase(categoria))
+                .toList();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produto buscarPorId(@PathParam("id") Long id) {
+        return catalogo.get(id);
+    }
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>O <code>@Path</code> da classe é <code>/produtos</code>. <code>listar</code> não acrescenta outro caminho, então atende <code>GET /produtos</code>, com <code>categoria</code> opcional na query string. <code>buscarPorId</code> acrescenta <code>/{id}</code>, então <code>GET /produtos/10</code> entra nesse método e <code>@PathParam("id")</code> recebe 10. O JAX-RS escolhe o método pelo verbo e pelo caminho. A query <code>?categoria=eletronicos</code> não faz essa escolha, e <code>buscarPorId</code> não declara <code>@QueryParam("categoria")</code>. <code>listar</code> seria chamado em <code>GET /produtos</code> ou <code>GET /produtos?categoria=eletronicos</code>, sem o segmento <code>/10</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>listar</code>, porque a query <code>categoria=eletronicos</code> seleciona o método que declara <code>@QueryParam</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Os dois métodos: primeiro <code>buscarPorId</code> e, em seguida, <code>listar</code>, para filtrar a categoria.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Nenhum. A presença de <code>{id}</code> e de <code>categoria</code> na mesma URL torna a escolha ambígua e a requisição falha.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>buscarPorId</code>, com <code>id</code> igual a 10. O segmento <code>/10</code> corresponde a <code>@Path("/{id}")</code>. A query <code>categoria</code> não desvia a chamada para <code>listar</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 12</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>No serviço de checkout, <code>paymentService</code> é um Rest Client injetado com <code>@Inject</code> e <code>@RestClient</code>. O código executa <code>paymentService.confirmPayment("411111", "100")</code>. O que o framework faz?</p>
+<pre><code>@RegisterRestClient(baseUri = "https://localhost:8444/")
+public interface IPayment {
+
+    @POST
+    @Path("/payment")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    Invoice confirmPayment(
+        @FormParam("cardNumber") String cardNumber,
+        @FormParam("value") String value);
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>A interface descreve a chamada que será enviada, não um cálculo local. <code>@POST</code> e <code>@Path("/payment")</code>, juntos ao <code>baseUri</code>, formam <code>POST https://localhost:8444/payment</code>. <code>@Consumes(MediaType.APPLICATION_FORM_URLENCODED)</code> e os <code>@FormParam</code> colocam <code>cardNumber</code> e <code>value</code> no corpo de formulário. <code>@Produces(MediaType.APPLICATION_JSON)</code> e o retorno <code>Invoice</code> fazem o framework converter a resposta JSON nesse objeto. Se o pagamento for aceito, <code>invoice.valid()</code> vale <code>true</code>. Não é GET, os campos não vão na query string e o corpo não é JSON.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Envia <code>POST</code> para <code>https://localhost:8444/payment</code>, com <code>cardNumber</code> e <code>value</code> no corpo <code>application/x-www-form-urlencoded</code>, e converte o JSON da resposta em um <code>Invoice</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Executa o método só em memória, sem requisição HTTP, e devolve um <code>Invoice</code> vazio.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Envia <code>GET</code> para <code>https://localhost:8444/payment?cardNumber=411111&amp;value=100</code> e espera texto puro.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Envia <code>POST</code> para <code>https://localhost:8444/payment</code> com o JSON <code>{"cardNumber":"411111","value":"100"}</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 13</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Assinale a alternativa correta sobre extensões e sobre o registro de recursos e clients no Quarkus, conforme o material da disciplina.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>No servidor, <code>resteasy-reactive</code> é a implementação do JAX-RS no Quarkus e <code>resteasy-reactive-jackson</code> faz a conversão entre objetos Java e JSON. No cliente, o par correspondente é <code>rest-client</code>, que provê o MicroProfile Rest Client, e <code>rest-client-jackson</code>, que converte JSON. As quatro não se substituem. No Jakarta EE tradicional era comum estender <code>Application</code> com <code>@ApplicationPath</code>. No Quarkus essa classe não é necessária: basta <code>@Path</code> para o framework descobrir e registrar o recurso, em <code>http://localhost:8080</code> mais o valor do <code>@Path</code>. A URL de um Rest Client fica no atributo <code>baseUri</code> de <code>@RegisterRestClient</code>, não em uma subclasse de <code>Application</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>resteasy-reactive</code> converte JSON e <code>resteasy-reactive-jackson</code> implementa o JAX-RS. No cliente basta <code>resteasy-reactive</code>. No Quarkus é obrigatório estender <code>Application</code> e anotar essa classe com <code>@ApplicationPath</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>resteasy-reactive</code> implementa o Jakarta REST. <code>resteasy-reactive-jackson</code> converte objetos e JSON no servidor. No cliente, <code>rest-client</code> provê o MicroProfile Rest Client e <code>rest-client-jackson</code> converte JSON. Uma classe com <code>@Path</code> é registrada sem estender <code>Application</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>resteasy-reactive</code>, <code>resteasy-reactive-jackson</code>, <code>rest-client</code> e <code>rest-client-jackson</code> são sinônimas. Qualquer uma, sozinha, expõe recursos e consome serviços remotos, com ou sem JSON.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>O Rest Client é registrado em uma subclasse de <code>Application</code> anotada com <code>@ApplicationPath</code>. A URL do serviço remoto só pode ser definida nessa classe.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 14</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Chega a requisição <code>GET /produtos/categoria/eletronicos</code>. O que este método faz, e qual é o defeito?</p>
+<pre><code>@Path("/produtos")
+public class ProdutoResource {
+
+    @GET
+    @Path("/categoria/{categoria}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Produto&gt; listar(@QueryParam("categoria") String categoria) {
+        if (categoria == null) {
+            return catalogo.values().stream().toList();
+        }
+        return catalogo.values().stream()
+                .filter(p -&gt; p.categoria().equalsIgnoreCase(categoria))
+                .toList();
+    }
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>O <code>@Path</code> da classe mais o do método atendem <code>GET /produtos/categoria/eletronicos</code>, então <code>listar</code> é chamado. O nome <code>{categoria}</code> no caminho só é injetado com <code>@PathParam("categoria")</code>. Neste método o parâmetro está anotado com <code>@QueryParam("categoria")</code>, que procura <code>?categoria=</code> na URL. Essa query não foi enviada, o valor fica <code>null</code> e o <code>if</code> devolve todos os produtos do catálogo. O segmento <code>eletronicos</code> não participa do filtro.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>Filtra os produtos da categoria <code>eletronicos</code>. <code>@QueryParam</code> também lê o trecho <code>{categoria}</code> do caminho.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>A requisição não entra no método, porque <code>@Path("/categoria/{categoria}")</code> e <code>@QueryParam</code> não podem aparecer juntos.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p>Devolve o catálogo inteiro. <code>eletronicos</code> está no caminho, mas o parâmetro usa <code>@QueryParam</code>, que só lê <code>?categoria=</code>. Como essa query não veio, <code>categoria</code> fica <code>null</code>. O valor do caminho precisaria de <code>@PathParam("categoria")</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p>A rota é recusada, porque um <code>{categoria}</code> no <code>@Path</code> sem <code>@PathParam</code> impede o registro do método.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+
+  <question type="multichoice">
+    <name>
+      <text>Questão 15</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>O serviço de pagamento do material expõe <code>POST /payment</code>, lê <code>cardNumber</code> e <code>value</code> e responde um <code>Invoice</code> em JSON. Ele espera esses dois campos no corpo de formulário (<code>application/x-www-form-urlencoded</code>). A interface abaixo foi escrita para chamá-lo. Por que ela não corresponde a esse serviço?</p>
+<pre><code>@RegisterRestClient(baseUri = "https://localhost:8444/")
+public interface IPayment {
+
+    @POST
+    @Path("/payment")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    Invoice confirmPayment(
+        @FormParam("cardNumber") String cardNumber,
+        @FormParam("value") String value);
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>No exemplo do carrinho, <code>confirmPayment</code> envia <code>cardNumber</code> e <code>value</code> com <code>@FormParam</code> e declara <code>@Consumes(MediaType.APPLICATION_FORM_URLENCODED)</code>. O corpo é <code>application/x-www-form-urlencoded</code>, que é o que o serviço de pagamento espera. Nesta interface os parâmetros continuam <code>@FormParam</code>, mas <code>@Consumes</code> anuncia JSON. O tipo de mídia da requisição deixa de ser o do serviço remoto, então a chamada não reproduz o contrato do pagamento. <code>@Produces(MediaType.APPLICATION_JSON)</code> com retorno <code>Invoice</code> está coerente com a resposta do material. <code>baseUri</code> na anotação é uma forma válida de fixar a URL. <code>@Path</code> aqui descreve o caminho da requisição enviada ao <code>baseUri</code>, não um endpoint local na porta 8080.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@RegisterRestClient</code> não aceita <code>baseUri</code>. A URL do pagamento teria de estar no <code>pom.xml</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<p><code>@FormParam</code> indica campos de formulário, mas <code>@Consumes(MediaType.APPLICATION_JSON)</code> declara outro tipo de corpo. No material, <code>@FormParam</code> aparece junto de <code>@Consumes(MediaType.APPLICATION_FORM_URLENCODED)</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@Produces(MediaType.APPLICATION_JSON)</code> impede a conversão da resposta em <code>Invoice</code>. O método deveria retornar <code>String</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<p><code>@Path("/payment")</code> publica um endpoint neste processo. O <code>baseUri</code> é ignorado e a chamada vai sempre para <code>localhost:8080</code>.</p>]]></text>
+      <feedback format="html"><text><![CDATA[]]></text></feedback>
+    </answer>
+    <tags>
+      <tag><text>p1</text></tag>
+    </tags>
+  </question>
+</quiz>
