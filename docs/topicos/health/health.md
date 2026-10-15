@@ -20,8 +20,41 @@ Nesse contexto, essas verificações são usadas para determinar se um nó de
 computação precisa ser descartado/encerado e/ou eventualmente substituído por
 outra instância. Assim, o Health checks não se destina (embora possa ser usado)
 como uma solução de monitoramento de serviços para operadores humanos.
+{: .fs-3 }
+
+🩺 **Uma analogia simples**: pense no Health Check como o monitor de sinais
+vitais de um paciente em um hospital. A cada poucos segundos, o monitor
+verifica se o paciente está respirando (está "vivo" — *liveness*) e se ele
+está em condições de receber um procedimento (está "pronto" — *readiness*).
+Se o monitor detectar que o paciente parou de responder, a equipe médica (o
+orquestrador, por exemplo o Kubernetes) age imediatamente: reanima ou
+substitui o paciente por outro em condições de atendimento. O serviço nunca
+precisa "se diagnosticar" sozinho para o mundo exterior, basta responder
+honestamente quando perguntado "você está bem?".
+{: .fs-3 }
 
 Por padrão, o Quarkus utiliza a extensão [SmallRye Health](https://github.com/smallrye/smallrye-health/) como uma implementação da especificação [Microprofile Health](https://github.com/eclipse/microprofile-health).
+{: .fs-3 }
+
+## Exemplos no mundo real 🌍
+
+* **Kubernetes**: os *probes* `livenessProbe` e `readinessProbe` de um Pod
+apontam exatamente para os _endpoints_ `/q/health/live` e `/q/health/ready`
+de um serviço Quarkus. Se o `livenessProbe` falhar algumas vezes seguidas, o
+Kubernetes **reinicia** o container automaticamente. Se o `readinessProbe`
+falhar, o Kubernetes **remove temporariamente** o Pod do balanceamento de
+carga (sem reiniciá-lo), evitando enviar requisições para uma instância que
+ainda está inicializando ou momentaneamente sobrecarregada.
+{: .fs-3 }
+
+* **Balanceadores de carga em nuvem** (por exemplo, AWS Elastic Load
+Balancing ou um API Gateway): periodicamente, o balanceador faz uma
+requisição HTTP ao _endpoint_ de *health check* de cada instância. Instâncias
+que respondem com erro (ou não respondem) são automaticamente retiradas do
+pool de servidores que recebem tráfego, até voltarem a responder "UP". Isso
+evita que usuários sejam direcionados para uma instância travada ou fora do
+ar.
+{: .fs-3 }
 
 ## Configuração no Quarkus
 
@@ -180,13 +213,69 @@ code pw2/exemplos/books
 
 ```
 
-## Exercício 🏋️
+## Exercício de Fixação Prático 🏋️
+
+Antes de partir para o exercício principal, resolva os cinco exercícios
+simples abaixo. Eles são propositalmente pequenos e diretos, o objetivo é
+ganhar confiança com a criação de verificações de *liveness* e *readiness*
+antes de aplicá-las em uma arquitetura maior.
+{: .fs-3 }
+
+**1) Seu primeiro liveness check.** Crie uma classe decorada com `@Liveness`
+que implementa `HealthCheck` e sempre retorna `HealthCheckResponse.up("alive")`
+(veja a seção [Implementação](#implementação)). Acesse
+`http://localhost:8080/q/health/live` e confira o JSON retornado.
+{: .fs-3 }
+
+**2) Simulando uma falha.** Crie uma classe decorada com `@Readiness` que
+retorna propositalmente `response.down()` (sem consultar nada externo).
+Acesse `http://localhost:8080/q/health/ready` e observe o valor da
+propriedade `status` e o código de status HTTP retornado pela requisição.
+{: .fs-3 }
+
+**3) Adicionando informações extras.** Modifique o `@Readiness` do exercício
+anterior (ou crie um novo) para retornar `up()` e usar o método `withData`
+para incluir uma informação extra, por exemplo, a versão do serviço:
+`response.up().withData("version", "1.0.0")`. Visualize o resultado no JSON
+retornado pelo _endpoint_ `/q/health`.
+{: .fs-3 }
+
+**4) Observando pela interface Web.** Em modo de desenvolvimento, acesse
+`http://localhost:8080/q/health-ui/` e identifique visualmente quais checks
+estão `UP` e quais estão `DOWN`, com base nas classes criadas nos exercícios
+anteriores (veja a Figura 1, mostrada mais acima).
+{: .fs-3 }
+
+**5) Dependendo de outro serviço.** Crie um `@Readiness` que, por meio de um
+Rest Client (como no exemplo da classe `Ready` na seção
+[Implementação](#implementação)), verifica se outro serviço está disponível.
+Teste duas vezes: uma com o serviço dependente no ar (deve responder `UP`) e
+outra com o serviço dependente desligado (deve responder `DOWN`).
+{: .fs-3 }
+
+💡 Se os cinco exercícios acima funcionaram, você já domina o essencial de
+Health Checks no Quarkus: criar verificações de *liveness* e *readiness*,
+adicionar dados extras e depender de outros serviços. O exercício abaixo
+apenas aplica essas mesmas ideias em uma arquitetura com múltiplos serviços.
+{: .fs-3 }
+
+---
 
 No projeto da rede [social de empréstimo de livros](https://github.com/rodrigoprestesmachado/pw2/tree/dev/exemplos/books), adicione um Health Check no serviço management para verificar
 se o serviço de usuários se encontra disponível. Como resolver: Crie um método
 no Web Service do serviço de usuários para verificar se o serviço está
 disponível e, por meio de um Rest Cliente, faça com que o serviço de
 management verifique se o serviço de usuários está disponível.
+{: .fs-3 }
+
+## Teste seus conhecimentos 🧠
+
+<center>
+    <iframe src="https://pw2.rpmhub.dev/topicos/health/questions.html"
+        title="Microprofile Health" width="90%" height="500"
+        style="border:none;background-color:white;">
+    </iframe>
+</center>
 
 ## Referências 📚
 

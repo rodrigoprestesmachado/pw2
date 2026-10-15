@@ -27,6 +27,42 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Uma analogia 🩺
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Pense no Health Check como o monitor de sinais vitais de um paciente em um hospital.
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+* O monitor verifica se o paciente está respirando (está "vivo" — liveness) e se ele está em condições de receber um procedimento (está "pronto" — readiness).
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+* Se o paciente parar de responder, a equipe médica (o orquestrador, por exemplo o Kubernetes) age imediatamente: reanima ou substitui o paciente por outro em condições de atendimento.
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Exemplos no mundo real 🌍
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* **Kubernetes**: os probes livenessProbe e readinessProbe apontam para /q/health/live e /q/health/ready.
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+* Se o livenessProbe falhar, o Kubernetes reinicia o container. Se o readinessProbe falhar, o Pod é removido temporariamente do balanceamento de carga.
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Exemplos no mundo real 🌍
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* **Balanceadores de carga em nuvem** (ex: AWS Elastic Load Balancing): fazem requisições HTTP periódicas ao endpoint de health check de cada instância.
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+* Instâncias que respondem com erro (ou não respondem) são retiradas do pool de servidores que recebem tráfego, até voltarem a responder "UP".
+<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Configuração
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Microprofile Health</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Qual extensão o Quarkus utiliza, por padrão, como implementação da especificação Microprofile Health?
+        - [ ] `quarkus-rest-client`
+        - [x] `smallrye-health`
+        - [ ] `quarkus-security-jwt`
+        - [ ] `smallrye-fault-tolerance`
+
+        # Qual endpoint indica apenas se o serviço está "vivo" (rodando)?
+        - [ ] `/q/health`
+        - [x] `/q/health/live`
+        - [ ] `/q/health/ready`
+        - [ ] `/q/health-ui`
+
+        # Qual endpoint indica se o serviço está pronto para atender solicitações (requests)?
+        - [ ] `/q/health/live`
+        - [x] `/q/health/ready`
+        - [ ] `/q/health-ui`
+        - [ ] `/q/metrics`
+
+        # Qual anotação deve decorar uma classe para que ela responda no endpoint `/q/health/live`?
+        - [ ] `@Readiness`
+        - [x] `@Liveness`
+        - [ ] `@Startup`
+        - [ ] `@ApplicationScoped`
+
+        # O que a anotação `@Startup` faz quando usada em uma classe de Health Check?
+        - [ ] Faz com que o bean só responda no endpoint `/q/health/ready`.
+        - [ ] Impede que o bean seja instanciado.
+        - [x] Faz com que o bean seja instanciado no início da aplicação.
+        - [ ] Converte o bean em um Singleton transacional.
+
+        # Quais são as duas propriedades principais contidas no JSON retornado pelos endpoints de Health?
+        - [ ] `name` e `data`.
+        - [x] `status` e `checks`.
+        - [ ] `up` e `down`.
+        - [ ] `live` e `ready`.
+
+        # Qual interface uma classe deve implementar para se tornar uma verificação de Health?
+        - [ ] `RestClient`
+        - [x] `HealthCheck`
+        - [ ] `ApplicationScoped`
+        - [ ] `FaultTolerance`
+
+        # Para que serve a interface Web disponível em `/q/health-ui`?
+        - [ ] Para gerar automaticamente tokens JWT.
+        - [x] Para visualizar, de forma gráfica, o resultado das verificações de saúde do serviço.
+        - [ ] Para configurar manualmente as rotas REST do serviço.
+        - [ ] Para monitorar o tempo de resposta das requisições HTTP.
+
+        # Qual propriedade deve ser configurada como `true` para habilitar o `/q/health-ui` em modo de produção?
+        - [ ] `quarkus.smallrye-health.ui.enable`
+        - [x] `quarkus.smallrye-health.ui.enable=true`
+        - [ ] `mp.jwt.verify.issuer`
+        - [ ] `quarkus.http.ssl-port`
+
+        # Em um ambiente Kubernetes, o que normalmente acontece quando o `livenessProbe` de um Pod falha repetidamente?
+        - [ ] O Pod é removido do balanceamento de carga, mas continua rodando.
+        - [x] O Kubernetes reinicia o container do Pod.
+        - [ ] Nada acontece, o probe é apenas informativo.
+        - [ ] O Pod é promovido automaticamente a réplica principal.
+
+    </div>
+</body>
+
+</html>
