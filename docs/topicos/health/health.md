@@ -15,6 +15,7 @@ As verificações de Health checks são usadas para verificar o estado de um ser
 Esse tipo de recurso é propício para ambientes de infraestrutura em nuvem onde
 processos automatizados mantêm o estado de nós de computação (kubernetes por
 exemplo).
+{: .fs-3 }
 
 Nesse contexto, essas verificações são usadas para determinar se um nó de
 computação precisa ser descartado/encerado e/ou eventualmente substituído por
@@ -60,6 +61,7 @@ ar.
 
 Para se criar um projeto Quarkus com recursos de Health checks abra um terminal
 de digite (linux, unix):
+{: .fs-3 }
 
     mvn io.quarkus.platform:quarkus-maven-plugin:2.4.1.Final:create \
         -DprojectGroupId=dev.pw2 \
@@ -67,13 +69,17 @@ de digite (linux, unix):
         -Dextensions="smallrye-health"
 
     code health
+{: .fs-3 }
 
 Se você já tiver um projeto Quarkus e quiser instalar o `smallrye-health` digite
 na raiz do projeto:
+{: .fs-3 }
 
     ./mvnw quarkus:add-extension -Dextensions="smallrye-health"
+{: .fs-3 }
 
 Outra opção é adicionar no pom.xml a seguinte dependência:
+{: .fs-3 }
 
 ```xml
 <dependency>
@@ -81,24 +87,30 @@ Outra opção é adicionar no pom.xml a seguinte dependência:
     <artifactId>quarkus-smallrye-health</artifactId>
 </dependency>
 ```
+{: .fs-3 }
 
 ## Implementação
 
 A extensão `smallrye-health` irá habilitar _endpoints_, são eles:
+{: .fs-3 }
 
-* `/q/health/live` - indica se o serviço está rodando (vivo).
+* `/q/health/live`: indica se o serviço está rodando (vivo).
 
-* `/q/health/ready` - informa se o serviço está pronto para atender às solicitações (_requests_).
+* `/q/health/ready`: informa se o serviço está pronto para atender às solicitações (_requests_).
 
-* `/q/health` - indica se o serviço está vivo e também pronto para atender às solicitações.
+* `/q/health`: indica se o serviço está vivo e também pronto para atender às solicitações.
+{: .fs-3 }
 
 Os _endpoints_ retornam um objeto JSON contendo duas propriedades:
+{: .fs-3 }
 
-* status - o resultado geral de todos os procedimentos de verificação de saúde.
+* status: o resultado geral de todos os procedimentos de verificação de saúde.
 
-* checks - uma série de verificações individuais.
+* checks: uma série de verificações individuais.
+{: .fs-3 }
 
 Um exemplo dos dados retornados no _endpoint_ `/q/health` :
+{: .fs-3 }
 
 ```json
 {
@@ -118,6 +130,7 @@ Um exemplo dos dados retornados no _endpoint_ `/q/health` :
     ]
 }
 ```
+{: .fs-3 }
 
 Uma classe que implementa uma verificação de _health_ deve ser decorada com
 `@ApplicationScoped` ou `@Singleton`. Estas anotações fazem com que seja criado
@@ -125,6 +138,7 @@ uma única instância de um _bean_ que irá responder a todas as requisições d
 verificação de saúde. Se uma classe do bean não for decorada, então o escopo
 `@Singleton` é usado automaticamente, no momento da utilização das anotações
 `@Liveness` e `@Readiness`. Observe o exemplo abaixo:
+{: .fs-3 }
 
 ```java
 @Liveness
@@ -138,18 +152,22 @@ public class Live implements HealthCheck {
 
 }
 ```
+{: .fs-3 }
 
 Como você pode ver, os procedimentos de verificação de integridade são definidos
 por meio de _beans_ que implementam a interface `HealthCheck` e que são
 decorados com uma das anotações de verificação de integridade, tais como:
+{: .fs-3 }
 
-* `@Liveness` - faz com o que o bean responda no _endpoint_  `/q/health /live` e
+* `@Liveness`: faz com o que o bean responda no _endpoint_  `/q/health /live` e
   indique que o serviço está vivo(rodando).
-* `@Readiness` - faz com o que o bean responda no _endpoint_  `/q/health/ready`
+* `@Readiness`: faz com o que o bean responda no _endpoint_  `/q/health/ready`
   e indique que o serviço está pronto para receber requisições.
-* `@Startup` - faz com que o bean seja instanciado no início da aplicação.
+* `@Startup`: faz com que o bean seja instanciado no início da aplicação.
+{: .fs-3 }
 
 Assim, para atender ao endpoint `/q/health/ready` você pode implementar, por exemplo, a classe `Ready.java` conforme o trecho de código abaixo:
+{: .fs-3 }
 
 ```java
 @Readiness
@@ -176,10 +194,12 @@ public class Ready implements HealthCheck {
     }
 }
 ```
+{: .fs-3 }
 
 Lembre-se de que a classe `Ready` é um bean Singleton pois não foi anotada.
 🚨 Uma observação interessante, `javax.ejb.Singleton` são transacionais, porém,
 `javax.inject.Singleton` não são, ou seja, não suportam acessos concorrentes.
+{: .fs-3 }
 
 No exemplo acima, a classe `Ready` verifica se o serviço de catálogo está
 disponível. Para isso, a classe `Ready` injeta um Rest Client chamado do
@@ -188,6 +208,7 @@ serviço de catálogo chamado `PingRC`. Assim, o método privado
 retorna um objeto `HealthCheckResponseBuilder` com o status do serviço de
 catálogo. Logo, o método `call` retorna um objeto `HealthCheckResponse` com o
 status do serviço de catálogo.
+{: .fs-3 }
 
 A extensão `smallrye-health` também pode criar uma URL `/q/health-ui` para que
 você observe as  verificações de saúde por meio de uma interface Web, conforme
@@ -195,30 +216,39 @@ ilustra a Figura 1. A URL `/q/health-ui` é habilita por padrão nos modos de
 desenvolvimento e teste, porém, pode ser explicitamente configurada para o
 modo de produção se a propriedade do Quarkus `quarkus.smallrye-health.ui.enable=true`
 receber o valor `true`.
+{: .fs-3 }
 
     http://localhost:8080/q/health-ui/
+{: .fs-3 }
 
 <center>
     <img src="slides/img/health-ui.png" width="50%" height="50%"/><br/>
-    Figura 1 - Health UI
+    Figura 1: Health UI
 </center>
 
 ## Código 💡
 
 Um código de exemplo desse documento pode ser encontrado no Github:
+{: .fs-3 }
 
 ```sh
 git clone -b dev https://github.com/rodrigoprestesmachado/pw2
 code pw2/exemplos/books
-
 ```
+{: .fs-3 }
 
 ## Exercício de Fixação Prático 🏋️
 
-Antes de partir para o exercício principal, resolva os cinco exercícios
-simples abaixo. Eles são propositalmente pequenos e diretos, o objetivo é
-ganhar confiança com a criação de verificações de *liveness* e *readiness*
-antes de aplicá-las em uma arquitetura maior.
+Antes de iniciar os exercícios, certifique-se de que o seu projeto Quarkus
+esteja configurado com a extensão `smallrye-health` (veja a seção
+[Configuração no Quarkus](#configuração-no-quarkus)). Sem essa extensão, os
+_endpoints_ `/q/health/live`, `/q/health/ready` e `/q/health` não estarão
+disponíveis.
+{: .fs-3 }
+
+Resolva os cinco exercícios simples abaixo. Eles são propositalmente pequenos
+e diretos, o objetivo é ganhar confiança com a criação de verificações de
+*liveness* e *readiness* antes de aplicá-las em uma arquitetura maior.
 {: .fs-3 }
 
 **1) Seu primeiro liveness check.** Crie uma classe decorada com `@Liveness`
@@ -249,23 +279,17 @@ anteriores (veja a Figura 1, mostrada mais acima).
 **5) Dependendo de outro serviço.** Crie um `@Readiness` que, por meio de um
 Rest Client (como no exemplo da classe `Ready` na seção
 [Implementação](#implementação)), verifica se outro serviço está disponível.
-Teste duas vezes: uma com o serviço dependente no ar (deve responder `UP`) e
-outra com o serviço dependente desligado (deve responder `DOWN`).
+Para este exercício, você pode reaproveitar os serviços e o Rest Client
+criados na aula de [Rest Client](../rest-client/rest-client.html) (por
+exemplo, a interface `IPayment` ou os serviços de catálogo/empréstimos),
+apenas injetando o Rest Client na sua classe `@Readiness`. Teste duas vezes:
+uma com o serviço dependente no ar (deve responder `UP`) e outra com o
+serviço dependente desligado (deve responder `DOWN`).
 {: .fs-3 }
 
 💡 Se os cinco exercícios acima funcionaram, você já domina o essencial de
 Health Checks no Quarkus: criar verificações de *liveness* e *readiness*,
-adicionar dados extras e depender de outros serviços. O exercício abaixo
-apenas aplica essas mesmas ideias em uma arquitetura com múltiplos serviços.
-{: .fs-3 }
-
----
-
-No projeto da rede [social de empréstimo de livros](https://github.com/rodrigoprestesmachado/pw2/tree/dev/exemplos/books), adicione um Health Check no serviço management para verificar
-se o serviço de usuários se encontra disponível. Como resolver: Crie um método
-no Web Service do serviço de usuários para verificar se o serviço está
-disponível e, por meio de um Rest Cliente, faça com que o serviço de
-management verifique se o serviço de usuários está disponível.
+adicionar dados extras e depender de outros serviços.
 {: .fs-3 }
 
 ## Teste seus conhecimentos 🧠
@@ -282,6 +306,7 @@ management verifique se o serviço de usuários está disponível.
 * Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
 
 * SMALLRYE HEALTH disponível em: [https://quarkus.io/guides/smallrye-health](https://quarkus.io/guides/smallrye-health)
+{: .fs-3 }
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>

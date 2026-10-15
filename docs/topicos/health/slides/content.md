@@ -90,13 +90,13 @@ Pressione 'F' para tela cheia
 * A extensão _smallrye-health_ expõe diretamente três endpoints em REST:
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
-  * **/q/health/live** -indica se o serviço está rodando (vivo).
+  * **/q/health/live**: indica se o serviço está rodando (vivo).
   <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
-  * **/q/health/ready** - indica se o serviço está vivo e também pronto para atender às solicitações.
+  * **/q/health/ready**: indica se o serviço está vivo e também pronto para atender às solicitações.
   <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
-  * **/q/health** - acumula todos os procedimentos de verificação de integridade do serviço.
+  * **/q/health**: acumula todos os procedimentos de verificação de integridade do serviço.
   <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
 
