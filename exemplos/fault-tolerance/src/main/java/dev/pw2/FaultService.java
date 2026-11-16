@@ -10,24 +10,22 @@ package dev.pw2;
 
 import java.util.logging.Logger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.Timeout;
-import org.jboss.resteasy.specimpl.ResponseBuilderImpl;
+
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/fault")
 public class FaultService {
 
-    /* Coloca no console as mensagens de erro */
     private static final Logger LOGGER = Logger.getLogger(FaultService.class.getName());
 
     private static final String FALL_BACK_MESSAGE = "FallbackMethod: ";
@@ -49,10 +47,9 @@ public class FaultService {
         // }
 
         if (name.equalsIgnoreCase("error")) {
-            ResponseBuilderImpl builder = new ResponseBuilderImpl();
-            builder.status(Response.Status.INTERNAL_SERVER_ERROR);
-            builder.entity("The requested was an error");
-            Response response = builder.build();
+            Response response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("The requested was an error")
+                    .build();
             throw new WebApplicationException(response);
         }
 
@@ -60,26 +57,23 @@ public class FaultService {
     }
 
     /**
-     * Método usado para se recuperar de uma falha
+     * Metodo usado para se recuperar de uma falha.
      *
      * @param name O valor da url
-     * @return uma mensagem de erro juntamente com o parâmetro de entrada
+     * @return uma mensagem de erro juntamente com o parametro de entrada
      */
     public String recover(String name) {
         return FALL_BACK_MESSAGE + name;
     }
 
     /**
-     * Para testar o Bulkhead instale a ferramenta k6:
+     * Para testar o Bulkhead, use a ferramenta k6:
      *
      * https://k6.io/docs/
      *
-     * Logo, na raiz desse projeto execute o comando:
+     * Na raiz desse projeto execute:
      *
      * k6 run k6.js
-     *
-     * @param name
-     * @return
      */
     @GET
     @Path("/bulkhead/{name}")
@@ -90,11 +84,6 @@ public class FaultService {
         return name;
     }
 
-    /**
-     * Interrompe a thread por 10 segundos
-     *
-     * @throws InterruptedException
-     */
     private void sleep() throws InterruptedException {
         Thread.sleep(10000);
     }

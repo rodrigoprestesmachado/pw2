@@ -20,6 +20,12 @@
         - [x] Tenta reexecutar o método um número especificado de vezes.
         - [ ] Reduz o tempo de execução do método.
 
+        # Com @Retry(maxRetries = 3), quantas execuções podem ocorrer no máximo?
+        - [ ] Exatamente 3 execuções no total.
+        - [x] Até 4 execuções: 1 inicial e 3 novas tentativas.
+        - [ ] Apenas 1 execução, sem novas tentativas.
+        - [ ] Tentativas infinitas até o sucesso.
+
         # Qual é o propósito da anotação @Fallback em um método?
         - [ ] Substituir o método original por outro método alternativo em caso de falha.
         - [ ] Aumentar o tempo de execução do método.
@@ -65,8 +71,14 @@
         # O que é necessário para um método de fallback funcionar corretamente com @Fallback?
         - [ ] Deve ter um nome diferente do método original.
         - [ ] Deve retornar um tipo de dado diferente.
-        - [x] Deve ter a mesma assinatura que o método original.
+        - [x] Deve estar na mesma classe, com os mesmos parâmetros e retorno atribuível ao do método original.
         - [ ] Deve ser executado antes do método original.
+
+        # O @CircuitBreaker abre o circuito com base em qual critério?
+        - [ ] Uma sequência rígida de falhas consecutivas, sem olhar a janela.
+        - [x] A taxa de falhas dentro de uma janela deslizante de invocações.
+        - [ ] O tempo total de execução do método.
+        - [ ] O número de threads disponíveis no servidor.
 
     </div>
 </body>

@@ -67,19 +67,19 @@ Pressione 'F' para tela cheia
 ## As 5 anotações
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* 🔄 `@Retry` — *"Tenta de novo!"*
+* 🔄 `@Retry` (*"Tenta de novo!"*)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* 🅱️ `@Fallback` — *"Plano B"*
+* 🅱️ `@Fallback` (*"Plano B"*)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* ⏱️ `@Timeout` — *"Não vou esperar para sempre"*
+* ⏱️ `@Timeout` (*"Não vou esperar para sempre"*)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* 🚢 `@Bulkhead` — *"Compartimentos estanques"*
+* 🚢 `@Bulkhead` (*"Compartimentos estanques"*)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* ⚡ `@CircuitBreaker` — *"Disjuntor elétrico"*
+* ⚡ `@CircuitBreaker` (*"Disjuntor elétrico"*)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
 
@@ -94,18 +94,18 @@ Em um projeto existente:
 <!-- .element: style="margin-bottom:10px; font-size: 22px; color:white" -->
 
 ```sh
-./mvnw quarkus:add-extension -Dextensions="quarkus-smallrye-fault-tolerance"
+./mvnw quarkus:add-extension -Dextensions="smallrye-fault-tolerance"
 ```
 <!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-Criando do zero:
+Criando do zero (Quarkus 3.40.1.2 LTS):
 <!-- .element: style="margin-bottom:10px; font-size: 22px; color:white" -->
 
 ```sh
-mvn io.quarkus.platform:quarkus-maven-plugin:2.9.0.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:3.40.1.2:create \
     -DprojectGroupId=dev.pw2 \
     -DprojectArtifactId=fault-tolerance \
-    -Dextensions="quarkus-smallrye-fault-tolerance" \
+    -Dextensions='rest,smallrye-fault-tolerance' \
     -DclassName="dev.pw2.FaultService" \
     -Dpath="/fault"
 
@@ -132,7 +132,7 @@ code fault-tolerance
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Retry — exemplo
+## @Retry: exemplo
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```java
@@ -143,10 +143,9 @@ code fault-tolerance
 public String getName(@PathParam("name") String name) {
 
     if (name.equalsIgnoreCase("error")) {
-        ResponseBuilderImpl builder = new ResponseBuilderImpl();
-        builder.status(Response.Status.INTERNAL_SERVER_ERROR);
-        builder.entity("The requested was an error");
-        Response response = builder.build();
+        Response response = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("The requested was an error")
+                .build();
         throw new WebApplicationException(response);
     }
 
@@ -157,7 +156,7 @@ public String getName(@PathParam("name") String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Retry — o que acontece?
+## @Retry: o que acontece?
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 * 1️⃣ Se receber `"error"`, lança `WebApplicationException`
@@ -169,10 +168,13 @@ public String getName(@PathParam("name") String name) {
 * 3️⃣ Espera **2 segundos** (`delay = 2000`)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* 4️⃣ Tenta de novo — até **3 vezes** (`maxRetries = 3`)
+* 4️⃣ Faz até **3 novas tentativas** (`maxRetries = 3`)
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* 5️⃣ Se tudo falhar, **aí sim** propaga a exceção
+* 5️⃣ Total: **até 4 execuções** (1 inicial + 3 retries)
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* 6️⃣ Se tudo falhar, **aí sim** propaga a exceção
 <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
 * ⚠️ Cuidado: não adianta com bugs ou dados inválidos
@@ -194,7 +196,7 @@ public String getName(@PathParam("name") String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Fallback — exemplo
+## @Fallback: exemplo
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```java
@@ -207,7 +209,6 @@ public String getName(@PathParam("name") String name) {
     // 🚨 o código do método do exemplo anterior foi suprimido
 }
 
-// Método que irá ser executado caso o método getName não se recupere da falha
 public String recover(String name) {
     return FALL_BACK_MESSAGE;
 }
@@ -216,16 +217,19 @@ public String recover(String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Fallback — regra de ouro
+## @Fallback: regra de ouro
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* O método de fallback deve ter a **mesma assinatura** do original:
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
+* O método de fallback deve:
+<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-  * ✅ Mesmo tipo de retorno
+  * ✅ Ficar na **mesma classe**
   <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-  * ✅ Mesma lista de parâmetros (ordem e tipos)
+  * ✅ Ter os **mesmos parâmetros** (ordem e tipos)
+  <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+  * ✅ Ter retorno **atribuível** ao do método original
   <!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
 * Se quebrar essa regra, o Quarkus reclama na **inicialização** 🚨
@@ -245,12 +249,12 @@ public String recover(String name) {
 * Resultado: threads, memória e conexões esgotadas 💀
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
-* `@Timeout` define um **tempo máximo** — passou disso, lança exceção
+* `@Timeout` define um **tempo máximo**. Passou disso, lança exceção
 <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Timeout — exemplo
+## @Timeout: exemplo
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```java
@@ -291,7 +295,7 @@ public String getName(@PathParam("name") String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Bulkhead — exemplo
+## @Bulkhead: exemplo
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```java
@@ -309,12 +313,12 @@ public String bulkhead(@PathParam("name") String name) {
 * No máximo **2 requisições** simultâneas
 <!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
 
-* A terceira que chegar... é **descartada** 🚫
+* A terceira que chegar... é **rejeitada** 🚫
 <!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## @Bulkhead — dois modos
+## @Bulkhead: dois modos
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 * 🚪 **Modo Semáforo** (sem `@Asynchronous`):
@@ -364,13 +368,13 @@ public String bulkhead(@PathParam("name") String name) {
 ## Os 3 estados do disjuntor
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* 🟢 **Fechado** — operação normal, mas monitorando falhas
+* 🟢 **Fechado**: operação normal, mas monitorando falhas
 <!-- .element: style="margin-bottom:35px; font-size: 25px; color:white" -->
 
-* 🔴 **Aberto** — muitas falhas! Chamadas falham **imediatamente**
+* 🔴 **Aberto**: taxa de falhas alta! Chamadas falham **imediatamente**
 <!-- .element: style="margin-bottom:35px; font-size: 25px; color:white" -->
 
-* 🟡 **Meio-aberto** — depois de um tempo, permite chamadas de teste
+* 🟡 **Meio-aberto**: depois do delay, permite chamadas de sonda
 <!-- .element: style="margin-bottom:35px; font-size: 25px; color:white" -->
 
 
@@ -387,15 +391,18 @@ public String bulkhead(@PathParam("name") String name) {
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 * O disjuntor tem uma **"memória curta"** das últimas invocações
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* Por padrão: tamanho **20**, taxa de falha **0,5** (50%)
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+* Padrões: janela **20**, taxa **0,5**, delay **5s**, sondas **1**
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
 
-* **Exemplo:** janela = 10, taxa = 0,5
+* Critério: **taxa de falhas na janela** (não "falhas seguidas")
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* **Exemplo:** janela = 4, taxa = 0,5
 <!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
 
-  * Se **5 das últimas 10** chamadas falharem...
+  * Se **2 das últimas 4** chamadas falharem...
   <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
 
   * ...o disjuntor **abre** 🔴
@@ -403,30 +410,32 @@ public String bulkhead(@PathParam("name") String name) {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Circuit Breaker — código
+## Circuit Breaker: código
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```java
+@ApplicationScoped
+public class CoffeeRepositoryService {
 
-@CircuitBreaker(requestVolumeThreshold = 2)
-public Integer getAvailability(Coffee coffee) {
-    maybeFail();
-    return new Random().nextInt(30);
-}
-
-private void maybeFail() {
-    // introduce some artificial failures
-    final Long invocationNumber = counter.getAndIncrement();
-    // alternate 2 successful and 2 failing invocations
-    if (invocationNumber % 4 > 1) {
-        throw new RuntimeException("Service failed.");
+    @CircuitBreaker(requestVolumeThreshold = 4, failureRatio = 0.5, delay = 5000)
+    public Integer getAvailability(Coffee coffee) {
+        maybeFail();
+        return new Random().nextInt(30);
     }
+
+    private void maybeFail() {
+        final Long invocationNumber = counter.getAndIncrement();
+        if (invocationNumber % 4 > 1) {
+            throw new RuntimeException("Service failed.");
+        }
+    }
+
+    public Coffee getCoffeeById(int id) { ... }
 }
-
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:30px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-* `maybeFail` simula instabilidade: **2 sucessos** seguidos de **2 falhas** 🔄
+* `maybeFail` simula instabilidade: **2 sucessos** e **2 falhas** 🔄
 <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
 
 
@@ -449,10 +458,10 @@ Camadas de defesa em sequência:
 * 1️⃣ Cada chamada: máx. **3 segundos**
 <!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
 
-* 2️⃣ Falhou? Tenta **mais 3 vezes**
+* 2️⃣ Falhou? Até **3 novas tentativas**
 <!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
 
-* 3️⃣ Muitas falhas? **Disjuntor abre** e poupa recursos
+* 3️⃣ Taxa de falhas alta? **Disjuntor abre** e poupa recursos
 <!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
 
 * 4️⃣ Em qualquer cenário ruim: **fallback** entrega resposta útil
@@ -474,7 +483,7 @@ Camadas de defesa em sequência:
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## K6 — script de exemplo
+## K6: script de exemplo
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 ```javascript
@@ -486,7 +495,6 @@ export const options = {
     vus: 10,
     duration: '10s',
     thresholds: {
-        // Como teste, os erros de HTTP devem ser menor do que 5%
 	    http_req_failed: ['rate<0.05'],
 	},
 };
@@ -499,13 +507,13 @@ export default function () {
 <!-- .element: style="margin-bottom:30px; font-size: 14px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
 ```sh
-    k6 run k6.js
+k6 run k6.js
 ```
 <!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## K6 — decifrando o script
+## K6: decifrando o script
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
 * `vus: 10` → 👥 cria **10 usuários virtuais** em paralelo
@@ -557,7 +565,7 @@ export default function () {
 * 🚢 `@Bulkhead` → limita concorrência
 <!-- .element: style="margin-bottom:20px; font-size: 24px; color:white" -->
 
-* ⚡ `@CircuitBreaker` → para de tentar quando claramente está quebrado
+* ⚡ `@CircuitBreaker` → isola quando a taxa de falhas na janela é alta
 <!-- .element: style="margin-bottom:20px; font-size: 24px; color:white" -->
 
 * 🎯 Combine-as para **defesa em camadas**
@@ -565,13 +573,38 @@ export default function () {
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Exercícios de fixação 🏦
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Domínio: **serviço bancário** (saldo e transferência)
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* Projeto Quarkus novo, código de partida pronto
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* Um exercício por anotação + um combinado
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* Ordem: Retry → Fallback → Timeout → Bulkhead → CircuitBreaker → combinação
+<!-- .element: style="margin-bottom:25px; font-size: 25px; color:white" -->
+
+* Detalhes na página:
+<!-- .element: style="margin-bottom:20px; font-size: 25px; color:white" -->
+
+  [Exercícios de Fixação](https://pw2.rpmhub.dev/topicos/fault/fault.html#exercícios-de-fixação-)
+<!-- .element: style="margin-bottom:30px; font-size: 22px; color:#FFD580" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Referências
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
-* Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
+* SMALLRYE FAULT TOLERANCE:
+  [https://quarkus.io/guides/smallrye-fault-tolerance](https://quarkus.io/guides/smallrye-fault-tolerance)
 <!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
 
-* SMALLRYE FAULT TOLERANCE disponível em: [https://quarkus.io/guides/smallrye-fault-tolerance](https://quarkus.io/guides/smallrye-fault-tolerance)
+* MicroProfile Fault Tolerance:
+  [https://github.com/eclipse/microprofile-fault-tolerance/](https://github.com/eclipse/microprofile-fault-tolerance/)
 <!-- .element: style="margin-bottom:70px; font-size: 25px; color:white" -->
 
 <center>

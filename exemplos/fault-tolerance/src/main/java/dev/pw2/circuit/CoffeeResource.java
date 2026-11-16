@@ -11,14 +11,14 @@ package dev.pw2.circuit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/circuit")
 public class CoffeeResource {
@@ -39,30 +39,18 @@ public class CoffeeResource {
         final Long invocationNumber = counter++;
 
         Coffee coffee = coffeeRepository.getCoffeeById(id);
-        // check that coffee with given id exists, return 404 if not
         if (coffee == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         try {
-            Integer availability = null;
-            if (coffee != null) {
-                availability = coffeeRepository.getAvailability(coffee);
-            }
+            Integer availability = coffeeRepository.getAvailability(coffee);
 
-            if (availability != null) {
-                LOGGER.log(Level.INFO, () -> "Sucesso: " + invocationNumber);
-                return Response.ok(availability).build();
-            } else {
-                LOGGER.log(Level.SEVERE, () -> "Falha, coffee nulo:" + invocationNumber);
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity("Coffee is null")
-                        .type(MediaType.TEXT_PLAIN_TYPE)
-                        .build();
-            }
+            LOGGER.log(Level.INFO, () -> "Sucesso: " + invocationNumber);
+            return Response.ok(availability).build();
         } catch (RuntimeException e) {
             String message = String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage());
-            LOGGER.log(Level.SEVERE, () -> "Falha:" + invocationNumber);
+            LOGGER.log(Level.SEVERE, () -> "Falha:" + invocationNumber + " " + message);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(message)
                     .type(MediaType.TEXT_PLAIN_TYPE)
