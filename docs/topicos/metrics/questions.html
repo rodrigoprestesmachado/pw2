@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Métricas e Observabilidade no Quarkus</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Qual o papel do Micrometer no ecossistema do Quarkus?
+        - [ ] Funcionar como um banco de dados relacional para guardar logs.
+        - [x] Atuar como uma fachada (abstração de API) para instrumentos e coleta de métricas, independente do sistema de monitoramento final.
+        - [ ] Gerar relatórios em formato PDF e enviá-los por e-mail.
+        - [ ] Substituir o compilador Java nativo.
+
+        # Em qual endpoint o Quarkus expõe por padrão as métricas formatadas para coleta do Prometheus?
+        - [ ] /metrics.json
+        - [ ] /actuator/metrics
+        - [x] /q/metrics
+        - [ ] /prometheus/data
+
+        # Qual medidor (Meter) do Micrometer deve ser utilizado para registrar um valor que apenas incrementa, como total de acessos?
+        - [ ] Gauge
+        - [x] Counter
+        - [ ] Timer
+        - [ ] DistributionSummary
+
+        # Quando devemos usar um Gauge em vez de um Counter?
+        - [ ] Quando queremos medir o tempo exato de resposta de uma requisição HTTP.
+        - [x] Quando o valor monitorado pode subir e descer continuamente, como número de conexões ativas ou itens numa fila.
+        - [ ] Apenas para contabilizar cliques que ocorrem aos finais de semana.
+        - [ ] Somente quando o valor ultrapassar 1 milhão de ocorrências.
+
+        # Qual é a principal função do medidor Timer?
+        - [ ] Parar a aplicação após 5 minutos de inatividade.
+        - [ ] Medir apenas o uso de memória do computador.
+        - [x] Medir a latência (duração de tempo) e a frequência de execução de operações ou endpoints.
+        - [ ] Registrar o relógio do sistema operacional para agendamentos cron.
+
+        # Qual a diferença entre um Timer e um DistributionSummary?
+        - [ ] O Timer só aceita números inteiros e o DistributionSummary aceita texto.
+        - [x] O Timer é específico para grandezas de tempo (latência), enquanto o DistributionSummary mede valores escalares arbitrários (como tamanho de payloads em bytes).
+        - [ ] Não há diferença, são sinônimos perfeitos.
+        - [ ] DistributionSummary serve apenas para contagem de erros 500.
+
+        # O que são tags dimensionais no Micrometer e qual sua vantagem?
+        - [ ] São comentários que aparecem no código Java após a compilação.
+        - [x] São pares chave/valor que enriquecem as métricas, permitindo filtrar e agregar dados por endpoint, método HTTP ou status.
+        - [ ] São identificadores exclusivos de hardware exigidos pelo Linux.
+        - [ ] São senhas de acesso aos relatórios do Prometheus.
+
+        # Como o Prometheus coleta as métricas da aplicação Quarkus?
+        - [ ] O Quarkus envia mensagens UDP para a porta 9090 do Prometheus.
+        - [ ] O Quarkus insere as métricas diretamente numa tabela SQL do Prometheus.
+        - [x] O Prometheus realiza requisições HTTP periódicas (pull / scraping) no endpoint /q/metrics da aplicação.
+        - [ ] O desenvolvedor precisa fazer upload manual de arquivos CSV no Prometheus.
+
+        # Por que uma métrica recém-criada no código pode não aparecer imediatamente no endpoint /q/metrics?
+        - [ ] Porque o Micrometer só atualiza os dados à meia-noite.
+        - [x] Porque as métricas são construídas de forma lazy e só aparecem após a primeira invocação ou registro do trecho instrumentado.
+        - [ ] Porque o endpoint /q/metrics exige reinicialização do sistema operacional.
+        - [ ] Porque é necessário recompilar o Quarkus em modo nativo.
+
+        # Como a anotação @Timed ajuda a monitorar métodos de endpoints REST?
+        - [ ] Força o método a terminar em menos de 100 milissegundos.
+        - [x] Registra automaticamente a contagem de execuções, o tempo total acumulado e o tempo máximo observado daquele método.
+        - [ ] Cria uma contagem regressiva visível para o cliente no navegador.
+        - [ ] Cancela a requisição se ela demorar muito.
+
+        # Quais métricas são coletadas automaticamente pelo Quarkus com a extensão do Micrometer, sem precisar de código Java?
+        - [ ] Saldo bancário dos clientes cadastrados no sistema.
+        - [ ] Total de curtidas nas redes sociais da empresa.
+        - [x] Métricas da JVM (memória heap/non-heap, GC, threads), tempo das requisições HTTP e alocação de memória Netty.
+        - [ ] Histórico de commits do repositório Git.
+
+        # Por que usamos 'extra_hosts: ["host.docker.internal:host-gateway"]' no docker-compose do Prometheus no Linux?
+        - [ ] Para aumentar a memória RAM do contêiner Docker.
+        - [x] Para que o contêiner do Prometheus no Linux consiga alcançar a porta 8080 do Quarkus rodando na máquina host.
+        - [ ] Para evitar que o Prometheus solicite senha de root.
+        - [ ] Para habilitar a aceleração de placa de vídeo (GPU) no monitoramento.
+
+    </div>
+</body>
+
+</html>

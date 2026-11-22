@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quizdown@latest/public/build/quizdown.js">
+    </script>
+    <script>quizdown.init();</script>
+    <title>Configuração no Quarkus</title>
+</head>
+
+<body>
+    <div class="quizdown">
+
+        # Qual o principal objetivo de externalizar configurações em microsserviços (Twelve-Factor App)?
+        - [ ] Tornar o código-fonte mais longo e detalhado.
+        - [x] Separar código e configuração, permitindo que o mesmo executável rode em dev, teste e prod apenas alterando variáveis externas.
+        - [ ] Evitar o uso do arquivo application.properties.
+        - [ ] Forçar a recompilação do projeto para cada ambiente de implantação.
+
+        # O que acontece por padrão se injetarmos @ConfigProperty(name = "app.taxa") e essa chave não existir em lugar nenhum?
+        - [ ] O valor é inicializado silenciosamente como null.
+        - [ ] A aplicação assume o valor zero automaticamente.
+        - [x] O Quarkus interrompe a inicialização lançando uma DeploymentException.
+        - [ ] O valor da variável de ambiente PATH é injetado.
+
+        # Como podemos evitar que a ausência de uma propriedade impeça a inicialização da aplicação?
+        - [ ] Anotando a classe com @IgnoreError.
+        - [x] Definindo defaultValue na anotação ou declarando o campo como Optional<T>.
+        - [ ] Criando um arquivo .env vazio.
+        - [ ] Utilizando obrigatoriamente System.getProperty().
+
+        # Onde fica localizado o arquivo padrão de propriedades versionado com o código em um projeto Quarkus?
+        - [ ] Na raiz do projeto, ao lado do pom.xml.
+        - [ ] Dentro do diretório target/classes.
+        - [x] Em src/main/resources/application.properties.
+        - [ ] Em ~/.quarkus/config.properties.
+
+        # Onde deve ficar o arquivo .env e qual sua principal finalidade em desenvolvimento local?
+        - [ ] Em src/main/resources/ para ser empacotado no JAR final.
+        - [x] Na raiz do projeto, para guardar segredos e ajustes locais sem versioná-los no Git.
+        - [ ] No diretório /tmp do sistema operacional.
+        - [ ] Dentro da pasta src/test/resources/ apenas para testes de unidade.
+
+        # Se no application.properties temos "minha.api.url", como essa propriedade é representada no arquivo .env ou como variável de ambiente?
+        - [ ] minha.api.url
+        - [ ] minha_api_url
+        - [x] MINHA_API_URL
+        - [ ] env.minha.api.url
+
+        # Se uma mesma propriedade existir no application.properties, no .env e como parâmetro -D na linha de comando, qual tem prioridade?
+        - [ ] application.properties.
+        - [ ] .env.
+        - [x] O parâmetro de linha de comando -D (System Property).
+        - [ ] Nenhuma, ocorre erro de duplicidade.
+
+        # Como definimos uma propriedade válida exclusivamente para o perfil de produção dentro do application.properties?
+        - [ ] [prod].minha.propriedade=valor
+        - [x] %prod.minha.propriedade=valor
+        - [ ] @prod:minha.propriedade=valor
+        - [ ] prod::minha.propriedade=valor
+
+        # Por que você NÃO deve nomear suas propriedades de negócio começando com o prefixo "quarkus."?
+        - [ ] Porque a compilação em Java não aceita palavras que começam com 'q'.
+        - [x] Porque o namespace "quarkus." é reservado para configurações do próprio framework e suas extensões.
+        - [ ] Porque as variáveis com esse prefixo são apagadas no build.
+        - [ ] Porque esse prefixo só pode ser usado em arquivos YAML.
+
+        # O que significa uma configuração do Quarkus ser marcada como "Build time" (com ícone de cadeado 🔒 na documentação)?
+        - [ ] Que o valor é criptografado com senha de administrador.
+        - [ ] Que a propriedade só pode ser lida por testes automatizados.
+        - [x] Que o valor é fixado durante a compilação/build e não pode ser alterado em tempo de execução sem novo build.
+        - [ ] Que a propriedade fica trancada e inacessível para leitura via Java.
+
+        # Qual o efeito da expressão "banco.host=${DB_HOST:localhost}" em application.properties?
+        - [ ] Tenta conectar simultaneamente a DB_HOST e a localhost.
+        - [x] Lê o valor de DB_HOST do ambiente; se não estiver definido, utiliza "localhost" como valor padrão.
+        - [ ] Lança exceção se a variável DB_HOST não existir no sistema.
+        - [ ] Substitui a palavra localhost pelo texto "DB_HOST".
+
+        # Qual dependência é necessária no pom.xml para que o Quarkus entenda application.yaml ou application.yml?
+        - [ ] quarkus-json-config
+        - [ ] quarkus-spring-boot
+        - [x] quarkus-config-yaml
+        - [ ] quarkus-rest-yaml
+
+    </div>
+</body>
+
+</html>

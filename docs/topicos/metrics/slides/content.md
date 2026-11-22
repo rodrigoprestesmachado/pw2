@@ -54,6 +54,27 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Kit de Medidores 🧰
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* 🔢 **Counter** (*"Catraca/Odômetro"*): valor acumulador que **só sobe** (total de pedidos, erros)
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 🌡️ **Gauge** (*"Velocímetro/Termômetro"*): valor instantâneo que **sobe e desce** (tamanho de fila, memória)
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* ⏱️ **Timer** (*"Cronômetro"*): mede **duração e frequência** de requisições e operações
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* ⚖️ **DistributionSummary** (*"Balança"*): distribuição estatística de grandezas que **não** são tempo (bytes, R$)
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* ⚡ **`@Timed` / `@Counted`**: anotações práticas para instrumentar métodos em 1 linha!
+<!-- .element: style="margin-bottom:25px; font-size: 22px; color:#FFD580" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Alguns exemplos do que pode ser monitorado
 <!-- .element: style="margin-bottom:100px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -263,6 +284,31 @@ sample.stop(registry.timer("checkout.flow", "step", "payment"));
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## DistributionSummary ⚖️
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* Mede a distribuição de **valores escalares** que não representam tempo (bytes, moeda, etc.)
+<!-- .element: style="margin-bottom:30px; font-size: 24px; color:white" -->
+
+```java
+// Via builder
+DistributionSummary summary = DistributionSummary
+    .builder("vendas.valor.pagamento")
+    .baseUnit("BRL")
+    .description("Valores dos pagamentos efetuados")
+    .register(registry);
+
+// Registrando uma ocorrencia
+summary.record(149.90);
+```
+<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* Suporta cálculo de histogramas e percentis (p50, p95, p99)
+<!-- .element: style="margin-bottom:30px; font-size: 22px; color:#ffdd99" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Métricas Automáticas 🤖
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -342,6 +388,35 @@ scrape_configs:
 * O Prometheus coleta métricas periodicamente via o endpoint `/q/metrics`
 <!-- .element: style="margin-bottom:30px; font-size: 22px; color:white" -->
 
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Exercícios de fixação 🎯
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* 🟢 **Ex. 1:** Criando seu primeiro contador com `Counter`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* ⏱️ **Ex. 2:** Medindo duração e latência com anotação `@Timed`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🌡️ **Ex. 3:** Monitorando estado dinâmico com `Gauge`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🏷️ **Ex. 4:** Enriquecendo métricas com Tags Dimensionais
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🤖 **Ex. 5:** Explorando métricas automáticas do HTTP no `/q/metrics`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🧠 **Teste seus conhecimentos:** Quiz interativo com Quizdown na página!
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:#FFD580" -->
+
+* Detalhes na página:
+<!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
+
+  [Exercícios de Fixação na Página](https://pw2.rpmhub.dev/topicos/metrics/metrics.html#colocando-tudo-em-prática-observabilidade-na-prática-)
+<!-- .element: style="margin-bottom:30px; font-size: 20px; color:#FFD580" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->

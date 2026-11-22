@@ -43,6 +43,29 @@ Pressione 'F' para tela cheia
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Kit de Ferramentas 🧰
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* 💉 `@ConfigProperty` → injeta propriedades tipadas em beans CDI
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 📁 `application.properties` → configurações padrão versionadas com o código
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 🎭 **Perfis (`%dev`, `%test`, `%prod`)** → valores específicos para cada fase do ciclo
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 🔐 **Arquivo `.env`** → ajustes e segredos locais fora do Git
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 📄 **YAML** → formato alternativo hierárquico e legível
+<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
+
+* 💡 **Princípio 12-Factor:** código idêntico em qualquer ambiente; só a configuração varia!
+<!-- .element: style="margin-bottom:25px; font-size: 22px; color:#FFD580" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## MicroProfile Config
 <!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
 
@@ -402,6 +425,35 @@ pw2:
 
 5. Valide com `./mvnw quarkus:dev`.
 <!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Exercícios de fixação 🎯
+<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+
+* 🟢 **Ex. 1:** Injeção básica de propriedade com `@ConfigProperty`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🛡️ **Ex. 2:** Propriedades seguras com `defaultValue` e `Optional<T>`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* ⚡ **Ex. 3:** Sobrescrita em runtime via parâmetro `-D`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🎭 **Ex. 4:** Perfis na prática (`%dev` e `%prod`)
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🔐 **Ex. 5:** Isolando segredos locais com o arquivo `.env`
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+
+* 🧠 **Teste seus conhecimentos:** Quiz interativo com Quizdown na página!
+<!-- .element: style="margin-bottom:20px; font-size: 22px; color:#FFD580" -->
+
+* Detalhes na página:
+<!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
+
+  [Exercícios de Fixação na Página](https://pw2.rpmhub.dev/topicos/configuration/configuration.html#colocando-tudo-em-prática-dominando-a-configuração-)
+<!-- .element: style="margin-bottom:30px; font-size: 20px; color:#FFD580" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
