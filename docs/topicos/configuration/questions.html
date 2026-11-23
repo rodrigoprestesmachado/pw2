@@ -80,6 +80,18 @@
         - [ ] Lança exceção se a variável DB_HOST não existir no sistema.
         - [ ] Substitui a palavra localhost pelo texto "DB_HOST".
 
+        # Com o perfil prod ativo, qual valor vale para a mesma chave escrita duas vezes no application.properties?
+        - [ ] O valor sem prefixo, porque ele vem primeiro no arquivo.
+        - [x] O valor prefixado com %prod, porque a chave do perfil ativo vence dentro da mesma fonte.
+        - [ ] Os dois valores são concatenados.
+        - [ ] A aplicação recusa subir por causa da chave duplicada.
+
+        # Onde fica o application.properties que sobrescreve o arquivo empacotado no JAR, sem usar variável de ambiente?
+        - [ ] Em src/test/resources/application.properties.
+        - [ ] Em META-INF/microprofile-config.properties.
+        - [x] Em config/application.properties, no diretório de trabalho.
+        - [ ] Ao lado do pom.xml, com o nome .env.
+
         # Qual dependência é necessária no pom.xml para que o Quarkus entenda application.yaml ou application.yml?
         - [ ] quarkus-json-config
         - [ ] quarkus-spring-boot

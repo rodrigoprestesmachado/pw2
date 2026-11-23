@@ -1,5 +1,5 @@
 <!-- .slide: data-background-opacity="0.3" data-background-image="img/title.jpg" data-transition="convex" -->
-# Configuration
+# Configuration 🛠️
 <!-- .element: style="margin-bottom:100px; font-size: 60px; color:white; font-family: Marker Felt;" -->
 
 Pressione 'F' para tela cheia
@@ -9,465 +9,401 @@ Pressione 'F' para tela cheia
 <!-- .element: style="margin-bottom 25px; font-size: 15px; color:white" -->
 
 
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Introdução
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- Quarkus é um framework Java projetado para aplicativos nativos da nuvem.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
-
-- Como esses aplicativos são executados em contêineres, a configuração é
-  essencial para parametrizar o serviço sem alterar o código.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
-
-- O Quarkus suporta configuração baseada em propriedades e injeção de
-  configuração via CDI.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
-
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Objetivos
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Por que configuração? 🤔
+<!-- .element: style="margin-bottom:40px; font-size: 48px; color:white; font-family: Marker Felt;" -->
 
-- Declarar propriedades em `application.properties`
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* O mesmo artefato roda em dev, teste e produção
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
-- Injetar propriedades com `@ConfigProperty`
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* O que muda é a configuração injetada pelo ambiente, não o código
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
-- Usar perfis (`dev`, `test`, `prod`) e sobrescrever valores em runtime
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* Princípio do [Twelve-Factor App](https://12factor.net/pt_br/config)
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
-- Trabalhar com arquivos `.env` e YAML
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Kit de Ferramentas 🧰
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-* 💉 `@ConfigProperty` → injeta propriedades tipadas em beans CDI
-<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
-
-* 📁 `application.properties` → configurações padrão versionadas com o código
-<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
-
-* 🎭 **Perfis (`%dev`, `%test`, `%prod`)** → valores específicos para cada fase do ciclo
-<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
-
-* 🔐 **Arquivo `.env`** → ajustes e segredos locais fora do Git
-<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
-
-* 📄 **YAML** → formato alternativo hierárquico e legível
-<!-- .element: style="margin-bottom:25px; font-size: 24px; color:white" -->
-
-* 💡 **Princípio 12-Factor:** código idêntico em qualquer ambiente; só a configuração varia!
-<!-- .element: style="margin-bottom:25px; font-size: 22px; color:#FFD580" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## MicroProfile Config
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+<!-- .element: style="margin-bottom:40px; font-size: 48px; color:white; font-family: Marker Felt;" -->
 
-- O Quarkus implementa a especificação
-  [MicroProfile Config](https://github.com/eclipse/microprofile-config),
-  através do [SmallRye Config](https://github.com/smallrye/smallrye-config).
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* O Quarkus usa a especificação [MicroProfile Config](https://github.com/eclipse/microprofile-config)
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
-- As configurações podem vir de várias **fontes**: arquivo de propriedades,
-  variáveis de ambiente, parâmetros `-D`, arquivos `.env`, YAML, entre outros.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* Implementação: [SmallRye Config](https://github.com/smallrye/smallrye-config)
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
+* Fontes: `application.properties`, variáveis de ambiente, `-D`, `.env` e YAML
+<!-- .element: style="margin-bottom:35px; font-size: 26px; color:white" -->
 
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Onde ficam as configurações?
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- Caminho padrão: `src/main/resources/application.properties`
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Variáveis de ambiente: `PW2_MESSAGE` ↔ `pw2.message`
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Parâmetros `-D` na linha de comando do Maven ou da JVM
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Arquivo `.env` na raiz do projeto
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Arquivo YAML (`application.yaml` ou `application.yml`)
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Propriedades comuns
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Kit de ferramentas 🧰
+<!-- .element: style="margin-bottom:35px; font-size: 48px; color:white; font-family: Marker Felt;" -->
 
-- `quarkus.http.port`: Define a porta HTTP do servidor.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* 💉 `@ConfigProperty` — injeta a chave já convertida (String, int, boolean)
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
 
-- `quarkus.datasource.jdbc.url`: URL da fonte de dados para integração com
-  banco de dados.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* 📁 `application.properties` — valores versionados com o código
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
 
-- `quarkus.log.console.enable`: Ativa ou desativa a saída de log no console.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+* 🎭 Perfis `%dev`, `%test`, `%prod` — um valor para cada fase
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
+
+* 🔐 `.env` e variáveis de ambiente — segredos e ajustes fora do Git
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
+
+* 📄 YAML — a mesma configuração em árvore
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
+
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Injeção de Configuração
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Onde ficam as configurações? 📁
+<!-- .element: style="margin-bottom:40px; font-size: 44px; color:white; font-family: Marker Felt;" -->
 
-- O Quarkus suporta injeção de configuração em beans CDI (_Contexts and
-  Dependency Injection_).
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+```text
+src/main/resources/application.properties
+```
+<!-- .element: style="margin-bottom:25px; font-size: 22px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-- Use a anotação `@ConfigProperty` para injetar propriedades configuradas.
-<!-- .element: style="margin-bottom:60px; font-size: 25px; color:white" -->
+```properties
+pw2.mensagem=Ola, bem-vindo ao mundo dos microsservicos!
+pw2.autor=Rodrigo
+```
+<!-- .element: style="margin-bottom:20px; font-size: 20px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* Esse arquivo vai dentro do JAR
+<!-- .element: style="margin-bottom:18px; font-size: 24px; color:white" -->
+
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## Exemplo com `@ConfigProperty`
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
-
-```properties
-pw2.message=hello
-pw2.name=world
-```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+## @ConfigProperty 💉
+<!-- .element: style="margin-bottom:20px; font-size: 46px; color:black; font-family: Marker Felt;" -->
 
 ```java
-@Path("/hello")
-@RequestScoped
-public class HelloResource {
+@Inject
+@ConfigProperty(name = "pw2.mensagem")
+String mensagem;
 
-    @Inject
-    @ConfigProperty(name = "pw2.message", defaultValue = "")
-    String message;
+@Inject
+@ConfigProperty(name = "pw2.autor", defaultValue = "Anonimo")
+String autor;
 
-    @Inject
-    @ConfigProperty(name = "pw2.name")
-    Optional<String> name;
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return message + " " + name.orElse("world");
-    }
-}
+@Inject
+@ConfigProperty(name = "pw2.versao")
+Optional<String> versao;
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:16px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* Pacote: `org.eclipse.microprofile.config.inject.ConfigProperty`
+<!-- .element: style="margin-bottom:12px; font-size: 20px; color:black" -->
+
+* Com `@ConfigProperty` no campo, o `@Inject` é opcional no Quarkus
+<!-- .element: style="margin-bottom:12px; font-size: 20px; color:black" -->
+
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Quando a propriedade não existe
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Se a chave não existe 💥
+<!-- .element: style="margin-bottom:40px; font-size: 46px; color:white; font-family: Marker Felt;" -->
 
-- Sem valor e sem `defaultValue` → falha na inicialização
-  (`DeploymentException`).
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* Sem valor e sem `defaultValue` → a aplicação não sobe (`DeploymentException`)
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
 
-- Com `defaultValue = "..."` → usa o padrão informado.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* `defaultValue = "Anonimo"` → usa esse texto
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
 
-- Tipo `Optional<T>` → injeta `Optional.empty()` se ausente.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
+* `Optional<T>` → injeta `Optional.empty()`
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
+
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## Acesso programático
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
-
-- Use `ConfigProvider` quando o código não é um bean CDI ou quando a chave é
-  dinâmica.
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
+## Leitura programática 🔍
+<!-- .element: style="margin-bottom:30px; font-size: 46px; color:black; font-family: Marker Felt;" -->
 
 ```java
-String databaseName = ConfigProvider.getConfig()
-    .getValue("database.name", String.class);
+String dbHost = ConfigProvider.getConfig()
+    .getValue("banco.host", String.class);
 
-Optional<String> maybeDatabaseName = ConfigProvider.getConfig()
-    .getOptionalValue("database.name", String.class);
+Optional<Integer> dbPorta = ConfigProvider.getConfig()
+    .getOptionalValue("banco.porta", Integer.class);
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:20px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+* `getValue` lança `NoSuchElementException` se a chave falta
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:black" -->
+
+* `getOptionalValue` devolve `Optional.empty()`
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:black" -->
+
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Sobrescrevendo em runtime
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Quem vence? 🏆
+<!-- .element: style="margin-bottom:28px; font-size: 48px; color:white; font-family: Marker Felt;" -->
 
-- Parâmetro `-D` na execução do serviço:
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+* 400 — `-Dchave=valor`
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:white" -->
+
+* 300 — variável de ambiente (`PW2_MENSAGEM`)
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:white" -->
+
+* 295 — `.env` no diretório de trabalho
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:white" -->
+
+* 260 — `config/application.properties` no diretório de trabalho
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:white" -->
+
+* 250 — `src/main/resources/application.properties` (dentro do JAR)
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:white" -->
+
+* No mesmo arquivo, `%prod.chave` vale quando o perfil ativo é `prod`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:#ffdd99" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Sobrescrevendo em runtime ⚡
+<!-- .element: style="margin-bottom:30px; font-size: 44px; color:white; font-family: Marker Felt;" -->
 
 ```sh
-./mvnw compile quarkus:dev -Dpw2.message=hello
+./mvnw quarkus:dev -Dpw2.mensagem="Ola direto da linha de comando"
 ```
-<!-- .element: style="margin-bottom:40px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
-
-- Variáveis de ambiente seguem a mesma lógica:
-  `PW2_MESSAGE=hello` sobrescreve `pw2.message`.
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Namespace `quarkus.`
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- 🚨 O Quarkus reserva o namespace `quarkus.` para sua própria configuração.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- Ex.: `quarkus.http.port` define a porta HTTP.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- **Nunca** use o prefixo `quarkus.` nas suas variáveis de aplicação.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Configurações de build
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- Algumas configurações do Quarkus só têm efeito durante o *build*.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- Estão disponíveis em runtime, mas como **somente leitura**.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- Marcadas com 🔒 na
-  [lista oficial](https://quarkus.io/guides/all-config) — alterá-las exige
-  reconstruir o serviço (*rebuild*).
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Profiles
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- Permitem configurações distintas para cada ambiente.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- Quarkus oferece três por padrão: `dev`, `test` e `prod`.
-<!-- .element: style="margin-bottom:50px; font-size: 25px; color:white" -->
-
-- Duas formas de organizar:
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
-
-  - Prefixo `%perfil` no mesmo `application.properties`.
-  <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
-
-  - Arquivos separados: `application-dev.properties`,
-    `application-prod.properties`.
-  <!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
-
-
-<!-- .slide: data-background="white" data-transition="convex" -->
-## Profiles — Exemplo
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
-
-```properties
-pw2.jdbc=jdbc:mysql://localhost:3306/pw2
-%prod.pw2.jdbc=jdbc:mysql://rpmhub.dev:3307/pw2
-```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
-
-- Linhas sem prefixo valem para todos os perfis.
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
-
-- `%prod.pw2.jdbc` sobrescreve o valor padrão quando o perfil ativo é `prod`.
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
-
-
-<!-- .slide: data-background="white" data-transition="convex" -->
-## Profile customizado
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
-
-```properties
-quarkus.http.port=9090
-%build.quarkus.http.port=9999
-```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
-
-- Ative o perfil informando `quarkus.profile`:
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
+<!-- .element: style="margin-bottom:18px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
 ```sh
-./mvnw compile quarkus:dev -Dquarkus.profile=build
+java -Dpw2.mensagem="Ola direto da linha de comando" -jar target/quarkus-app/quarkus-run.jar
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:18px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
+```sh
+PW2_MENSAGEM="Ola via variavel de ambiente" ./mvnw quarkus:dev
+```
+<!-- .element: style="margin-bottom:16px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Arquivos `.env`
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
-
-- Útil para **segredos e ajustes locais** (senhas, tokens, URLs de DEV).
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Carregado automaticamente em `quarkus:dev`.
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Tem **prioridade** sobre o `application.properties` em runtime.
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
-
-- Fica na **raiz** do projeto (mesmo nível do `pom.xml`) — adicione ao
-  `.gitignore`.
-<!-- .element: style="margin-bottom:40px; font-size: 25px; color:white" -->
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## `.env` ↔ `application.properties`
-<!-- .element: style="margin-bottom:40px; font-size: 45px; color:black; font-family: Marker Felt;" -->
+## Perfis 🎭
+<!-- .element: style="margin-bottom:25px; font-size: 48px; color:black; font-family: Marker Felt;" -->
 
-`application.properties`
-<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
+* `dev` no `quarkus:dev`, `test` no `./mvnw test`, `prod` no `java -jar`
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:black" -->
 
 ```properties
-pw2.message=hello
-pw2.jdbc.url=jdbc:mysql://localhost:3306/pw2
-pw2.jdbc.password=${DB_PASSWORD:changeme}
+pw2.banco.url=jdbc:postgresql://localhost:5432/meubanco_dev
+%prod.pw2.banco.url=jdbc:postgresql://db.minhaempresa.com:5432/meubanco_prod
+%test.pw2.banco.url=jdbc:h2:mem:testdb
+```
+<!-- .element: style="margin-bottom:16px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+```properties
 quarkus.http.port=8080
+%homologacao.quarkus.http.port=8090
 ```
-<!-- .element: style="margin-bottom:25px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:14px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-`.env` (raiz do projeto)
-<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
+```sh
+./mvnw quarkus:dev -Dquarkus.profile=homologacao
+```
+<!-- .element: style="margin-bottom:12px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Arquivo do perfil
+<!-- .element: style="margin-bottom:30px; font-size: 46px; color:white; font-family: Marker Felt;" -->
+
+* `application-homologacao.properties`, no mesmo diretório do `application.properties`
+<!-- .element: style="margin-bottom:25px; font-size: 23px; color:white" -->
+
+* As chaves desse arquivo ficam sem o prefixo `%homologacao.`
+<!-- .element: style="margin-bottom:25px; font-size: 23px; color:white" -->
+
+* Ele vence as chaves `%homologacao.` do arquivo principal
+<!-- .element: style="margin-bottom:25px; font-size: 23px; color:white" -->
+
+* O `application.properties` precisa existir, mesmo vazio
+<!-- .element: style="margin-bottom:25px; font-size: 23px; color:white" -->
+
+* Ative com `-Dquarkus.profile=homologacao` ou `QUARKUS_PROFILE=homologacao`
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:#ffdd99" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Arquivo `.env` 🔐
+<!-- .element: style="margin-bottom:30px; font-size: 48px; color:white; font-family: Marker Felt;" -->
+
+* Fica na raiz do projeto, ao lado do `pom.xml`, e entra no `.gitignore`
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
+
+* Lido do diretório de trabalho: no `quarkus:dev` e também no `java -jar`
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
+
+* Ordinal 295: acima do `application.properties`, abaixo da variável de ambiente e do `-D`
+<!-- .element: style="margin-bottom:22px; font-size: 23px; color:white" -->
 
 ```properties
-PW2_MESSAGE=hello from .env
-PW2_JDBC_URL=jdbc:mysql://localhost:3307/pw2
-DB_PASSWORD=secret
+PW2_MENSAGEM=Mensagem geral
+_DEV_PW2_MENSAGEM=Mensagem apenas no perfil dev
 QUARKUS_HTTP_PORT=9090
 ```
-<!-- .element: style="margin-bottom:25px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:14px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-Pontos viram underscores; tudo em maiúsculas.
-<!-- .element: style="margin-bottom:20px; font-size: 20px; color:black" -->
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## Expressões de propriedade
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
+## Nomes no ambiente
+<!-- .element: style="margin-bottom:28px; font-size: 46px; color:black; font-family: Marker Felt;" -->
 
-- Você pode referenciar variáveis no próprio `application.properties`:
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
+Para `pw2.mensagem`, o Quarkus procura:
+<!-- .element: style="margin-bottom:16px; font-size: 24px; color:black" -->
+
+* `pw2.mensagem`
+<!-- .element: style="margin-bottom:14px; font-size: 24px; color:black" -->
+
+* `pw2_mensagem`
+<!-- .element: style="margin-bottom:14px; font-size: 24px; color:black" -->
+
+* `PW2_MENSAGEM`
+<!-- .element: style="margin-bottom:18px; font-size: 24px; color:black" -->
+
+* `quarkus.http.port` → `QUARKUS_HTTP_PORT`
+<!-- .element: style="margin-bottom:12px; font-size: 22px; color:black" -->
+
+* `app.boas-vindas` → `APP_BOAS_VINDAS`
+<!-- .element: style="margin-bottom:12px; font-size: 22px; color:black" -->
+
+
+
+<!-- .slide: data-background="white" data-transition="convex" -->
+## Expressões `${chave:padrao}`
+<!-- .element: style="margin-bottom:30px; font-size: 42px; color:black; font-family: Marker Felt;" -->
 
 ```properties
-pw2.jdbc.url=${PW2_JDBC_URL:jdbc:mysql://localhost:3306/pw2}
-application.host=${HOST:localhost}
+banco.senha=${DB_SENHA:senha_padrao_dev}
+servico.externo.url=${URL_SERVICO:http://localhost:8081}
 ```
-<!-- .element: style="margin-bottom:30px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:20px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-- Sintaxe `${NOME:valor-padrao}` — usa o valor padrão se `NOME` não existir.
-<!-- .element: style="margin-bottom:30px; font-size: 22px; color:black" -->
+* A busca da chave acontece em todas as fontes
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:black" -->
+
+* Sem a chave e sem o padrão depois dos dois-pontos, a leitura falha
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:black" -->
+
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Arquivos YAML
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Namespace `quarkus.` 🚨
+<!-- .element: style="margin-bottom:35px; font-size: 46px; color:white; font-family: Marker Felt;" -->
 
-- Instale a extensão `quarkus-config-yaml`:
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
-
-```xml
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-config-yaml</artifactId>
-</dependency>
+```properties
+quarkus.http.port=8082
+quarkus.log.console.level=DEBUG
 ```
-<!-- .element: style="margin-bottom:40px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:25px; font-size: 20px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
-- Crie `application.yaml` ou `application.yml` em `src/main/resources`.
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
+* `quarkus.` configura o framework e as extensões
+<!-- .element: style="margin-bottom:22px; font-size: 24px; color:white" -->
+
+* Propriedade de negócio usa outro prefixo, como `pw2.` ou `app.`
+<!-- .element: style="margin-bottom:22px; font-size: 24px; color:white" -->
+
+
+
+<!-- .slide: data-background="#21093D" data-transition="convex" -->
+## Configuração de build 🔒
+<!-- .element: style="margin-bottom:40px; font-size: 46px; color:white; font-family: Marker Felt;" -->
+
+* O cadeado na [lista oficial](https://quarkus.io/guides/all-config) marca o que só vale no build
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
+
+* Em execução o valor pode ser lido, e não muda o comportamento do framework
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
+
+* Para passar a valer, o artefato é gerado de novo
+<!-- .element: style="margin-bottom:35px; font-size: 24px; color:white" -->
+
 
 
 <!-- .slide: data-background="white" data-transition="convex" -->
-## `properties` ↔ `yaml`
-<!-- .element: style="margin-bottom:40px; font-size: 50px; color:black; font-family: Marker Felt;" -->
+## YAML 📄
+<!-- .element: style="margin-bottom:20px; font-size: 48px; color:black; font-family: Marker Felt;" -->
 
-`application.properties`
-<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
-
-```properties
-pw2.message=hello
-pw2.name=world
+```sh
+./mvnw quarkus:add-extension -Dextensions='quarkus-config-yaml'
 ```
-<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
-
-`application.yml`
-<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
+<!-- .element: style="margin-bottom:14px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
 ```yaml
 pw2:
-  message: hello
-  name: world
+  servico:
+    nome: Notificacoes
+    timeout: 5000
+quarkus:
+  http:
+    port: 8080
 ```
-<!-- .element: style="margin-bottom:25px; font-size: 18px; font-family: arial; color:black; background-color: #F2FAF3;" -->
+<!-- .element: style="margin-bottom:12px; font-size: 16px; font-family: arial; color:black; background-color: #F2FAF3;" -->
 
+* Arquivo: `application.yml` ou `application.yaml`, em `src/main/resources`
+<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
 
-<!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Exercício 🏋️
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+* Mesma posição do `application.properties` do mesmo diretório. Uma chave, um formato
+<!-- .element: style="margin-bottom:10px; font-size: 20px; color:black" -->
 
-- Transforme a configuração do serviço `users` do projeto Books em YAML.
-<!-- .element: style="margin-bottom:30px; font-size: 25px; color:white" -->
-
-1. Abra `exemplos/books/users`.
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
-
-2. Adicione `quarkus-config-yaml` no `pom.xml`.
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
-
-3. Crie `src/main/resources/application.yml` com as propriedades equivalentes.
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
-
-4. Esvazie o `application.properties` (mantenha apenas um formato).
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
-
-5. Valide com `./mvnw quarkus:dev`.
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
 ## Exercícios de fixação 🎯
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+<!-- .element: style="margin-bottom:28px; font-size: 44px; color:white; font-family: Marker Felt;" -->
 
-* 🟢 **Ex. 1:** Injeção básica de propriedade com `@ConfigProperty`
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+* 🟢 **Ex. 1:** `app.boas-vindas` com `@ConfigProperty`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:white" -->
 
-* 🛡️ **Ex. 2:** Propriedades seguras com `defaultValue` e `Optional<T>`
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+* 🛡️ **Ex. 2:** `defaultValue` e `Optional`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:white" -->
 
-* ⚡ **Ex. 3:** Sobrescrita em runtime via parâmetro `-D`
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+* ⚡ **Ex. 3:** sobrescrever com `-D`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:white" -->
 
-* 🎭 **Ex. 4:** Perfis na prática (`%dev` e `%prod`)
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+* 🎭 **Ex. 4:** `%dev` e `%prod` em `app.ambiente`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:white" -->
 
-* 🔐 **Ex. 5:** Isolando segredos locais com o arquivo `.env`
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:white" -->
+* 🔐 **Ex. 5:** `.env` com `APP_BOAS_VINDAS` e `APP_CUPOM`
+<!-- .element: style="margin-bottom:14px; font-size: 22px; color:white" -->
 
-* 🧠 **Teste seus conhecimentos:** Quiz interativo com Quizdown na página!
-<!-- .element: style="margin-bottom:20px; font-size: 22px; color:#FFD580" -->
+* 🏋️ Desafio: `exemplos/books/users` em `application.yml`
+<!-- .element: style="margin-bottom:16px; font-size: 22px; color:#FFD580" -->
 
-* Detalhes na página:
-<!-- .element: style="margin-bottom:15px; font-size: 22px; color:white" -->
+  [Exercícios na página](https://pw2.rpmhub.dev/topicos/configuration/configuration.html#colocando-tudo-em-prática-dominando-a-configuração-)
+<!-- .element: style="margin-bottom:12px; font-size: 18px; color:#FFD580" -->
 
-  [Exercícios de Fixação na Página](https://pw2.rpmhub.dev/topicos/configuration/configuration.html#colocando-tudo-em-prática-dominando-a-configuração-)
-<!-- .element: style="margin-bottom:30px; font-size: 20px; color:#FFD580" -->
 
 
 <!-- .slide: data-background="#21093D" data-transition="convex" -->
-## Referências
-<!-- .element: style="margin-bottom:50px; font-size: 50px; color:white; font-family: Marker Felt;" -->
+## Referências 📚
+<!-- .element: style="margin-bottom:40px; font-size: 48px; color:white; font-family: Marker Felt;" -->
 
-* Alex Soto Bueno; Jason Porter; [Quarkus Cookbook: Kubernetes-Optimized Java Solutions.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) Editora: O'Reilly Media, 2020.
-<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
+* Alex Soto Bueno; Jason Porter; [Quarkus Cookbook.](https://www.amazon.com.br/gp/product/B08D364VMD/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B08D364VMD&linkCode=as2&tag=rpmhub-20&linkId=2f82a4bb959a1797ec9791e0af68d1af) O'Reilly Media, 2020.
+<!-- .element: style="margin-bottom:28px; font-size: 22px; color:white" -->
 
-* Configuration Reference Guide. Disponível em: [https://quarkus.io/guides/config-reference](https://quarkus.io/guides/config-reference)
-<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
+* Configuração no Quarkus: [https://quarkus.io/guides/config-reference](https://quarkus.io/guides/config-reference)
+<!-- .element: style="margin-bottom:28px; font-size: 22px; color:white" -->
 
-* SmallRye Config. Disponível em: [https://github.com/smallrye/smallrye-config](https://github.com/smallrye/smallrye-config)
-<!-- .element: style="margin-bottom:40px; font-size: 20px; color:white" -->
+* MicroProfile Config: [https://github.com/eclipse/microprofile-config](https://github.com/eclipse/microprofile-config)
+<!-- .element: style="margin-bottom:28px; font-size: 22px; color:white" -->
+
+* SmallRye Config: [https://github.com/smallrye/smallrye-config](https://github.com/smallrye/smallrye-config)
+<!-- .element: style="margin-bottom:28px; font-size: 22px; color:white" -->
 
 <center>
 <a href="https://rpmhub.dev" target="blanck"><img src="../../../imgs/logo.png" alt="Rodrigo Prestes Machado" width="3%" height="3%" border=0 style="border:0; text-decoration:none; outline:none"></a><br/>

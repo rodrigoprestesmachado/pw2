@@ -62,6 +62,18 @@
         - [x] O Prometheus realiza requisições HTTP periódicas (pull / scraping) no endpoint /q/metrics da aplicação.
         - [ ] O desenvolvedor precisa fazer upload manual de arquivos CSV no Prometheus.
 
+        # No formato do Prometheus, como aparece um Counter registrado com o nome example.prime.number?
+        - [ ] example.prime.number
+        - [ ] example_prime_number
+        - [x] example_prime_number_total
+        - [ ] example_prime_number_seconds_count
+
+        # De qual pacote vêm as anotações @Counted e @Timed usadas com o Micrometer no Quarkus?
+        - [ ] org.eclipse.microprofile.metrics.annotation, com o nome da métrica no atributo name
+        - [x] io.micrometer.core.annotation, com o nome da métrica no atributo value
+        - [ ] jakarta.ws.rs, junto com @Path e @GET
+        - [ ] io.prometheus.client, lidas direto pelo Prometheus
+
         # Por que uma métrica recém-criada no código pode não aparecer imediatamente no endpoint /q/metrics?
         - [ ] Porque o Micrometer só atualiza os dados à meia-noite.
         - [x] Porque as métricas são construídas de forma lazy e só aparecem após a primeira invocação ou registro do trecho instrumentado.

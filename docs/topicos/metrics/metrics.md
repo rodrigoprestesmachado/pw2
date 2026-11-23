@@ -96,15 +96,27 @@ para ser lido por qualquer ferramenta de coleta.
 
 ## 1. Obtendo o `MeterRegistry` 💉
 
-O ponto de entrada para criar qualquer métrica programática no Micrometer é a
-classe `MeterRegistry`. No Quarkus, você obtém uma instância simplesmente
-injetando-a via construtor (forma recomendada) ou campo:
+Para registrar um medidor, o código precisa de uma referência ao `MeterRegistry`.
+Quem cria e configura esse objeto é a extensão do Micrometer: ela mantém **um
+único registro** para a aplicação inteira (um `CompositeMeterRegistry`) e
+encaminha cada métrica para os backends ativos — aqui, o Prometheus. Por isso
+um contador criado em qualquer classe aparece junto com os demais em
+`/q/metrics`.
+{: .fs-3 }
+
+O Quarkus publica esse registro como um bean CDI. Há três formas de obter a
+mesma referência:
+{: .fs-3 }
+
+**1. Injeção pelo construtor.** Com um único construtor, o Quarkus dispensa a
+anotação `@Inject`. Ela pode ficar no código para deixar a injeção explícita:
 {: .fs-3 }
 
 ```java
 package dev.pw2;
 
 import io.micrometer.core.instrument.MeterRegistry;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
 
 @Path("/itens")
@@ -112,12 +124,40 @@ public class ItemResource {
 
     private final MeterRegistry registry;
 
-    // Injeção via construtor (boa prática recomendada)
+    @Inject
     public ItemResource(MeterRegistry registry) {
         this.registry = registry;
     }
 }
 ```
+
+**2. Injeção por campo.** Neste caso o `@Inject` é obrigatório. Sem ele o campo
+permanece nulo:
+{: .fs-3 }
+
+```java
+import io.micrometer.core.instrument.MeterRegistry;
+import jakarta.inject.Inject;
+
+@Inject
+MeterRegistry registry;
+```
+
+**3. Registro global do Micrometer.** `Metrics.globalRegistry` é o mesmo bean
+que a extensão mantém:
+{: .fs-3 }
+
+```java
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Metrics;
+
+MeterRegistry registry = Metrics.globalRegistry;
+```
+
+Guarde essa referência num campo quando mais de um método for registrar
+medidores. `registry.counter(...)` e os demais métodos localizam ou acrescentam
+um medidor dentro desse mesmo registro.
+{: .fs-3 }
 
 ## 2. Counter: registrando eventos que só aumentam 🔢
 
@@ -167,20 +207,29 @@ Vamos decifrar o que acontece passo a passo:
 
 1. No construtor, invocamos `registry.counter("itens.consultas.total", "tipo", "geral")`.
 2. A cada chamada ao método `listarItens()`, executamos `contadorAcessos.increment()`.
-3. Ao acessar `http://localhost:8080/q/metrics`, o Prometheus exibirá a métrica convertida com underscores:
+3. Ao acessar `http://localhost:8080/q/metrics` depois de uma chamada, a métrica aparece assim:
 {: .fs-3 }
 
 ```text
 itens_consultas_total{tipo="geral"} 1.0
 ```
 
+O ponto do nome vira underscore. Este contador já termina em `total`, então o
+nome exportado continua `itens_consultas_total`. Se o nome ainda não termina
+assim, a convenção do Prometheus acrescenta o sufixo `_total`:
+`example.prime.number` aparece como `example_prime_number_total`.
+{: .fs-3 }
+
 ### O atalho com `@Counted` ⚡
 
 Se você só precisa contar quantas vezes um método foi executado, não precisa nem
-instanciar o `Counter` manualmente. Basta anotar o método:
+instanciar o `Counter` manualmente. Basta anotar o método com
+`io.micrometer.core.annotation.Counted`. O nome da métrica vai no atributo `value`:
 {: .fs-3 }
 
 ```java
+import io.micrometer.core.annotation.Counted;
+
 @GET
 @Path("/rapido")
 @Counted(value = "itens.rapido.execucoes", description = "Total de chamadas ao endpoint rapido")
@@ -188,6 +237,10 @@ public String endpointRapido() {
     return "Executado!";
 }
 ```
+
+No `/q/metrics`, depois da primeira chamada, essa anotação aparece como
+`itens_rapido_execucoes_total`.
+{: .fs-3 }
 
 ## 3. Timer: medindo latência e duração de operações ⏱️
 
@@ -204,10 +257,13 @@ armazena automaticamente três informações essenciais:
 tempo de chamada a APIs externas via REST Client.
 {: .fs-3 }
 
-A forma mais simples e produtiva de usar um Timer é com a anotação **`@Timed`**:
+A forma mais simples de usar um Timer é a anotação
+`io.micrometer.core.annotation.Timed`:
 {: .fs-3 }
 
 ```java
+import io.micrometer.core.annotation.Timed;
+
 @GET
 @Path("/processar")
 @Timed(value = "itens.processar.duracao", description = "Tempo gasto no processamento de itens")
@@ -314,6 +370,11 @@ DistributionSummary resumoPagamentos = DistributionSummary
 resumoPagamentos.record(149.90);
 ```
 
+A unidade informada em `baseUnit` entra no nome exportado. No `/q/metrics` você
+encontra `vendas_valor_pagamento_BRL_count`, `vendas_valor_pagamento_BRL_sum` e
+`vendas_valor_pagamento_BRL_max`.
+{: .fs-3 }
+
 ## 6. Tags dimensionais: filtrando dados com riqueza 🏷️
 
 O Micrometer não separa métricas em pastas rígidas (como fazia a especificação
@@ -342,6 +403,11 @@ Assim, no Grafana ou Prometheus, você pode consultar o total geral somando tudo
 ou filtrar apenas os pagamentos realizados por Pix.
 {: .fs-3 }
 
+Cada combinação de nome e tags vira uma série própria. Use tags com poucos
+valores conhecidos (como `pix` e `cartao_credito`). Um valor aberto, como um
+id de usuário ou o texto livre de uma busca, multiplica as séries sem limite.
+{: .fs-3 }
+
 ## 7. Métricas automáticas do Quarkus 🤖
 
 A melhor parte do suporte ao Micrometer no Quarkus é que você ganha dezenas de
@@ -349,22 +415,28 @@ métricas vitais sem precisar escrever uma linha sequer de código Java! O Quark
 já vem com instrumentação automática para:
 {: .fs-3 }
 
-* **Servidor HTTP:** Todas as requisições HTTP recebidas são medidas automaticamente
-sob `http_server_requests_seconds_count/sum/max`, incluindo tags para o path da URI,
-o método HTTP (GET/POST) e o status code (200, 404, 500).
-* **Recursos da JVM:** Memória heap e direct, contagem de threads ativas, pausas do
+* **Servidor HTTP:** toda requisição recebida entra em
+`http_server_requests_seconds_count`, `http_server_requests_seconds_sum` e
+`http_server_requests_seconds_max`, com as tags `uri`, `method`, `status` e
+`outcome`. O `uri` usa o template do path (`/catalogo/pedido/{tipo}`), e não o
+valor recebido no lugar do parâmetro.
+* **Recursos da JVM:** memória heap e direct, contagem de threads ativas, pausas do
 Garbage Collector (GC) e tempo de CPU.
-* **Alocação de Memória Netty:** Como o Quarkus roda sobre o motor de alta performance
-Netty/Vert.x, métricas como `allocator_memory_used` e `allocator_memory_pinned`
-ajudam a garantir que a memória fora do heap (direct memory) não cause vazamentos.
-* **Extensões integradas:** Pools de conexão de banco (`quarkus-agroal`), cache
-(`quarkus-cache`), clientes gRPC e mensagens Kafka também emitem métricas
-automaticamente quando presentes no projeto.
+* **Alocação de memória do Netty:** o Quarkus roda sobre Vert.x/Netty. As métricas
+`allocator.memory.used` e `allocator.memory.pinned` aparecem no Prometheus como
+`allocator_memory_used` e `allocator_memory_pinned`, com a tag `memory_type`
+(`heap` ou `direct`).
+* **Extensões integradas:** quando estão no projeto, também emitem métricas: banco
+(`quarkus-agroal` e `quarkus-hibernate-orm`), cache (`quarkus-cache`),
+Redis (`quarkus-redis-client`), gRPC (`quarkus-grpc`) e mensageria
+(Kafka e RabbitMQ, pela extensão `quarkus-messaging`).
 {: .fs-3 }
 
-💡 **Nota sobre inicialização *lazy*:** As métricas de negócio criadas na sua
-aplicação só aparecem no endpoint `/q/metrics` após a primeira invocação do
-método correspondente.
+💡 **Nota sobre inicialização *lazy*:** o `/q/metrics` só lista um medidor depois
+que o código que o registra executou. Um `Counter` criado no construtor aparece
+quando o Quarkus cria a resource, em geral na primeira requisição. `@Counted` e
+`@Timed` registram o medidor na primeira execução do método. As métricas de HTTP
+também só surgem depois da primeira requisição ao endpoint.
 {: .fs-3 }
 
 ## 8. Coletando métricas com Prometheus e Docker 📊
@@ -451,9 +523,11 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/catalogo")
 public class CatalogoResource {
 
+    private final MeterRegistry registry;
     private final Counter contadorBuscas;
 
     public CatalogoResource(MeterRegistry registry) {
+        this.registry = registry;
         this.contadorBuscas = registry.counter("catalogo.buscas.total");
     }
 
@@ -669,7 +743,9 @@ curl -s http://localhost:8080/q/metrics | grep http_server_requests_seconds_coun
 ```
 
 **Resultado esperado:**
-Você verá linhas listando cada endpoint chamado, acompanhadas de tags como `method="GET"`, `outcome="SUCCESS"`, `status="200"` e `uri="/catalogo"` sem que você precise ter escrito código para isso!
+Você verá uma linha para cada endpoint já chamado, com tags `method="GET"`,
+`outcome="SUCCESS"`, `status="200"` e `uri`. O `uri` traz o template:
+`/catalogo`, `/catalogo/relatorio`, `/catalogo/pedido/{tipo}` e `/fila/adicionar`.
 {: .fs-3 }
 
 ---

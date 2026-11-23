@@ -140,7 +140,7 @@ public class ConfigResource {
 Vamos decifrar o que acontece passo a passo:
 {: .fs-3 }
 
-1. O Quarkus intercepta os campos marcados com `@ConfigProperty`.
+1. O Quarkus lê os campos anotados com `@ConfigProperty` e injeta o valor já convertido.
 2. O campo `mensagem` recebe exatamente o valor da chave `pw2.mensagem` definida no `application.properties`.
 3. O campo `autor` busca a chave `pw2.autor`. Se ela não existisse, assumiria o valor `"Anonimo"` definido em `defaultValue`.
 4. O campo `versao` é do tipo `Optional<String>`. Como a chave `pw2.versao` não foi declarada no arquivo, o Quarkus não falha: ele simplesmente injeta um `Optional.empty()`.
@@ -186,6 +186,11 @@ Optional<Integer> dbPorta = ConfigProvider.getConfig()
     .getOptionalValue("banco.porta", Integer.class);
 ```
 
+`getValue` exige que a chave exista: se `banco.host` não estiver definida, a chamada
+lança `NoSuchElementException`. `getOptionalValue` devolve `Optional.empty()`
+quando a chave falta.
+{: .fs-3 }
+
 ## 4. Sobrescrevendo em runtime e ordem de precedência ⚡
 
 Imagine que seu serviço foi compilado e você precisa executá-lo em um servidor
@@ -195,7 +200,14 @@ Você pode passar qualquer propriedade na inicialização via parâmetro de sist
 {: .fs-3 }
 
 ```sh
-./mvnw quarkus:dev -Dpw2.mensagem="Ola direto da linha de comando!"
+./mvnw quarkus:dev -Dpw2.mensagem="Ola direto da linha de comando"
+```
+
+O mesmo parâmetro vale no executável empacotado:
+{: .fs-3 }
+
+```sh
+java -Dpw2.mensagem="Ola direto da linha de comando" -jar target/quarkus-app/quarkus-run.jar
 ```
 
 Ou através de **variáveis de ambiente** do sistema operacional:
@@ -211,11 +223,17 @@ Quando o mesmo nome de propriedade é definido em locais diferentes, o Quarkus
 adota uma ordem de precedência rígida (do maior para o menor):
 {: .fs-3 }
 
-1. **Parâmetros de linha de comando (`-Dchave=valor`)**: maior prioridade de todas.
-2. **Variáveis de ambiente do sistema operacional** (ex: `PW2_MENSAGEM=...`).
-3. **Arquivo `.env`** na raiz do projeto (carregado em desenvolvimento).
-4. **`application.properties`** (específico de perfil, ex: `%dev.`).
-5. **`application.properties`** (padrão geral).
+1. **Parâmetros de sistema (`-Dchave=valor`)**, ordinal 400.
+2. **Variáveis de ambiente**, ordinal 300. Exemplo: `PW2_MENSAGEM`.
+3. **Arquivo `.env`** no diretório de trabalho, ordinal 295.
+4. **`config/application.properties`** no diretório de trabalho, ordinal 260. Em produção esse arquivo fica ao lado da aplicação e altera o serviço sem reabrir o JAR.
+5. **`application.properties` do classpath** (`src/main/resources/application.properties`, empacotado no JAR), ordinal 250.
+{: .fs-3 }
+
+O perfil não é uma fonte à parte. Dentro do mesmo arquivo, a chave do perfil
+ativo é a que vale: com o perfil `prod`, `%prod.pw2.banco.url` substitui
+`pw2.banco.url`. Uma variável de ambiente continua vencendo essa chave, porque
+a fonte dela tem ordinal maior.
 {: .fs-3 }
 
 ## 5. Perfis de configuração: dev, test e prod 🎭
@@ -257,6 +275,23 @@ quarkus.http.port=8080
 ```
 
 E ativá-lo na inicialização com `-Dquarkus.profile=homologacao`.
+A variável de ambiente equivalente é `QUARKUS_PROFILE=homologacao`.
+{: .fs-3 }
+
+Também dá para separar o perfil em outro arquivo, `application-homologacao.properties`,
+no mesmo diretório do `application.properties`. Nesse arquivo as chaves ficam
+sem o prefixo `%homologacao.`:
+{: .fs-3 }
+
+```properties
+quarkus.http.port=8090
+```
+
+O `application.properties` precisa existir nesse diretório, mesmo que vazio:
+é ele que faz o Quarkus descobrir o arquivo do perfil. As chaves do arquivo
+`application-homologacao.properties` vencem as chaves `%homologacao.` escritas
+no arquivo principal. O perfil ativo não é definido dentro de
+`application-homologacao.properties`.
 {: .fs-3 }
 
 ## 6. O arquivo `.env`: guardando segredos locais 🔐
@@ -280,16 +315,38 @@ meu-projeto/
     └── application.properties    ← Configurações versionadas no Git
 ```
 
+O Quarkus lê o `.env` do diretório de trabalho. No `quarkus:dev`, esse diretório
+é a raiz do projeto. O arquivo também entra em vigor no `java -jar`, quando está
+na pasta de onde você executa o comando.
+{: .fs-3 }
+
 ### Regra de conversão de nomes
 
-As variáveis no `.env` seguem o padrão das variáveis de ambiente:
-**letras maiúsculas e pontos substituídos por sublinhados (`_`)**:
+Para a chave `pw2.mensagem`, o Quarkus procura, nesta ordem:
 {: .fs-3 }
 
-* `pw2.mensagem` vira `PW2_MENSAGEM`
-* `quarkus.http.port` vira `QUARKUS_HTTP_PORT`
-* `banco.dados.senha` vira `BANCO_DADOS_SENHA`
+* `pw2.mensagem` (o nome exato)
+* `pw2_mensagem` (cada caractere que não é letra, dígito ou `_` vira `_`)
+* `PW2_MENSAGEM` (a mesma troca, em maiúsculas)
 {: .fs-3 }
+
+Nos exemplos e no `.env` usamos a forma maiúscula, que também é a variável de
+ambiente:
+{: .fs-3 }
+
+* `pw2.mensagem` → `PW2_MENSAGEM`
+* `quarkus.http.port` → `QUARKUS_HTTP_PORT`
+* `banco.dados.senha` → `BANCO_DADOS_SENHA`
+* `app.boas-vindas` → `APP_BOAS_VINDAS` (o hífen também vira `_`)
+{: .fs-3 }
+
+No `.env`, o perfil usa um sublinhado antes do nome do perfil:
+{: .fs-3 }
+
+```properties
+PW2_MENSAGEM=Mensagem geral
+_DEV_PW2_MENSAGEM=Mensagem apenas no perfil dev
+```
 
 Exemplo de `.env`:
 {: .fs-3 }
@@ -311,8 +368,10 @@ banco.senha=${DB_SENHA:senha_padrao_dev}
 servico.externo.url=${URL_SERVICO:http://localhost:8081}
 ```
 
-Se a variável `DB_SENHA` existir no `.env` ou no sistema, o Quarkus usa o seu
-valor. Se não existir, ele adota `senha_padrao_dev`.
+A expressão procura a chave `DB_SENHA` em todas as fontes. Se ela existir, por
+exemplo no `.env` ou como variável de ambiente, o Quarkus usa esse valor. Se
+não existir, adota `senha_padrao_dev`. Sem a chave e sem o texto depois dos
+dois-pontos, a leitura lança `NoSuchElementException`.
 {: .fs-3 }
 
 ## 7. O namespace reservado `quarkus.` e configurações de build 🚨
@@ -334,10 +393,11 @@ negócio (como `quarkus.minha-taxa`). Esse namespace é reservado exclusivamente
 para o framework.
 {: .fs-3 }
 
-Além disso, note que algumas opções do Quarkus são de **tempo de compilação/build**
-(marcadas com um ícone de cadeado 🔒 na documentação oficial). Essas propriedades
-são gravadas permanentemente no bytecode durante o build e não podem ser
-alteradas em tempo de execução sem recompilar a aplicação.
+Algumas opções do Quarkus só produzem efeito no **build**. Na
+[lista oficial](https://quarkus.io/guides/all-config) elas aparecem com um
+cadeado 🔒. O valor fica disponível em tempo de execução para leitura, e uma
+mudança feita depois do build não altera o comportamento do framework. Para
+valer, é preciso gerar o artefato de novo.
 {: .fs-3 }
 
 ## 8. Arquivos YAML: uma alternativa visual 📄
@@ -350,8 +410,8 @@ basta adicionar a extensão `quarkus-config-yaml`:
 ./mvnw quarkus:add-extension -Dextensions='quarkus-config-yaml'
 ```
 
-E criar o arquivo `src/main/resources/application.yml`. Compare a elegância
-dos dois formatos:
+E criar `src/main/resources/application.yml` (o nome `application.yaml` também
+vale). Compare os dois formatos:
 {: .fs-3 }
 
 Em `application.properties`:
@@ -376,6 +436,10 @@ quarkus:
   http:
     port: 8080
 ```
+
+Com a extensão instalada, o YAML ocupa a mesma posição do `application.properties`
+que está no mesmo diretório. Mantenha um único formato para cada chave.
+{: .fs-3 }
 
 ---
 
@@ -488,7 +552,7 @@ Bem-vindo ao curso de Microsservicos! | Depto: Tecnologia | Cupom: Nenhum cupom 
 {: .fs-3 }
 
 ```sh
-./mvnw quarkus:dev -Dapp.boas-vindas="Ola via System Property!"
+./mvnw quarkus:dev -Dapp.boas-vindas="Ola via System Property"
 ```
 
 **Teste:**
@@ -499,7 +563,7 @@ curl http://localhost:8080/boas-vindas
 ```
 
 **Resultado esperado:**
-A mensagem exibida passa a ser `Ola via System Property!`, demonstrando que o parâmetro de inicialização tem prioridade sobre o arquivo estático.
+A mensagem exibida passa a ser `Ola via System Property`, demonstrando que o parâmetro de inicialização tem prioridade sobre o arquivo estático.
 {: .fs-3 }
 
 ---
@@ -518,16 +582,21 @@ app.ambiente=Ambiente padrao
 %prod.app.ambiente=Voce esta em PRODUCAO (Seguranca maxima)
 ```
 
-**Passo 2:** Injete no recurso:
+**Passo 2:** Injete a propriedade e inclua o valor no retorno de `saudar()`:
 {: .fs-3 }
 
 ```java
     @ConfigProperty(name = "app.ambiente")
     String ambiente;
-```
 
-E adicione ao retorno de `saudar()`.
-{: .fs-3 }
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String saudar() {
+        return mensagem + " | Depto: " + departamento
+            + " | Cupom: " + cupom.orElse("Nenhum cupom ativo")
+            + " | " + ambiente;
+    }
+```
 
 **Teste:**
 Com o Quarkus rodando via `./mvnw quarkus:dev`, chame o endpoint e veja a mensagem de desenvolvimento.
